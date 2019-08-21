@@ -6,6 +6,7 @@
 
 namespace motion_planning
 {
+ManeuverGenerator::ManeuverGenerator() {}
 std::vector<IManeuver> ManeuverGenerator::Generate(const units::velocity::meters_per_second_t& target_velocity) const
 {
     return std::vector<IManeuver>();
