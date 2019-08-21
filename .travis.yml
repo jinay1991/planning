@@ -1,7 +1,5 @@
 language: c++
 dist: bionic
-addons:
-  apt:
-    update: true
-install: make get-deps bazel gcc g++
+before_install: apt-get install -y bazel
+install: bazel test //... --test_output=all
 compiler: gcc
