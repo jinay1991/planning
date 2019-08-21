@@ -4,7 +4,7 @@
 #ifndef MOTION_PLANNING_MANEUVER_GENERATOR_H_
 #define MOTION_PLANNING_MANEUVER_GENERATOR_H_
 
-#include <motion_planning/i_maneuver.h>
+#include <motion_planning/i_maneuver_generator.h>
 #include <units/units.h>
 
 namespace motion_planning
