@@ -1,4 +1,7 @@
-// #include "motion_planning_fixture.h"
-#include <gtest/gtest.h>
+///
+/// @file
+///
 
-// TEST_F(MotionPlanningFixture, Activate) {}
+#include "motion_planning_fixture.h"
+
+TEST_F(MotionPlanningFixture, Activate) {}

@@ -1,3 +1,6 @@
+///
+/// @file
+///
 #ifndef MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H_
 #define MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H_
 namespace motion_planning

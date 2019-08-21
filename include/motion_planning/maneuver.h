@@ -1,3 +1,6 @@
+///
+/// @file
+///
 #ifndef MOTION_PLANNING_MANEUVER_H_
 #define MOTION_PLANNING_MANEUVER_H_
 

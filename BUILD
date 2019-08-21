@@ -17,10 +17,10 @@ cc_test(
     name = "unit_tests",
     srcs = glob([
         "test/**/*.cpp",
-        # "test/**/*.h",
+        "test/**/*.h",
     ]),
-    # includes = ["test"],
-    # tags = ["test"],
+    includes = ["test"],
+    tags = ["unit_test"],
     deps = [
         ":motion_planning",
         "@googletest//:gtest",
