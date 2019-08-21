@@ -8,6 +8,8 @@
 #include <gtest/gtest.h>
 #include <motion_planning/motion_planning.h>
 
+namespace
+{
 class MotionPlanningFixture : public ::testing::Test
 {
   public:
@@ -16,6 +18,8 @@ class MotionPlanningFixture : public ::testing::Test
     virtual void TearDown() override {}
 
   private:
+    motion_planning::MotionPlanning motion_planner_{};
 };
 
+}  // namespace
 #endif  /// MOTION_PLANNING_FIXTURE_H

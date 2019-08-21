@@ -5,5 +5,8 @@
 #define MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H_
 namespace motion_planning
 {
-}
+class ITrajectoryPrioritizer
+{
+};
+}  // namespace motion_planning
 #endif  /// MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H_

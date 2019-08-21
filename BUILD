@@ -6,6 +6,7 @@ cc_library(
     hdrs = glob([
         "include/**/*.h",
     ]),
+    copts = ["-std=c++14"],
     includes = ["include"],
     tags = ["lib"],
     visibility = [
@@ -19,8 +20,9 @@ cc_test(
         "test/**/*.cpp",
         "test/**/*.h",
     ]),
+    copts = ["-std=c++14"],
     includes = ["test"],
-    tags = ["unit_test"],
+    tags = ["test"],
     deps = [
         ":motion_planning",
         "@googletest//:gtest",
