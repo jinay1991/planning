@@ -1,3 +1,9 @@
+# bazel build files
+bazel-*
+
+# vscode files
+.vscode
+
 # Prerequisites
 *.d
 
