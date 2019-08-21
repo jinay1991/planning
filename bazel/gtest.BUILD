@@ -13,6 +13,7 @@ cc_library(
     ]),
     copts = [
         "-Iexternal/gtest/include",
+        "-std=c++14",
     ],
     linkopts = ["-pthread"],
     visibility = ["//visibility:public"],
@@ -29,6 +30,7 @@ cc_library(
     ]),
     copts = [
         "-Iexternal/gtest/include",
+        "-std=c++14",
     ],
     visibility = ["//visibility:public"],
     deps = [

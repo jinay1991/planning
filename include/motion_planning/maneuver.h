@@ -11,8 +11,6 @@ namespace motion_planning
 {
 class Maneuver : public IManeuver
 {
-  public:
-    Maneuver();
 };
 }  // namespace motion_planning
 #endif  /// MOTION_PLANNING_MANEUVER_H_
