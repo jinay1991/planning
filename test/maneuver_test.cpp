@@ -11,7 +11,7 @@ namespace
 {
 TEST(ManeuverTest, HasEgoManeuverAsDefault)
 {
-    // ASSERT_THAT(Maneuver(), ::testing::Eq(Maneuver(Maneuver::LaneId::kEgo, units::velocity::meters_per_second_t{0.0})));
+    ASSERT_THAT(Maneuver(), ::testing::Eq(Maneuver(Maneuver::LaneId::kEgo, units::velocity::meters_per_second_t{0.0})));
 }
 }  // namespace
 }  // namespace motion_planning

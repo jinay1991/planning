@@ -19,7 +19,7 @@ class Maneuver : public IManeuver
 
     Maneuver(const LaneId& id, const units::velocity::meters_per_second_t& velocity);
 
-    // inline bool operator==(const Maneuver& rhs) const { return id_ == rhs.id_ && velocity_ == rhs.velocity_; };
+    inline bool operator==(const Maneuver& rhs) const { return id_ == rhs.id_ && velocity_ == rhs.velocity_; };
 
   private:
     LaneId id_;
