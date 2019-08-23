@@ -47,3 +47,4 @@ docker-build:
   only:
     changes:
       - Dockerfile
+      - schedules
