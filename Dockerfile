@@ -24,4 +24,8 @@ RUN ln -s /usr/lib64/libuWS.so /usr/lib/libuWS.so
 RUN rm -r uWebSockets
 
 # Installation of Docker (used to compile image with scheduled job)
-RUN apt-get install -y docker
+RUN apt-get install -y apt-transport-https ca-certificates software-properties-common
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+RUN apt-get update && apt-cache policy docker-ce
+RUN apt-get install -y docker-ce docker-ce-cli
