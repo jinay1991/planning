@@ -1,3 +1,15 @@
+docker_build:
+  image: docker:stable
+  stage: build
+  variables:
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
+  services:
+    - docker:stable-dind
+  script:
+    - docker build -t registry.gitlab.com/jinay1991/motion_planning .
+    - docker push registry.gitlab.com/jinay1991/motion_planning
+
 image: registry.gitlab.com/jinay1991/motion_planning
 
 bazel-build:
@@ -45,8 +57,21 @@ pages:
       - public
     expire_in: 30 days
 
+package:
+  stage: deploy
+  script:
+    - bazel build //:motion_planning_deb_pkg --host_force_python=PY2
+  artifacts:
+    paths:
+      - bazel-bin/*_amd64.deb
+    when: on_success
+  only:
+    refs:
+      - master
+
 code_quality:
   image: docker:stable
+  stage: test
   variables:
     DOCKER_DRIVER: overlay2
   allow_failure: true
