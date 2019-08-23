@@ -8,23 +8,22 @@ image: registry.gitlab.com/jinay1991/motion_planning
 test:
   stage: test
   script:
-    - bazel test //... --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:test_results.xml"
+    - bazel test //... --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:/tmp/test_results.xml"
   artifacts:
     reports:
-      junit: test_results.xml
+      junit: /tmp/test_results.xml
     name: test results
     when: on_success
-
-coverage:
-  stage: deploy
-  script:
-    - bazel test //... --test_output=all --cache_test_results=false --collect_code_coverage=true
-    - export OUTPUT_DIR=$(bazel info execution_root)
-    - export COVERAGE_INFO=$(find $OUTPUT_DIR -name coverage.dat)
-    - genhtml -s --num-spaces 4 --legend --highlight --sort -t "Test Coverage" --demangle-cpp --function-coverage --branch-coverage -o coverage $COVERAGE_INFO
-    - tar czvf coverage.tar.gz coverage/
-  artifacts:
-    paths:
-      - coverage
-    name: coverage report
-    when: on_success
+# coverage:
+#   stage: deploy
+#   script:
+#     - bazel test //... --test_output=all --cache_test_results=false --collect_code_coverage=true
+#     - export OUTPUT_DIR=$(bazel info execution_root)
+#     - export COVERAGE_INFO=$(find $OUTPUT_DIR -name coverage.dat)
+#     - genhtml -s --num-spaces 4 --legend --highlight --sort -t "Test Coverage" --demangle-cpp --function-coverage --branch-coverage -o coverage $COVERAGE_INFO
+#     - tar czvf coverage.tar.gz coverage/
+#   artifacts:
+#     paths:
+#       - coverage
+#     name: coverage report
+#     when: on_success
