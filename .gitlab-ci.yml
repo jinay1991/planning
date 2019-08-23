@@ -24,6 +24,7 @@ coverage:
   artifacts:
     paths:
       - coverage_bundle
+      - test_results
     reports:
       junit: test_results
     when: on_success
