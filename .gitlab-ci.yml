@@ -1,5 +1,8 @@
 image: registry.gitlab.com/jinay1991/motion_planning
 
+before_script:
+  - bundle install
+
 build:
   stage: build
   script:
@@ -13,17 +16,16 @@ test:
 coverage:
   stage: deploy
   script:
-    - bazel test //... --test_output=all --cache_test_results=false --collect_code_coverage=true --test_arg="--gtest_output=xml:test_results.xml"
+    - bundle exec bazel test //... --test_output=all --cache_test_results=false --collect_code_coverage=true --test_arg="--gtest_output=xml:test_results.xml" -d test_results
     - export OUTPUT_DIR=$(bazel info execution_root)
     - export COVERAGE_INFO=$(find $OUTPUT_DIR -name coverage.dat)
-    - genhtml -s --num-spaces 4 --legend --highlight --sort -t "Motion Planning" --demangle-cpp --function-coverage --branch-coverage $COVERAGE_INFO -o coverage
+    - bundle exec genhtml -s --num-spaces 4 --legend --highlight --sort -t "Motion Planning" --demangle-cpp --function-coverage --branch-coverage $COVERAGE_INFO -o coverage -d coverage_bundle
     - tar czvf coverage.tar.gz coverage/
   artifacts:
     paths:
-      - coverage
-      - coverage.tar.gz
+      - coverage_bundle
     reports:
-      junit: test_results.xml
+      junit: test_results
     when: on_success
 
 package:
