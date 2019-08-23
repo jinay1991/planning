@@ -1,35 +1,30 @@
 image: registry.gitlab.com/jinay1991/motion_planning
 
-before_script:
-  - bundle install
-
 # build:
 #   stage: build
 #   script:
 #     - bazel build //...
 
-# test:
-#   stage: test
-#   script:
-#     - bazel test //... --test_output=all --cache_test_results=false
+test:
+  stage: test
+  script:
+    - bazel test //... --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:test_results.xml"
+  artifacts:
+    reports:
+      junit: test_results.xml
+    name: test results
+    when: on_success
 
 coverage:
   stage: deploy
   script:
-    - bundle exec bazel test //... --test_output=all --cache_test_results=false --collect_code_coverage=true --test_arg="--gtest_output=xml:test_results.xml" -d test_results
+    - bazel test //... --test_output=all --cache_test_results=false --collect_code_coverage=true
     - export OUTPUT_DIR=$(bazel info execution_root)
     - export COVERAGE_INFO=$(find $OUTPUT_DIR -name coverage.dat)
-    - bundle exec genhtml -s --num-spaces 4 --legend --highlight --sort -t "Motion Planning" --demangle-cpp --function-coverage --branch-coverage $COVERAGE_INFO -o coverage -d coverage_bundle
+    - genhtml -s --num-spaces 4 --legend --highlight --sort -t "Test Coverage" --demangle-cpp --function-coverage --branch-coverage -o coverage $COVERAGE_INFO
     - tar czvf coverage.tar.gz coverage/
   artifacts:
     paths:
-      - coverage_bundle
-      - test_results
-    reports:
-      junit: test_results
+      - coverage
+    name: coverage report
     when: on_success
-
-package:
-  stage: deploy
-  script:
-    - echo "Generate Package"
