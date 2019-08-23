@@ -21,7 +21,7 @@ code-coverage:
     - export OUTPUT_DIR=$(bazel info execution_root)
     - export COVERAGE_INFO=$(find $OUTPUT_DIR -name coverage.dat)
     - genhtml -s --num-spaces 4 --legend --highlight --sort -t "Test Coverage" --demangle-cpp --function-coverage --branch-coverage -o coverage $COVERAGE_INFO
-  coverage: /^functions.*\s+(\d+\%)$/
+  coverage: /functions.*\s+(\d+\d+%)$/
   artifacts:
     paths:
       - coverage/
@@ -39,3 +39,11 @@ pages:
     paths:
       - public
     expire_in: 30 days
+
+docker-build:
+  script:
+    - docker build -t registry.gitlab.com/jinay1991/motion_planning .
+    - docker push registry.gitlab.com/jinay1991/motion_planning
+  only:
+    changes:
+      - Dockerfile
