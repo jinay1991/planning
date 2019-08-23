@@ -6,4 +6,6 @@
 namespace
 {
 TEST_F(MotionPlanningFixture, Activate) {}
+TEST_F(MotionPlanningFixture, Deactivate) {}
+TEST_F(MotionPlanningFixture, KeepLane) {}
 }  // namespace
