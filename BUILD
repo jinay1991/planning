@@ -14,6 +14,9 @@ cc_library(
     visibility = [
         "//visibility:public",
     ],
+    deps = [
+        "@nholthaus//:units",
+    ],
 )
 
 cc_test(
@@ -23,23 +26,6 @@ cc_test(
             "test/**/*.cpp",
             "test/**/*.h",
         ],
-        exclude = [
-            "test/units/units_test.cpp",
-        ],
-    ),
-    copts = ["-std=c++14"],
-    includes = ["test"],
-    tags = ["test"],
-    deps = [
-        ":motion_planning",
-        "@googletest//:gtest_main",
-    ],
-)
-
-cc_test(
-    name = "third_party_tests",
-    srcs = glob(
-        ["test/units/*.cpp"],
     ),
     copts = ["-std=c++14"],
     includes = ["test"],

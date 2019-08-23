@@ -6,7 +6,7 @@
 #define MOTION_PLANNING_I_MANEUVER_GENERATOR_H_
 
 #include <motion_planning/maneuver.h>
-#include <units/units.h>
+#include <units.h>
 #include <vector>
 
 namespace motion_planning

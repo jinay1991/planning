@@ -7,7 +7,7 @@
 #include <motion_planning/i_maneuver.h>
 #include <motion_planning/i_maneuver_generator.h>
 #include <motion_planning/maneuver.h>
-#include <units/units.h>
+#include <units.h>
 
 namespace motion_planning
 {

@@ -5,7 +5,7 @@ bazel-build-and-test:
   script:
     - bazel build //...
   after_script:
-    - bazel test //:motion_planning_tests --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:/tmp/test_results.xml"
+    - bazel test //... --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:/tmp/test_results.xml"
     - cp /tmp/test_results.xml test_results.xml
   artifacts:
     reports:

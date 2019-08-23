@@ -1,8 +1,8 @@
 ///
 /// @file
 ///
-#ifndef LOGGING_H
-#define LOGGING_H
+#ifndef LOGGING_H_
+#define LOGGING_H_
 
 #include <iostream>
 
@@ -12,4 +12,4 @@
 #define LOG_WARNING(module, msg) std::cout << " [WARN]:" << module << ": " << msg;
 #define LOG_FATAL(module, msg) std::cout << "[FATAL]:" << module << ": " << msg;
 
-#endif  /// LOGGING_H
+#endif  /// LOGGING_H_

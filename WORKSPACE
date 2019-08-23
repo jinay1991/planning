@@ -8,8 +8,15 @@ new_git_repository(
 )
 
 new_git_repository(
-    name = "units",
-    build_file = "//bazel:units.BUILD",
+    name = "nholthaus",
+    build_file = "//bazel:nholthaus.BUILD",
     remote = "https://github.com/nholthaus/units",
     tag = "v2.3.1",
+)
+
+new_git_repository(
+    name = "nlohmann",
+    build_file = "//bazel:nlohmann.BUILD",
+    remote = "https://github.com/nlohmann/json",
+    tag = "v3.7.0",
 )

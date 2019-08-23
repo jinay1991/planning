@@ -6,7 +6,7 @@
 
 #include <motion_planning/domain_model/lane.h>
 #include <motion_planning/i_maneuver.h>
-#include <units/units.h>
+#include <units.h>
 
 namespace motion_planning
 {
