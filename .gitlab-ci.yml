@@ -1,20 +1,15 @@
 image: registry.gitlab.com/jinay1991/motion_planning
 
-bazel-build:
+bazel-build-and-test:
   stage: build
   script:
     - bazel build //...
-
-bazel-test:
-  stage: test
-  dependencies:
-    - bazel-build
-  script:
+  after_script:
     - bazel test //... --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:/tmp/test_results.xml"
   artifacts:
     reports:
       junit: /tmp/test_results.xml
-    name: test results
+    name: TestResults
     when: on_success
 
 code-coverage:
@@ -28,7 +23,7 @@ code-coverage:
   coverage: /^functions.*\s+(\d+\%)$/
   artifacts:
     paths:
-      - coverage
+      - coverage/
     name: code-coverage
     when: on_success
 
