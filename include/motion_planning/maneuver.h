@@ -21,8 +21,6 @@ class Maneuver : public IManeuver
 
     // inline bool operator==(const Maneuver& rhs) const { return id_ == rhs.id_ && velocity_ == rhs.velocity_; };
 
-    ~Maneuver() override {}
-
   private:
     LaneId id_;
     units::velocity::meters_per_second_t velocity_;

@@ -14,7 +14,6 @@ namespace motion_planning
 class IManeuverGenerator
 {
   public:
-    virtual ~IManeuverGenerator() = 0;
     virtual std::vector<Maneuver> Generate(const units::velocity::meters_per_second_t& target_velocity) const = 0;
 };
 }  // namespace motion_planning

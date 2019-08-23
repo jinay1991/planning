@@ -11,7 +11,6 @@ namespace motion_planning
 class TrajectoryPrioritizer : public ITrajectoryPrioritizer
 {
   public:
-    ~TrajectoryPrioritizer() override {}
 };
 }  // namespace motion_planning
 

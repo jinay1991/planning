@@ -14,8 +14,6 @@ namespace motion_planning
 class ManeuverGenerator : public IManeuverGenerator
 {
   public:
-    ~ManeuverGenerator() override {}
-
     std::vector<Maneuver> Generate(const units::velocity::meters_per_second_t& target_velocity) const override;
 };
 }  // namespace motion_planning

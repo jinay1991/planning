@@ -11,7 +11,6 @@ namespace motion_planning
 class TrajectoryPlanner : public ITrajectoryPlanner
 {
   public:
-    ~TrajectoryPlanner() override {}
 };
 }  // namespace motion_planning
 
