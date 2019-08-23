@@ -18,10 +18,29 @@ cc_library(
 
 cc_test(
     name = "motion_planning_tests",
-    srcs = glob([
-        "test/**/*.cpp",
-        "test/**/*.h",
-    ]),
+    srcs = glob(
+        [
+            "test/**/*.cpp",
+            "test/**/*.h",
+        ],
+        exclude = [
+            "test/units/units_test.cpp",
+        ],
+    ),
+    copts = ["-std=c++14"],
+    includes = ["test"],
+    tags = ["test"],
+    deps = [
+        ":motion_planning",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "third_party_tests",
+    srcs = glob(
+        ["test/units/*.cpp"],
+    ),
     copts = ["-std=c++14"],
     includes = ["test"],
     tags = ["test"],
