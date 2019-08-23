@@ -25,7 +25,3 @@ RUN rm -r uWebSockets
 
 # Installation of Docker (used to compile image with scheduled job)
 RUN apt-get install -y docker
-
-# Fetch dependencies for project
-RUN git clone https://gitlab.com/jinay1991/motion_planning.git
-RUN cd motion_planning && bazel fetch //...
