@@ -22,3 +22,6 @@ RUN cd uWebSockets/build && cmake ..
 RUN cd uWebSockets/build && make -j4 && make install
 RUN ln -s /usr/lib64/libuWS.so /usr/lib/libuWS.so
 RUN rm -r uWebSockets
+
+# Installation of Docker (used to compile image with scheduled job)
+RUN apt-get install -y docker

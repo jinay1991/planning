@@ -23,6 +23,8 @@ class MotionPlanning
   public:
     MotionPlanning();
 
+    ~MotionPlanning() = default;
+
   private:
     std::unique_ptr<IManeuverGenerator> maneuver_generator_;
     std::unique_ptr<ITrajectoryPlanner> trajectory_planner_;
