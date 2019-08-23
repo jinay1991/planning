@@ -15,7 +15,7 @@ image: registry.gitlab.com/jinay1991/motion_planning
 bazel-build:
   stage: build
   script:
-    - bazel build //...
+    - bazel build //... --host_force_python=PY2
 
 bazel-test:
   stage: test
