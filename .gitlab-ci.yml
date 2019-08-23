@@ -1,16 +1,16 @@
 image: registry.gitlab.com/jinay1991/motion_planning
 
-bazel-build-and-test:
-  stage: build
-  script:
-    - bazel build //...
-  after_script:
-    - bazel test //... --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:/tmp/test_results.xml"
-  artifacts:
-    reports:
-      junit: /tmp/test_results.xml
-    name: TestResults
-    when: on_success
+# bazel-build-and-test:
+#   stage: build
+#   script:
+#     - bazel build //...
+#   after_script:
+#     - bazel test //... --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:/tmp/test_results.xml"
+#   artifacts:
+#     reports:
+#       junit: /tmp/test_results.xml
+#     name: TestResults
+#     when: on_success
 
 code-coverage:
   stage: test
