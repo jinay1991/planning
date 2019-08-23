@@ -1,11 +1,9 @@
 image: registry.gitlab.com/jinay1991/motion_planning
 
 build:
-  stage: build
   script:
     - bazel build //...
 
 test:
-  stage: test
   script:
     - bazel test //... --test_output=all --cache_test_results=false

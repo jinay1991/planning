@@ -1,19 +1,30 @@
 cc_library(
     name = "gtest",
     srcs = glob(
-        ["src/*.cc"],
+        include = [
+            "googletest/src/*.cc",
+            "googletest/src/*.h",
+            "googletest/include/gtest/**/*.h",
+            "googlemock/src/*.cc",
+            "googlemock/include/gmock/**/*.h",
+        ],
         exclude = [
-            "src/gtest-all.cc",
-            "src/gtest-main.cc",
+            "googletest/src/gtest-all.cc",
+            "googletest/src/gtest_main.cc",
+            "googlemock/src/gmock-all.cc",
+            "googlemock/src/gmock_main.cc",
         ],
     ),
     hdrs = glob([
-        "include/**/*.h",
-        "src/*.h",
+        "googletest/include/gtest/*.h",
+        "googlemock/include/gmock/*.h",
     ]),
-    copts = [
-        "-Iexternal/gtest/include",
-        "-std=c++14",
+    copts = ["-std=c++11"],
+    includes = [
+        "googlemock",
+        "googlemock/include",
+        "googletest",
+        "googletest/include",
     ],
     linkopts = ["-pthread"],
     visibility = ["//visibility:public"],
@@ -21,17 +32,8 @@ cc_library(
 
 cc_library(
     name = "gtest_main",
-    srcs = glob(
-        ["src/gtest_main.cc"],
-    ),
-    hdrs = glob([
-        "include/**/*.h",
-        "src/*.h",
-    ]),
-    copts = [
-        "-Iexternal/gtest/include",
-        "-std=c++14",
-    ],
+    srcs = ["googletest/src/gtest_main.cc"],
+    copts = ["-std=c++11"],
     visibility = ["//visibility:public"],
     deps = [
         ":gtest",

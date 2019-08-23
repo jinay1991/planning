@@ -25,7 +25,6 @@ cc_test(
     tags = ["test"],
     deps = [
         ":motion_planning",
-        "@googletest//:gtest",
         "@googletest//:gtest_main",
     ],
 )
