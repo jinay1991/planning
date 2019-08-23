@@ -37,7 +37,19 @@ cc_test(
 )
 
 pkg_tar(
+    name = "motion_planning_bin_pkg",
+    testonly = True,
+    srcs = [
+        ":motion_planning_tests",
+    ],
+    extension = "tar.gz",
+    package_dir = "/opt/motion_planning/bin",
+    strip_prefix = "/",
+)
+
+pkg_tar(
     name = "motion_planning_lib_pkg",
+    testonly = True,
     srcs = [
         ":motion_planning",
     ],
@@ -48,6 +60,7 @@ pkg_tar(
 
 pkg_tar(
     name = "motion_planning_hdrs_pkg",
+    testonly = True,
     srcs = glob([
         "include/**/*.h",
     ]),
@@ -58,8 +71,10 @@ pkg_tar(
 
 pkg_tar(
     name = "motion_planning_tar_pkg",
+    testonly = True,
     extension = "tar.gz",
     deps = [
+        ":motion_planning_bin_pkg",
         ":motion_planning_hdrs_pkg",
         ":motion_planning_lib_pkg",
     ],
@@ -67,6 +82,7 @@ pkg_tar(
 
 pkg_deb(
     name = "motion_planning_deb_pkg",
+    testonly = True,
     architecture = "amd64",
     data = ":motion_planning_tar_pkg",
     description = "Motion Planning for Automonous Vehicle Driving",
