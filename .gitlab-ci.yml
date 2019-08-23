@@ -6,7 +6,7 @@ bazel-build:
     - bazel build //...
 
 bazel-test:
-  stage: build
+  stage: test
   dependencies:
     - bazel-build
   script:
