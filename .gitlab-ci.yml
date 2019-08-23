@@ -1,11 +1,17 @@
 image: registry.gitlab.com/jinay1991/motion_planning
 
-bazel-build-and-test:
+bazel-build:
   stage: build
   script:
     - bazel build //...
-  after_script:
+
+bazel-test:
+  stage: build
+  dependencies:
+    - bazel-build
+  script:
     - bazel test //... --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:/tmp/test_results.xml"
+  after_script:
     - cp /tmp/test_results.xml test_results.xml
   artifacts:
     reports:
@@ -38,12 +44,3 @@ pages:
     paths:
       - public
     expire_in: 30 days
-
-docker-build:
-  script:
-    - docker build -t registry.gitlab.com/jinay1991/motion_planning .
-    - docker push registry.gitlab.com/jinay1991/motion_planning
-  only:
-    changes:
-      - Dockerfile
-      - schedules
