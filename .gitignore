@@ -1,3 +1,6 @@
+# Extras
+.DS_Store
+
 # bazel build files
 bazel-*
 
