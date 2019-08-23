@@ -1,9 +1,31 @@
 image: registry.gitlab.com/jinay1991/motion_planning
 
 build:
+  stage: build
   script:
     - bazel build //...
 
 test:
+  stage: test
   script:
     - bazel test //... --test_output=all --cache_test_results=false
+
+coverage:
+  stage: test
+  script:
+    - bazel test //... --test_output=all --cache_test_results=false --collect_code_coverage=true --test_arg="--gtest_output=xml:/tmp/test_results.xml"
+    - export OUTPUT_DIR=$(bazel info execution_root)
+    - export COVERAGE_INFO=$(find $OUTPUT_DIR -name coverage.dat)
+    - genhtml -s --num-spaces 4 --legend --highlight --sort -t "Motion Planning" --demangle-cpp --function-coverage --branch-coverage $COVERAGE_INFO -o coverage
+    - tar czvf /tmp/coverage.tar.gz coverage/
+  artifacts:
+    paths:
+      - /tmp/coverage.tar.gz
+    reports:
+      junit: /tmp/test_results.xml
+    when: on_success
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Generate Package"
