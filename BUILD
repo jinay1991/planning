@@ -4,6 +4,7 @@ cc_library(
     name = "motion_planning",
     srcs = glob([
         "src/**/*.cpp",
+        "include/**/*.h",
     ]),
     hdrs = glob([
         "include/**/*.h",

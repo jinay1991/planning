@@ -26,8 +26,8 @@ void MotionPlanning::GenerateTrajectories()
     // {
     // }
     const auto rated_trajectories = trajectory_planner_->GetRatedTrajectories(maneuvers);
-    const auto prioritized_trajectories = trajectory_prioritizer_->GetPrioritizedTrajectories(rated_trajectories);
+    // const auto prioritized_trajectories = trajectory_prioritizer_->GetPrioritizedTrajectories(rated_trajectories);
 
-    trajectory_selector_->SetSelectedTrajectory(prioritized_trajectories->GetHighestPriorityTrajectory());
+    // trajectory_selector_->SetSelectedTrajectory(prioritized_trajectories->GetHighestPriorityTrajectory());
 }
 }  // namespace motion_planning

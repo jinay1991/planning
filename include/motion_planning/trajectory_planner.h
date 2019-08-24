@@ -11,6 +11,7 @@ namespace motion_planning
 class TrajectoryPlanner : public ITrajectoryPlanner
 {
   public:
+    std::vector<RatedTrajectory> GetRatedTrajectories(const std::vector<Maneuver> maneuvers) const override{};
 };
 }  // namespace motion_planning
 
