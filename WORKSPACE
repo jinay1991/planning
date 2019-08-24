@@ -1,4 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "new_git_repository")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 new_git_repository(
     name = "googletest",
@@ -19,6 +20,20 @@ new_git_repository(
     build_file = "//bazel:nlohmann.BUILD",
     remote = "https://github.com/nlohmann/json",
     tag = "v3.7.0",
+)
+
+new_git_repository(
+    name = "spline",
+    branch = "master",
+    build_file = "//bazel:spline.BUILD",
+    remote = "https://github.com/ttk592/spline",
+)
+
+http_archive(
+    name = "eigen3",
+    build_file = "//bazel:eigen3.BUILD",
+    strip_prefix = "eigen-eigen-323c052e1731",
+    url = "https://bitbucket.org/eigen/eigen/get/3.3.7.zip",
 )
 
 new_local_repository(

@@ -16,7 +16,9 @@ cc_library(
         "//visibility:public",
     ],
     deps = [
+        "@eigen3",
         "@nlohmann//:json",
+        "@spline",
         "@uWebSockets//:libuWS",
     ],
 )
