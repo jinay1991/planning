@@ -22,3 +22,6 @@ RUN cd uWebSockets/build && cmake ..
 RUN cd uWebSockets/build && make -j4 && make install
 RUN ln -s /usr/lib64/libuWS.so /usr/lib/libuWS.so
 RUN rm -r uWebSockets
+
+RUN git clone https://github.com/jinay1991/motion_planning.git
+RUN cd motion_planning && bazel build //... --host_force_python=PY2
