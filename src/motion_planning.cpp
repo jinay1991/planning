@@ -18,4 +18,16 @@ MotionPlanning::MotionPlanning()
     trajectory_prioritizer_ = std::make_unique<TrajectoryPrioritizer>();
     trajectory_selector_ = std::make_unique<TrajectorySelector>();
 }
+
+void MotionPlanning::GenerateTrajectories()
+{
+    const auto maneuvers = maneuver_generator_->Generate(units::velocity::meters_per_second_t{14.0});
+    // for (const auto maneuver: maneuvers)
+    // {
+    // }
+    const auto rated_trajectories = trajectory_planner_->GetRatedTrajectories(maneuvers);
+    const auto prioritized_trajectories = trajectory_prioritizer_->GetPrioritizedTrajectories(rated_trajectories);
+
+    trajectory_selector_->SetSelectedTrajectory(prioritized_trajectories->GetHighestPriorityTrajectory());
+}
 }  // namespace motion_planning

@@ -1,7 +1,6 @@
 ///
 /// @file
 ///
-
 #include <motion_planning/maneuver_generator.h>
 
 namespace motion_planning

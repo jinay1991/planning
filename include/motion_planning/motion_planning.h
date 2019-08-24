@@ -25,6 +25,8 @@ class MotionPlanning
 
     ~MotionPlanning() = default;
 
+    void GenerateTrajectories();
+
   private:
     std::unique_ptr<IManeuverGenerator> maneuver_generator_;
     std::unique_ptr<ITrajectoryPlanner> trajectory_planner_;

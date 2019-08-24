@@ -20,3 +20,9 @@ new_git_repository(
     remote = "https://github.com/nlohmann/json",
     tag = "v3.7.0",
 )
+
+new_local_repository(
+    name = "uWebSockets",
+    build_file = "//bazel:uWebSockets.BUILD",
+    path = "/usr/local/lib",
+)

@@ -1,0 +1,36 @@
+@startuml
+class IManeuver{
+
+}
+class IManeuverGenerator {
+
+}
+class ITrajectoryPlanner {
+
+}
+class ITrajectoryPrioritizer {
+
+}
+class ITrajectorySelector {
+
+}
+class IDataSource {
+
+}
+
+class MotionPlanning {
+
+}
+
+MotionPlanning <- IDataSource
+Maneuver <- IManeuver
+ManeuverGenerator <- IManeuverGenerator
+TrajectoryPlanner <- ITrajectoryPlanner
+TrajectoryPrioritizer <- ITrajectoryPrioritizer
+TrajectorySelector <- ITrajectorySelector
+
+MotionPlanning <|. IManeuverGenerator
+ManeuverGenerator <|. IManeuver
+
+
+@enduml
