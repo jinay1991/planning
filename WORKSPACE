@@ -24,5 +24,5 @@ new_git_repository(
 new_local_repository(
     name = "uWebSockets",
     build_file = "//bazel:uWebSockets.BUILD",
-    path = "/usr/local/lib",
+    path = "/usr/",
 )

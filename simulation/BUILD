@@ -17,7 +17,7 @@ cc_library(
     ],
     deps = [
         "@nlohmann//:json",
-        "@uWebSockets//:uWS",
+        "@uWebSockets//:libuWS",
     ],
 )
 
