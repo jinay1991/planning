@@ -74,6 +74,7 @@ package:
     paths:
       - artifacts/
     when: on_success
+    expire_in: 7 days
   only:
     refs:
       - master
