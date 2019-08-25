@@ -22,14 +22,14 @@ image: registry.gitlab.com/jinay1991/motion_planning
 bazel-build:
   stage: build
   script:
-    - bazel build //:motion_planning --host_force_python=PY2
+    - bazel build //lib/... --host_force_python=PY2
 
 bazel-test:
   stage: test
   dependencies:
     - bazel-build
   script:
-    - bazel test //:motion_planning_tests --host_force_python=PY2 --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:/tmp/test_results.xml"
+    - bazel test //lib/... --host_force_python=PY2 --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:/tmp/test_results.xml"
   after_script:
     - cp /tmp/test_results.xml test_results.xml
   artifacts:
@@ -41,7 +41,7 @@ bazel-test:
 code-coverage:
   stage: test
   script:
-    - bazel test //:motion_planning_tests --host_force_python=PY2 --test_output=all --cache_test_results=false --collect_code_coverage=true
+    - bazel test //lib/... --host_force_python=PY2 --test_output=all --cache_test_results=false --collect_code_coverage=true
     - export OUTPUT_DIR=$(bazel info execution_root)
     - export COVERAGE_INFO=$(find $OUTPUT_DIR -name coverage.dat)
     - genhtml -s --num-spaces 4 --legend --highlight --sort -t "Test Coverage" --demangle-cpp --function-coverage --branch-coverage -o coverage $COVERAGE_INFO

@@ -25,3 +25,4 @@ RUN rm -r uWebSockets
 
 RUN git clone https://github.com/jinay1991/motion_planning.git
 RUN cd motion_planning && bazel build //... --host_force_python=PY2
+RUN rm -r motion_planning
