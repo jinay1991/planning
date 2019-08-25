@@ -67,7 +67,7 @@ pages:
 package:
   stage: deploy
   script:
-    - bazel build //lib:motion_planning_deb_pkg --host_force_python=PY2
+    - bazel build //:motion_planning_deb_pkg --host_force_python=PY2
     - mkdir -p artifacts
     - cp bazel-bin/*_amd64.deb artifacts/
   artifacts:
