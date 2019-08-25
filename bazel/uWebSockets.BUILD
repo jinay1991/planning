@@ -3,11 +3,6 @@ config_setting(
     constraint_values = ["@bazel_tools//platforms:osx"],
 )
 
-config_setting(
-    name = "linux",
-    constraint_values = ["@bazel_tools//platforms:linux"],
-)
-
 cc_library(
     name = "libuv",
     srcs = select({

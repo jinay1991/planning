@@ -1,3 +1,8 @@
+config_setting(
+    name = "darwin",
+    constraint_values = ["@bazel_tools//platforms:osx"],
+)
+
 cc_library(
     name = "gtest",
     srcs = glob(
@@ -20,6 +25,10 @@ cc_library(
         "googlemock/include/gmock/*.h",
     ]),
     copts = ["-std=c++11"],
+    defines = select({
+        ":darwin": ["GTEST_USE_OWN_TR1_TUPLE=0"],
+        "//conditions:default": [],
+    }),
     includes = [
         "googlemock",
         "googlemock/include",
