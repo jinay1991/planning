@@ -21,13 +21,33 @@ MotionPlanning::MotionPlanning()
 
 void MotionPlanning::GenerateTrajectories()
 {
-    const auto maneuvers = maneuver_generator_->Generate(units::velocity::meters_per_second_t{14.0});
-    // for (const auto maneuver: maneuvers)
-    // {
-    // }
-    const auto rated_trajectories = trajectory_planner_->GetRatedTrajectories(maneuvers);
-    // const auto prioritized_trajectories = trajectory_prioritizer_->GetPrioritizedTrajectories(rated_trajectories);
+    const auto maneuvers = maneuver_generator_->Generate(units::velocity::meters_per_second_t{20});
 
-    // trajectory_selector_->SetSelectedTrajectory(prioritized_trajectories->GetHighestPriorityTrajectory());
+    planned_trajectories_ = trajectory_planner_->GetPlannedTrajectories(maneuvers);
+
+    prioritized_trajectories_ = trajectory_prioritizer_->GetPrioritizedTrajectories(planned_trajectories_);
+
+    selected_trajectory_ = trajectory_selector_->GetSelectedTrajectory(prioritized_trajectories_);
 }
+
+void MotionPlanning::SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics)
+{
+    trajectory_planner_->SetVehicleDynamics(vehicle_dynamics);
+}
+
+void MotionPlanning::SetMapCoordinates(const std::vector<MapCoordinates>& map_coordinates)
+{
+    trajectory_planner_->SetMapCoordinates(map_coordinates);
+}
+void MotionPlanning::SetPreviousPath(const std::vector<GlobalCoordinates>& previous_path_global)
+{
+    trajectory_planner_->SetPreviousPath(previous_path_global);
+}
+void MotionPlanning::SetPreviousPath(const std::vector<FrenetCoordinates>& previous_path_frenet)
+{
+    trajectory_planner_->SetPreviousPath(previous_path_frenet);
+}
+
+Trajectory MotionPlanning::GetSelectedTrajectory() const { return selected_trajectory_; }
+
 }  // namespace motion_planning

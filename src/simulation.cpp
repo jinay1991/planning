@@ -3,6 +3,7 @@
 ///
 
 #include <simulation/simulation.h>
+#include <iomanip>
 
 namespace sim
 {
@@ -18,12 +19,12 @@ Simulation::Simulation(const std::string& map_file) : map_file_{map_file}
     while (getline(in_map_, line))
     {
         std::istringstream iss(line);
-        WayPoint wp;
-        iss >> wp.x;
-        iss >> wp.y;
-        iss >> wp.s;
-        iss >> wp.dx;
-        iss >> wp.dy;
+        motion_planning::MapCoordinates wp;
+        iss >> wp.global_coords.x;
+        iss >> wp.global_coords.y;
+        iss >> wp.frenet_coords.s;
+        iss >> wp.frenet_coords.dx;
+        iss >> wp.frenet_coords.dy;
         map_waypoints_.push_back(wp);
     }
 
@@ -31,7 +32,7 @@ Simulation::Simulation(const std::string& map_file) : map_file_{map_file}
         // "42" at the start of the message means there's a websocket message event.
         // The 4 signifies a websocket message
         // The 2 signifies a websocket event
-        if (length && length > 2 && data[0] == '4' && data[1] == '2')
+        if (length && length > 2 && data != nullptr && data[0] == '4' && data[1] == '2')
         {
             auto s = this->HasData(data);
             if (s != "")
@@ -68,158 +69,34 @@ Simulation::Simulation(const std::string& map_file) : map_file_{map_file}
                     std::vector<double> next_x_vals;
                     std::vector<double> next_y_vals;
                     // ##############################################################
+                    motion_planning_.SetMapCoordinates(map_waypoints_);
 
-                    int prev_size = previous_path_x.size();
+                    motion_planning::VehicleDynamics vehicle_dynamics;
+                    vehicle_dynamics.global_coords.x = j[1]["x"];
+                    vehicle_dynamics.global_coords.y = j[1]["y"];
+                    vehicle_dynamics.frenet_coords.s = j[1]["s"];
+                    vehicle_dynamics.frenet_coords.d = j[1]["d"];
+                    vehicle_dynamics.yaw = units::angle::degree_t{j[1]["yaw"]};
+                    vehicle_dynamics.velocity = units::velocity::meters_per_second_t{j[1]["speed"]};
+                    motion_planning_.SetVehicleDynamics(vehicle_dynamics);
 
-                    if (prev_size > 0)
+                    std::vector<motion_planning::GlobalCoordinates> previous_path_global;
+                    std::vector<motion_planning::FrenetCoordinates> previous_path_frenet;
+                    for (auto idx = 0; idx < previous_path_x.size(); ++idx)
                     {
-                        car_s = end_path_s;
+                        previous_path_global.push_back(
+                            motion_planning::GlobalCoordinates{previous_path_x[idx], previous_path_y[idx]});
                     }
+                    motion_planning_.SetPreviousPath(previous_path_global);
 
-                    bool car_in_front = false;
-                    bool car_to_left = false;
-                    bool car_to_right = false;
+                    motion_planning_.GenerateTrajectories();
+                    const auto trajectory = motion_planning_.GetSelectedTrajectory();
 
-                    for (int i = 0; i < sensor_fusion.size(); i++)
+                    for (const auto& wp : trajectory.waypoints)
                     {
-                        int car_lane = -1;
-                        float d = sensor_fusion[i][6];
-                        if (d > 0 && d < 4)  // left lane (near to double solid lane marking)
-                            car_lane = 0;
-                        else if (d > 4 && d < 8)  // center lane
-                            car_lane = 1;
-                        else if (d > 8 && d < 12)  // right lane (near to the edge of the road)
-                            car_lane = 2;
-                        else
-                            continue;
-
-                        double vx = sensor_fusion[i][3];
-                        double vy = sensor_fusion[i][4];
-                        double check_speed = sqrt(vx * vx + vy * vy);
-                        double check_car_s = sensor_fusion[i][5];
-
-                        check_car_s += ((double)(prev_size * 0.02 * check_speed));
-
-                        if (car_lane == lane)
-                        {
-                            car_in_front |= (check_car_s > car_s) && ((check_car_s - car_s) < 30);
-                        }
-                        else if (car_lane == lane - 1)
-                        {
-                            car_to_left |= ((car_s - 30) < check_car_s) && ((car_s + 30) > check_car_s);
-                        }
-                        else if (car_lane == lane + 1)
-                        {
-                            car_to_right |= ((car_s - 30) < check_car_s) && ((car_s + 30) > check_car_s);
-                        }
+                        next_x_vals.push_back(wp.x);
+                        next_y_vals.push_back(wp.y);
                     }
-
-                    if (car_in_front)  // blocked by vehicle in ego lane
-                    {
-                        if (!car_to_right && lane != 2)
-                            lane++;  // change lane to RIGHT
-                        else if (!car_to_left && lane > 0)
-                            lane--;  // change lane to LEFT
-                        else
-                            ref_vel -= 0.224;  // 5 meters per seconds
-                    }
-                    else
-                    {
-                        if (ref_vel < 49.5) ref_vel += 0.224;
-                    }
-
-                    std::vector<double> ptsx;
-                    std::vector<double> ptsy;
-
-                    double ref_x = car_x;
-                    double ref_y = car_y;
-                    double ref_yaw = DegToRad(car_yaw);
-
-                    if (prev_size < 2)
-                    {
-                        double prev_car_x = car_x - cos(car_yaw);
-                        double prev_car_y = car_y - sin(car_yaw);
-
-                        ptsx.push_back(prev_car_x);
-                        ptsx.push_back(car_x);
-
-                        ptsy.push_back(prev_car_y);
-                        ptsy.push_back(car_y);
-                    }
-                    else
-                    {
-                        ref_x = previous_path_x[prev_size - 1];
-                        ref_y = previous_path_y[prev_size - 1];
-
-                        double ref_x_prev = previous_path_x[prev_size - 2];
-                        double ref_y_prev = previous_path_y[prev_size - 2];
-                        ref_yaw = atan2(ref_y - ref_y_prev, ref_x - ref_x_prev);
-
-                        ptsx.push_back(ref_x_prev);
-                        ptsx.push_back(ref_x);
-
-                        ptsy.push_back(ref_y_prev);
-                        ptsy.push_back(ref_y);
-                    }
-
-                    std::vector<double> next_wp0 = GetXY(car_s + 30, (2 + (4 * lane)), map_waypoints_);
-                    std::vector<double> next_wp1 = GetXY(car_s + 60, (2 + (4 * lane)), map_waypoints_);
-                    std::vector<double> next_wp2 = GetXY(car_s + 90, (2 + (4 * lane)), map_waypoints_);
-
-                    ptsx.push_back(next_wp0[0]);
-                    ptsx.push_back(next_wp1[0]);
-                    ptsx.push_back(next_wp2[0]);
-
-                    ptsy.push_back(next_wp0[1]);
-                    ptsy.push_back(next_wp1[1]);
-                    ptsy.push_back(next_wp2[1]);
-
-                    for (int i = 0; i < ptsx.size(); i++)
-                    {
-                        double shift_x = ptsx[i] - ref_x;
-                        double shift_y = ptsy[i] - ref_y;
-
-                        ptsx[i] = (shift_x * cos(-ref_yaw) - shift_y * sin(-ref_yaw));
-                        ptsy[i] = (shift_x * sin(-ref_yaw) + shift_y * cos(-ref_yaw));
-                    }
-
-                    tk::spline s;
-
-                    s.set_points(ptsx, ptsy);
-
-                    for (int i = 0; i < previous_path_x.size(); i++)
-                    {
-                        next_x_vals.push_back(previous_path_x[i]);
-                        next_y_vals.push_back(previous_path_y[i]);
-                    }
-
-                    double target_x = 30.0;
-                    double target_y = s(target_x);
-                    double target_dist = sqrt((target_x * target_x) + (target_y * target_y));
-
-                    double x_add_on = 0;
-
-                    for (int i = 1; i <= 50 - prev_size; i++)
-                    {
-                        double N = (target_dist / (0.02f * ref_vel / 2.24f));
-                        double x_point = x_add_on + (target_x / N);
-                        double y_point = s(x_point);
-
-                        x_add_on = x_point;
-
-                        double x_ref = x_point;
-                        double y_ref = y_point;
-
-                        x_point = (x_ref * cos(ref_yaw) - y_ref * sin(ref_yaw));
-                        y_point = (x_ref * sin(ref_yaw) + y_ref * cos(ref_yaw));
-
-                        x_point += ref_x;
-                        y_point += ref_y;
-
-                        next_x_vals.push_back(x_point);
-                        next_y_vals.push_back(y_point);
-                    }
-
                     // ##############################################################
                     // sequentially every .02 seconds
                     msgJson["next_x"] = next_x_vals;
@@ -288,24 +165,25 @@ double Simulation::GetDistance(double x1, double y1, double x2, double y2) const
     return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
-std::vector<double> Simulation::GetXY(double s, double d, const std::vector<WayPoint>& map_waypoints)
+std::vector<double> Simulation::GetXY(double s, double d,
+                                      const std::vector<motion_planning::MapCoordinates>& map_waypoints)
 {
     int prev_wp = -1;
 
-    while (s > map_waypoints[prev_wp + 1].s && (prev_wp < (int)(map_waypoints.size() - 1)))
+    while (s > map_waypoints[prev_wp + 1].frenet_coords.s && (prev_wp < (int)(map_waypoints.size() - 1)))
     {
         ++prev_wp;
     }
 
     int wp2 = (prev_wp + 1) % map_waypoints.size();
 
-    double heading =
-        atan2((map_waypoints[wp2].y - map_waypoints[prev_wp].y), (map_waypoints[wp2].x - map_waypoints[prev_wp].x));
+    double heading = atan2((map_waypoints[wp2].global_coords.y - map_waypoints[prev_wp].global_coords.y),
+                           (map_waypoints[wp2].global_coords.x - map_waypoints[prev_wp].global_coords.x));
     // the x,y,s along the segment
-    double seg_s = (s - map_waypoints[prev_wp].s);
+    double seg_s = (s - map_waypoints[prev_wp].frenet_coords.s);
 
-    double seg_x = map_waypoints[prev_wp].x + seg_s * cos(heading);
-    double seg_y = map_waypoints[prev_wp].y + seg_s * sin(heading);
+    double seg_x = map_waypoints[prev_wp].global_coords.x + seg_s * cos(heading);
+    double seg_y = map_waypoints[prev_wp].global_coords.y + seg_s * sin(heading);
 
     double perp_heading = heading - PI() / 2;
 
@@ -314,7 +192,8 @@ std::vector<double> Simulation::GetXY(double s, double d, const std::vector<WayP
 
     return {x, y};
 }
-std::vector<double> Simulation::GetFrenet(double x, double y, double theta, const std::vector<WayPoint>& map_waypoints)
+std::vector<double> Simulation::GetFrenet(double x, double y, double theta,
+                                          const std::vector<motion_planning::MapCoordinates>& map_waypoints)
 {
     int next_wp = NextWaypoint(x, y, theta, map_waypoints);
 
@@ -325,10 +204,10 @@ std::vector<double> Simulation::GetFrenet(double x, double y, double theta, cons
         prev_wp = map_waypoints.size() - 1;
     }
 
-    double n_x = map_waypoints[next_wp].x - map_waypoints[prev_wp].x;
-    double n_y = map_waypoints[next_wp].y - map_waypoints[prev_wp].y;
-    double x_x = x - map_waypoints[prev_wp].x;
-    double x_y = y - map_waypoints[prev_wp].y;
+    double n_x = map_waypoints[next_wp].global_coords.x - map_waypoints[prev_wp].global_coords.x;
+    double n_y = map_waypoints[next_wp].global_coords.y - map_waypoints[prev_wp].global_coords.y;
+    double x_x = x - map_waypoints[prev_wp].global_coords.x;
+    double x_y = y - map_waypoints[prev_wp].global_coords.y;
 
     // find the projection of x onto n
     double proj_norm = (x_x * n_x + x_y * n_y) / (n_x * n_x + n_y * n_y);
@@ -338,8 +217,8 @@ std::vector<double> Simulation::GetFrenet(double x, double y, double theta, cons
     double frenet_d = GetDistance(x_x, x_y, proj_x, proj_y);
 
     // see if d value is positive or negative by comparing it to a center point
-    double center_x = 1000 - map_waypoints[prev_wp].x;
-    double center_y = 2000 - map_waypoints[prev_wp].y;
+    double center_x = 1000 - map_waypoints[prev_wp].global_coords.x;
+    double center_y = 2000 - map_waypoints[prev_wp].global_coords.y;
     double centerToPos = GetDistance(center_x, center_y, x_x, x_y);
     double centerToRef = GetDistance(center_x, center_y, proj_x, proj_y);
 
@@ -352,19 +231,21 @@ std::vector<double> Simulation::GetFrenet(double x, double y, double theta, cons
     double frenet_s = 0;
     for (int i = 0; i < prev_wp; ++i)
     {
-        frenet_s += GetDistance(map_waypoints[i].x, map_waypoints[i].y, map_waypoints[i + 1].x, map_waypoints[i + 1].y);
+        frenet_s += GetDistance(map_waypoints[i].global_coords.x, map_waypoints[i].global_coords.y,
+                                map_waypoints[i + 1].global_coords.x, map_waypoints[i + 1].global_coords.y);
     }
 
     frenet_s += GetDistance(0, 0, proj_x, proj_y);
 
     return {frenet_s, frenet_d};
 }
-int Simulation::NextWaypoint(double x, double y, double theta, const std::vector<WayPoint>& map_waypoints)
+int Simulation::NextWaypoint(double x, double y, double theta,
+                             const std::vector<motion_planning::MapCoordinates>& map_waypoints)
 {
     int closestWaypoint = ClosestWaypoint(x, y, map_waypoints);
 
-    double map_x = map_waypoints[closestWaypoint].x;
-    double map_y = map_waypoints[closestWaypoint].y;
+    double map_x = map_waypoints[closestWaypoint].global_coords.x;
+    double map_y = map_waypoints[closestWaypoint].global_coords.y;
 
     double heading = atan2((map_y - y), (map_x - x));
 
@@ -382,15 +263,15 @@ int Simulation::NextWaypoint(double x, double y, double theta, const std::vector
 
     return closestWaypoint;
 }
-int Simulation::ClosestWaypoint(double x, double y, const std::vector<WayPoint>& map_waypoints)
+int Simulation::ClosestWaypoint(double x, double y, const std::vector<motion_planning::MapCoordinates>& map_waypoints)
 {
     double closestLen = 100000;  // large number
     int closestWaypoint = 0;
 
     for (int i = 0; i < map_waypoints.size(); ++i)
     {
-        double map_x = map_waypoints[i].x;
-        double map_y = map_waypoints[i].y;
+        double map_x = map_waypoints[i].global_coords.x;
+        double map_y = map_waypoints[i].global_coords.y;
         double dist = GetDistance(x, y, map_x, map_y);
         if (dist < closestLen)
         {
