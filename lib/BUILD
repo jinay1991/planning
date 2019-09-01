@@ -7,7 +7,10 @@ cc_library(
     hdrs = glob([
         "include/**/*.h",
     ]),
-    copts = ["-std=c++14"],
+    copts = [
+        "-std=c++14",
+        "-Wall",
+    ],
     includes = ["include"],
     tags = ["lib"],
     visibility = [
@@ -15,6 +18,7 @@ cc_library(
     ],
     deps = [
         "@nholthaus//:units",
+        "@spline",
     ],
 )
 

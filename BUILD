@@ -11,6 +11,7 @@ cc_library(
     ]),
     copts = [
         "-std=c++14",
+        "-Wall",
     ],
     includes = ["include"],
     tags = ["lib"],
@@ -18,6 +19,7 @@ cc_library(
         "//visibility:public",
     ],
     deps = [
+        "//lib:motion_planning",
         "@eigen3",
         "@nlohmann//:json",
         "@spline",

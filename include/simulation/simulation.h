@@ -4,6 +4,7 @@
 #ifndef SIMULATION_SIMULATION_H_
 #define SIMULATION_SIMULATION_H_
 
+#include <motion_planning/motion_planning.h>
 #include <spline.h>
 #include <uWS/uWS.h>
 #include <Eigen/Core>
@@ -51,23 +52,25 @@ class Simulation
     double GetDistance(double x1, double y1, double x2, double y2) const;
 
     /// @brief Transform from Frenet s,d coordinates to Cartesian x,y
-    std::vector<double> GetXY(double s, double d, const std::vector<WayPoint>& maps_waypoints);
+    std::vector<double> GetXY(double s, double d, const std::vector<motion_planning::MapCoordinates>& maps_waypoints);
 
     /// @brief Transform from Cartesian x,y coordinates to Frenet s,d coordinates
-    std::vector<double> GetFrenet(double x, double y, double theta, const std::vector<WayPoint>& maps_waypoints);
+    std::vector<double> GetFrenet(double x, double y, double theta, const std::vector<motion_planning::MapCoordinates>& maps_waypoints);
 
     /// @brief Returns next waypoint of the closest waypoint
-    int NextWaypoint(double x, double y, double theta, const std::vector<WayPoint>& maps_waypoints);
+    int NextWaypoint(double x, double y, double theta, const std::vector<motion_planning::MapCoordinates>& maps_waypoints);
 
     /// @brief Calculate closest waypoint to current x, y position
-    int ClosestWaypoint(double x, double y, const std::vector<WayPoint>& maps_waypoints);
+    int ClosestWaypoint(double x, double y, const std::vector<motion_planning::MapCoordinates>& maps_waypoints);
 
     uWS::Hub h_;
-    std::vector<WayPoint> map_waypoints_;
+    std::vector<motion_planning::MapCoordinates> map_waypoints_;
     std::string map_file_;
 
     std::int32_t lane{1};
     double ref_vel{0.0};
+
+    motion_planning::MotionPlanning motion_planning_;
 };
 }  // namespace sim
 

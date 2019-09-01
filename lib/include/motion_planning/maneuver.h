@@ -19,10 +19,15 @@ class Maneuver : public IManeuver
 
     Maneuver(const LaneId& id, const units::velocity::meters_per_second_t& velocity);
 
+    LaneId GetLaneId() const;
+
+    units::velocity::meters_per_second_t GetVelocity() const;
+
     inline bool operator==(const Maneuver& rhs) const { return id_ == rhs.id_ && velocity_ == rhs.velocity_; };
 
   private:
     LaneId id_;
+
     units::velocity::meters_per_second_t velocity_;
 };
 }  // namespace motion_planning
