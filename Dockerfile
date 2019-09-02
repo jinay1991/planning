@@ -13,7 +13,7 @@ RUN echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.
 RUN curl https://bazel.build/bazel-release.pub.gpg | apt-key add -
 RUN apt-get update && apt-get install -y bazel
 
-# Installation of uWebSockets (Udacity Simulation Connectivity Protocol)
+# Installation of dependencies to uWebSockets (Udacity Simulation Connectivity Protocol)
 RUN apt-get install -y libuv1-dev libssl-dev
 RUN git clone https://github.com/uWebSockets/uWebSockets
 RUN cd uWebSockets && git checkout e94b6e1
@@ -23,6 +23,8 @@ RUN cd uWebSockets/build && make -j4 && make install
 RUN ln -s /usr/lib64/libuWS.so /usr/lib/libuWS.so
 RUN rm -r uWebSockets
 
-RUN git clone https://github.com/jinay1991/motion_planning.git
-RUN cd motion_planning && bazel build //... --host_force_python=PY2
-RUN rm -r motion_planning
+# Installation of static code analysis
+RUN apt-get install -y cppcheck python python-pygments
+
+# cleanup
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
