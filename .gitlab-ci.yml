@@ -19,17 +19,29 @@ docker_build:
 
 image: registry.gitlab.com/jinay1991/motion_planning
 
+changelog:
+  stage: build
+  script:
+    - echo "ChangeLog check"
+  only:
+    refs:
+      - merge-request
+    changes:
+      - lib
+  except:
+    changes:
+      - ChangeLog
+
 cppcheck:
   stage: build
   script:
     - cppcheck --template=gcc --enable=all --inconclusive --std=c++14 -I lib/include/ -I include/ lib/src/*.cpp src/*.cpp  > static_code_analysis.log
     - cppcheck --template=gcc --enable=all --inconclusive --std=c++14 -I lib/include/ -I include/ lib/src/*.cpp src/*.cpp --xml 2> static_code_analysis.xml
     - cppcheck-htmlreport --file=static_code_analysis.xml --report-dir=static_code_analysis_report --source-dir=.
-    - tar cvzf static_code_analysis_report.tar.gz static_code_analysis_report/*
   artifacts:
     name: static_code_analysis
     paths:
-      - static_code_analysis_report.tar.gz
+      - static_code_analysis_report/
       - static_code_analysis.xml
       - static_code_analysis.log
     expire_in: 7 days
