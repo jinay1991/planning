@@ -19,19 +19,6 @@ docker_build:
 
 image: registry.gitlab.com/jinay1991/motion_planning
 
-changelog:
-  stage: build
-  script:
-    - echo "ChangeLog check"
-  only:
-    refs:
-      - merge-request
-    changes:
-      - lib
-  except:
-    changes:
-      - ChangeLog
-
 cppcheck:
   stage: build
   script:
