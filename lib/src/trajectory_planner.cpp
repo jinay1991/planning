@@ -126,7 +126,22 @@ Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const Maneuver::LaneId& la
 
     return trajectory;
 }
-
+LaneInformation::GlobalLaneId TrajectoryPlanner::GetGlobalLaneId(const LaneInformation::LaneId& lane_id) const
+{
+    const auto ego_global_lane_id = data_source_->GetGlobalLaneId();
+    switch (lane_id)
+    {
+        case LaneInformation::LaneId::kEgo:
+            return ego_global_lane_id;
+        case LaneInformation::LaneId::kLeft:
+            return ego_global_lane_id - 1;
+        case LaneInformation::LaneId::kRight:
+            return ego_global_lane_id + 1;
+        case LaneInformation::LaneId::kInvalid:
+        default:
+            return LaneInformation::GlobalLaneId::kInvalid;
+    }
+}
 Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& maneuvers) const
 {
     Trajectories trajectories;
@@ -134,7 +149,7 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
     const auto vehicle_dynamics = data_source_->GetVehicleDynamics();
     for (const auto& maneuver : maneuvers)
     {
-        Trajectory trajectory;
+        Trajectory trajectory{};
         const auto lane_id = maneuver.GetLaneId();
         const auto target_velocity = maneuver.GetVelocity();
 
@@ -144,6 +159,8 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
         trajectory.position = vehicle_dynamics.global_coords;
         trajectory.yaw = vehicle_dynamics.yaw;
         trajectory.maneuver = maneuver;
+        trajectory.lane_id = lane_id;
+        trajectory.global_lane_id = GetGlobalLaneId(lane_id);
 
         /// calculate further waypoints for next path
         const auto calculated_trajectory = GetCalculatedTrajectory(lane_id);
@@ -191,5 +208,8 @@ GlobalCoordinates TrajectoryPlanner::GetGlobalCoordinates(const FrenetCoordinate
 
     return {x, y};
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> Rewrite IsDriableLane()
 }  // namespace motion_planning

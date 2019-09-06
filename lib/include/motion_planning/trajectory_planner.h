@@ -39,6 +39,9 @@ class TrajectoryPlanner : public ITrajectoryPlanner
     /// @brief Converts Frenet Coordinates to Global Coordinates (using map)
     GlobalCoordinates GetGlobalCoordinates(const FrenetCoordinates& frenet_coords) const;
 
+    /// @brief Converts Local Lane Id to Global Lane Id (using ego's global lane)
+    LaneInformation::GlobalLaneId GetGlobalLaneId(const LaneInformation::LaneId& lane_id) const;
+
     /// @brief Value of PI = 22/7 = 3.14.... (use of M_PI)
     static constexpr inline double PI() { return M_PI; }
 

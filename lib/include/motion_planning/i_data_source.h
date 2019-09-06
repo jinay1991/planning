@@ -15,15 +15,15 @@ namespace motion_planning
 class IDataSource
 {
   public:
-    virtual void SetGlobalLaneId(const LaneInformation::GlobalLaneId& global_lane_id) = 0;
+    // virtual void SetGlobalLaneId(const LaneInformation::GlobalLaneId& global_lane_id) = 0;
     virtual void SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics) = 0;
     virtual void SetMapCoordinates(const std::vector<MapCoordinates>& map_coordinates) = 0;
     virtual void SetPreviousPath(const std::vector<GlobalCoordinates>& previous_path_global) = 0;
     virtual void SetPreviousPathEnd(const FrenetCoordinates& frenet_coords) = 0;
     virtual void SetSensorFusion(const SensorFusion& sensor_fusion) = 0;
 
-    virtual FrenetCoordinates GetPreviousPathEnd() const = 0;
     virtual LaneInformation::GlobalLaneId GetGlobalLaneId() const = 0;
+    virtual FrenetCoordinates GetPreviousPathEnd() const = 0;
     virtual VehicleDynamics GetVehicleDynamics() const = 0;
     virtual std::vector<MapCoordinates> GetMapCoordinates() const = 0;
     virtual std::vector<GlobalCoordinates> GetPreviousPathInGlobalCoords() const = 0;

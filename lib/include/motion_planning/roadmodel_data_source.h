@@ -24,22 +24,22 @@ class RoadModelDataSource : public IDataSource
                                  const std::vector<MapCoordinates>& map_coords,
                                  const PreviousPathGlobal& previous_path_global, const SensorFusion& sensor_fusion);
 
-    virtual void SetGlobalLaneId(const LaneInformation::GlobalLaneId& global_lane_id) override;
+    // virtual void SetGlobalLaneId(const LaneInformation::GlobalLaneId& global_lane_id) override;
     virtual void SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics) override;
     virtual void SetMapCoordinates(const std::vector<MapCoordinates>& map_coordinates) override;
     virtual void SetPreviousPath(const PreviousPathGlobal& previous_path_global) override;
     virtual void SetPreviousPathEnd(const FrenetCoordinates& frenet_coords) override;
     virtual void SetSensorFusion(const SensorFusion& sensor_fusion) override;
 
-    FrenetCoordinates GetPreviousPathEnd() const override;
     LaneInformation::GlobalLaneId GetGlobalLaneId() const override;
+    FrenetCoordinates GetPreviousPathEnd() const override;
     VehicleDynamics GetVehicleDynamics() const override;
     std::vector<MapCoordinates> GetMapCoordinates() const override;
     PreviousPathGlobal GetPreviousPathInGlobalCoords() const override;
     SensorFusion GetSensorFusion() const override;
 
   private:
-    LaneInformation::GlobalLaneId global_lane_id_;
+    LaneInformation::GlobalLaneId global_lane_id_{LaneInformation::GlobalLaneId::kInvalid};
     VehicleDynamics vehicle_dynamics_{};
     std::vector<MapCoordinates> map_coordinates_{};
     PreviousPathGlobal previous_path_global_{};

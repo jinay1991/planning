@@ -117,6 +117,4 @@ MotionPlanning *-- ITrajectoryPrioritizer
 MotionPlanning *-- ITrajectoryEvaluator
 MotionPlanning *-- ITrajectorySelector
 
-
-
 @enduml

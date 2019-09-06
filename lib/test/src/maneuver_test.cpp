@@ -5,8 +5,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <motion_planning/maneuver.h>
-namespace motion_planning
-{
+
+using namespace motion_planning;
+
 namespace
 {
 TEST(ManeuverTest, HasEgoManeuverAsDefault)
@@ -15,4 +16,3 @@ TEST(ManeuverTest, HasEgoManeuverAsDefault)
 }
 
 }  // namespace
-}  // namespace motion_planning

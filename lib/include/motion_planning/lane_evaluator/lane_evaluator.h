@@ -23,6 +23,8 @@ class LaneEvaluator
 
     bool IsDrivableLane(const LaneInformation::LaneId& lane_id) const;
 
+    bool IsValidLane(const LaneInformation::LaneId& lane_id) const;
+
   private:
     LaneInformation::GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& coords) const;
     LaneInformation::LaneId GetLocalLaneId(const LaneInformation::GlobalLaneId& global_lane_id) const;

@@ -3,10 +3,11 @@
 ///
 
 #include <gtest/gtest.h>
-#include <motion_planning/trajectory_builder.h>
 #include <motion_planning/trajectory_planner.h>
 #include <motion_planning/trajectory_prioritizer.h>
 #include <units.h>
+
+#include "trajectory_builder.h"
 
 using namespace motion_planning;
 

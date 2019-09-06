@@ -87,13 +87,13 @@ inline std::ostream& operator<<(std::ostream& out, const LaneInformation::LaneId
     switch (lane_id)
     {
         case LaneInformation::LaneId::kEgo:
-            return out << "LandId::kEgo";
+            return out << "LaneId::kEgo";
         case LaneInformation::LaneId::kRight:
-            return out << "LandId::kRight";
+            return out << "LaneId::kRight";
         case LaneInformation::LaneId::kLeft:
-            return out << "LandId::kLeft";
+            return out << "LaneId::kLeft";
         case LaneInformation::LaneId::kInvalid:
-            return out << "LandId::kInvalid";
+            return out << "LaneId::kInvalid";
     }
 }
 
