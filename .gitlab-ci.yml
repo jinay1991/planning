@@ -71,7 +71,9 @@ pages:
   stage: deploy
   dependencies:
     - code-coverage
+    - cppcheck
   script:
+    - mv static_code_analysis_report/ public/
     - mv coverage/ public
   artifacts:
     paths:
