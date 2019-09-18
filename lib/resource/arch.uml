@@ -1,0 +1,122 @@
+@startuml
+
+class IDataSource {
+    + VehicleDynamics GetVehicleDynamics() const
+    + MapCoordinates GetMapCoordinates() const
+    + PreviousPath GetPreviousPath() const
+    + SensorFusion GetSensorFusion() const
+}
+
+class RoadModelDataSource {
+    + RoadModelDataSource(const LaneInformation::GlobalLaneId& lane_id, const VehicleDynamics& vehicle_dynamics, const MapCoordinates& map_coords, const PreviousPath& previous_path, const SensorFusion& sensor_fusion)
+
+    + VehicleDynamics GetVehicleDynamics() const override
+    + MapCoordinates GetMapCoordinates() const override
+    + PreviousPath GetPreviousPath() const override
+    + SensorFusion GetSensorFusion() const override
+
+    - VehicleDynamics vehicle_dynamics_
+    - MapCoordinates map_coords_
+    - PreviousPath previous_path_
+    - SensorFusion sensor_fusion_
+}
+
+IDataSource <|-- RoadModelDataSource
+
+class MotionPlanning {
+    + MotionPlanning(const std::unique_ptr<IDataSource> data_source)
+    + Trajectory GetSelectedTrajectory() const;
+
+    - std::unique_ptr<IManeuverGenerator> maneuver_generator_
+    - std::unique_ptr<ITrajectoryPlanner> trajectory_planner_
+    - std::unique_ptr<ITrajectoryPrioritizer> trajectory_prioritizer_
+    - std::unique_ptr<ITrajectoryEvaluator> trajectory_evaluator_
+    - std::unique_ptr<ITrajectorySelector> trajectory_selector_
+
+    - std::unique_ptr<IDataSource> data_source_
+}
+
+
+package "Maneuver Generation" {
+    class IManeuverGenerator {
+        + std::vector<Maneuver> Generate(units::velocity::meters_per_second_t velocity) const
+    }
+
+    class ManeuverGenerator {
+        + std::vector<Maneuver> Generate(units::velocity::meters_per_second_t velocity) const override
+    }
+
+    IManeuverGenerator o-- ManeuverGenerator
+
+    class Maneuver {
+        + Maneuver();
+        + Maneuver(const LaneId& id, const units::velocity::meters_per_second_t& velocity);
+        + LaneId GetLaneId() const;
+        + units::velocity::meters_per_second_t GetVelocity() const;
+
+        - LaneId id_;
+        - units::velocity::meters_per_second_t velocity_;
+    }
+
+    ManeuverGenerator *.. Maneuver
+}
+
+package "Trajectory Generation" {
+    class ITrajectoryPlanner {
+        + ITrajectortPlanner(const LaneInformation::GlobalLaneId global_lane_id)
+        + void SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics)
+        + void SetMapCoordinates(const std::vector<MapCoordinates> map_coordinates)
+        + void SetPreviousPath(const std::vector<GlobalCoordinates> previous_path_global)
+        + void SetPreviousPath(const std::vector<FrenetCoordinates> previous_path_frenet)
+        + PlannedTrajectories GetPlannedTrajectories(const std::vector<Maneuver> maneuvers) const
+    }
+    class TrajectoryPlanner {
+        + ITrajectortPlanner(const LaneInformation::GlobalLaneId global_lane_id)
+        + void SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics) override
+        + void SetMapCoordinates(const std::vector<MapCoordinates> map_coordinates) override
+        + void SetPreviousPath(const std::vector<GlobalCoordinates> previous_path_global) override
+        + void SetPreviousPath(const std::vector<FrenetCoordinates> previous_path_frenet) override
+        + PlannedTrajectories GetPlannedTrajectories(const std::vector<Maneuver> maneuvers) const override
+    }
+    ITrajectoryPlanner o-- TrajectoryPlanner
+
+    class ITrajectoryPrioritizer {
+        + PrioritizedTrajectories GetPrioritizedTrajectories(const PlannedTrajectories& trajectories) const
+    }
+    class TrajectoryPrioritizer {
+        + PrioritizedTrajectories GetPrioritizedTrajectories(const PlannedTrajectories& trajectories) const override
+    }
+    ITrajectoryPrioritizer o-- TrajectoryPrioritizer
+
+    class ITrajectoryEvaluator {
+        + void SetSensorFusion(const SensorFusion& sensor_fusion)
+        + RatedTrajectories GetRatedTrajectories(const PlannedTrajectories& planned_trajectories) const
+    }
+    class TrajectoryEvaluator {
+        + void SetSensorFusion(const SensorFusion& sensor_fusion) override
+        + RatedTrajectories GetRatedTrajectories(const PlannedTrajectories& planned_trajectories) const override
+    }
+    ITrajectoryEvaluator o-- TrajectoryEvaluator
+}
+
+package "Trajectory Selection" {
+    class ITrajectorySelector {
+        + Trajectory GetSelectedTrajectory(const PrioritizedTrajectories prioritized_trajectories) const
+    }
+    class TrajectorySelector {
+        + Trajectory GetSelectedTrajectory(const PrioritizedTrajectories prioritized_trajectories) const override
+    }
+
+    ITrajectorySelector o-- TrajectorySelector
+}
+
+MotionPlanning *-- IDataSource
+MotionPlanning *-- IManeuverGenerator
+MotionPlanning *-- ITrajectoryPlanner
+MotionPlanning *-- ITrajectoryPrioritizer
+MotionPlanning *-- ITrajectoryEvaluator
+MotionPlanning *-- ITrajectorySelector
+
+
+
+@enduml

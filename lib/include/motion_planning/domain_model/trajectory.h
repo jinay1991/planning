@@ -30,7 +30,7 @@ inline bool operator>(const Trajectory& lhs, const Trajectory& rhs)
 
 inline std::ostream& operator<<(std::ostream& out, const Trajectory& trajectory)
 {
-    return out << "Trajectory{lane: " << trajectory.maneuver.GetLaneId()
+    return out << "Trajectory{wp: " << trajectory.waypoints.size() << ", lane: " << trajectory.maneuver.GetLaneId()
                << ", velocity: " << trajectory.maneuver.GetVelocity() << ", cost: " << trajectory.cost << "}";
 }
 }  // namespace motion_planning

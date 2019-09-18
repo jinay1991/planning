@@ -12,6 +12,7 @@ cc_library(
     copts = [
         "-std=c++14",
         "-Wall",
+        "-Werror",
     ],
     includes = ["include"],
     tags = ["lib"],
@@ -30,7 +31,11 @@ cc_library(
 cc_binary(
     name = "client-app",
     srcs = ["src/main.cpp"],
-    copts = ["-std=c++14"],
+    copts = [
+        "-std=c++14",
+        "-Wall",
+        "-Werror",
+    ],
     includes = ["include"],
     linkstatic = True,
     tags = ["bin"],

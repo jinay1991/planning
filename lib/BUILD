@@ -10,6 +10,7 @@ cc_library(
     copts = [
         "-std=c++14",
         "-Wall",
+        "-Werror",
     ],
     includes = ["include"],
     tags = ["lib"],
@@ -30,7 +31,11 @@ cc_test(
             "test/**/*.h",
         ],
     ),
-    copts = ["-std=c++14"],
+    copts = [
+        "-std=c++14",
+        "-Wall",
+        "-Werror",
+    ],
     includes = ["test"],
     tags = ["test"],
     visibility = ["//visibility:public"],

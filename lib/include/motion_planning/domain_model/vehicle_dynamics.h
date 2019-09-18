@@ -36,6 +36,7 @@ struct MapCoordinates
 struct VehicleDynamics
 {
     LaneInformation::LaneId lane_id;
+    LaneInformation::GlobalLaneId global_lane_id;
 
     units::velocity::meters_per_second_t velocity;
 
