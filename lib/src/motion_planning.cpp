@@ -5,18 +5,20 @@
 #include <logging/logging.h>
 #include <motion_planning/maneuver_generator.h>
 #include <motion_planning/motion_planning.h>
+#include <motion_planning/trajectory_evaluator.h>
 #include <motion_planning/trajectory_planner.h>
 #include <motion_planning/trajectory_prioritizer.h>
 #include <motion_planning/trajectory_selector.h>
 
 namespace motion_planning
 {
-MotionPlanning::MotionPlanning()
+MotionPlanning::MotionPlanning(std::shared_ptr<IDataSource>& data_source)
+    : maneuver_generator_{std::make_unique<ManeuverGenerator>()},
+      trajectory_planner_{std::make_unique<TrajectoryPlanner>(data_source)},
+      trajectory_evaluator_{std::make_unique<TrajectoryEvaluator>(data_source)},
+      trajectory_prioritizer_{std::make_unique<TrajectoryPrioritizer>()},
+      trajectory_selector_{std::make_unique<TrajectorySelector>()}
 {
-    maneuver_generator_ = std::make_unique<ManeuverGenerator>();
-    trajectory_planner_ = std::make_unique<TrajectoryPlanner>();
-    trajectory_prioritizer_ = std::make_unique<TrajectoryPrioritizer>();
-    trajectory_selector_ = std::make_unique<TrajectorySelector>();
 }
 
 void MotionPlanning::GenerateTrajectories()
@@ -25,27 +27,11 @@ void MotionPlanning::GenerateTrajectories()
 
     planned_trajectories_ = trajectory_planner_->GetPlannedTrajectories(maneuvers);
 
-    prioritized_trajectories_ = trajectory_prioritizer_->GetPrioritizedTrajectories(planned_trajectories_);
+    rated_trajectories_ = trajectory_evaluator_->GetRatedTrajectories(planned_trajectories_);
+
+    prioritized_trajectories_ = trajectory_prioritizer_->GetPrioritizedTrajectories(rated_trajectories_);
 
     selected_trajectory_ = trajectory_selector_->GetSelectedTrajectory(prioritized_trajectories_);
-}
-
-void MotionPlanning::SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics)
-{
-    trajectory_planner_->SetVehicleDynamics(vehicle_dynamics);
-}
-
-void MotionPlanning::SetMapCoordinates(const std::vector<MapCoordinates>& map_coordinates)
-{
-    trajectory_planner_->SetMapCoordinates(map_coordinates);
-}
-void MotionPlanning::SetPreviousPath(const std::vector<GlobalCoordinates>& previous_path_global)
-{
-    trajectory_planner_->SetPreviousPath(previous_path_global);
-}
-void MotionPlanning::SetPreviousPath(const std::vector<FrenetCoordinates>& previous_path_frenet)
-{
-    trajectory_planner_->SetPreviousPath(previous_path_frenet);
 }
 
 Trajectory MotionPlanning::GetSelectedTrajectory() const { return selected_trajectory_; }

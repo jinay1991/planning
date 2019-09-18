@@ -31,6 +31,6 @@ PrioritizedTrajectories TrajectoryPrioritizer::GetPrioritizedTrajectories(const 
     }
     PrintQueue(prioritized_trajectories);
     return prioritized_trajectories;
-};
+}
 
 }  // namespace motion_planning
