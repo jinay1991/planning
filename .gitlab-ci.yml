@@ -73,8 +73,7 @@ pages:
     - code-coverage
     - cppcheck
   script:
-    - mv static_code_analysis_report/ public/static_analysis_report
-    - mv coverage/ public/code_coverage_report
+    - mv coverage/ public
   artifacts:
     paths:
       - public
