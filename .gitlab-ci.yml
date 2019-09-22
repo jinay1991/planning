@@ -73,7 +73,11 @@ pages:
     - code-coverage
     - cppcheck
   script:
-    - mv coverage/ public
+    - mkdir -p reports
+    - echo "<!DOCTYPE html> <html> <head> <meta charset="utf-8"> <title>Motion Planning</title> </head> <body> <ul> <li><a href="coverage/">Code Coverage Report</a></li> <li><a href="static_code_analysis_report/">Static Code Analysis Report</a></li> </ul> </body> </html>" > reports/index.html
+    - mv coverage reports/coverage
+    - mv static_code_analysis_report/ reports/static_code_analysis_report/
+    - mv reports/ public
   artifacts:
     paths:
       - public
