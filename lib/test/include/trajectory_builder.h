@@ -8,43 +8,58 @@
 #include <motion_planning/maneuver.h>
 #include <units.h>
 
-namespace
-{
 using namespace motion_planning;
 
+namespace
+{
 class TrajectoryBuilder
 {
   public:
+    TrajectoryBuilder() { trajectory_.global_lane_id = LaneInformation::GlobalLaneId::kCenter; }
+
     TrajectoryBuilder& WithPosition(const GlobalCoordinates& position)
     {
         trajectory_.position = position;
         return *this;
     }
+
     TrajectoryBuilder& WithCost(const double& cost)
     {
         trajectory_.cost = cost;
         return *this;
     }
+
     TrajectoryBuilder& WithTargetVelocity(const units::velocity::meters_per_second_t& target_velocity)
     {
         target_velocity_ = target_velocity;
         return *this;
     }
-    TrajectoryBuilder& WithLaneId(const Maneuver::LaneId& lane_id)
+
+    TrajectoryBuilder& WithLaneId(const LaneInformation::LaneId& lane_id)
     {
         trajectory_.maneuver = Maneuver{lane_id, target_velocity_};
+        trajectory_.lane_id = lane_id;
         return *this;
     }
+
+    TrajectoryBuilder& WithGlobalLaneId(const LaneInformation::GlobalLaneId& global_lane_id)
+    {
+        trajectory_.global_lane_id = global_lane_id;
+        return *this;
+    }
+
     TrajectoryBuilder& WithYaw(const units::angle::radian_t& yaw)
     {
         trajectory_.yaw = yaw;
         return *this;
     }
+
     TrajectoryBuilder& WithWaypoints(const std::vector<GlobalCoordinates>& waypoints)
     {
         trajectory_.waypoints = waypoints;
         return *this;
     }
+
     TrajectoryBuilder& WithWaypoints(const GlobalCoordinates& start_position, const units::angle::radian_t start_yaw,
                                      const std::size_t count, const units::length::meter_t displacement)
     {

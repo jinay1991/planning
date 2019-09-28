@@ -38,7 +38,7 @@ bool LaneEvaluator::IsObjectNear(const FrenetCoordinates& ego_position, const Fr
 
 LaneInformation::LaneId LaneEvaluator::GetLocalLaneId(const LaneInformation::GlobalLaneId& global_lane_id) const
 {
-    const auto ego_global_lane_id = GetGlobalLaneId(data_source_->GetPreviousPathEnd());
+    const auto ego_global_lane_id = data_source_->GetGlobalLaneId();
 
     if (ego_global_lane_id == global_lane_id)
     {
@@ -68,8 +68,8 @@ bool LaneEvaluator::IsDrivableLane(const LaneInformation::LaneId& lane_id) const
     const auto ego_velocity = data_source_->GetVehicleDynamics().velocity;
     const auto previous_path_size = data_source_->GetPreviousPathInGlobalCoords().size();
     const auto ego_position = data_source_->GetPreviousPathEnd();
-    const auto ego_global_lane_id =
-        previous_path_size > 0 ? GetGlobalLaneId(ego_position) : LaneInformation::GlobalLaneId::kCenter;
+    const auto ego_global_lane_id = data_source_->GetGlobalLaneId();
+    // previous_path_size > 0 ?  : LaneInformation::GlobalLaneId::kCenter;
     const auto ego_position_predicted =
         FrenetCoordinates{ego_position.s + (previous_path_size * 0.02 * ego_velocity.value()), ego_position.d};
 
@@ -128,21 +128,41 @@ bool LaneEvaluator::IsDrivableLane(const LaneInformation::LaneId& lane_id) const
     switch (lane_id)
     {
         case LaneInformation::LaneId::kEgo:
-            is_drivable = is_ego_in_valid_lane && !car_in_front;
+            is_drivable = IsValidLane(LaneInformation::LaneId::kEgo) && is_ego_in_valid_lane && !car_in_front;
             break;
         case LaneInformation::LaneId::kLeft:
-            is_drivable = is_ego_in_valid_lane && !car_to_left;
+            is_drivable = IsValidLane(LaneInformation::LaneId::kLeft) && is_ego_in_valid_lane && !car_to_left;
             break;
         case LaneInformation::LaneId::kRight:
-            is_drivable = is_ego_in_valid_lane && !car_to_right;
+            is_drivable = IsValidLane(LaneInformation::LaneId::kRight) && is_ego_in_valid_lane && !car_to_right;
             break;
         case LaneInformation::LaneId::kInvalid:
         default:
             is_drivable = false;
             break;
     }
+
     log_stream << "Is {" << lane_id << "} drivable? " << std::boolalpha << is_drivable << std::endl;
     LOG_DEBUG("LaneEvaluator", log_stream.str());
     return is_drivable;
 }
+
+bool LaneEvaluator::IsValidLane(const LaneInformation::LaneId& lane_id) const
+{
+    const auto ego_global_lane_id = data_source_->GetGlobalLaneId();
+
+    switch (lane_id)
+    {
+        case LaneInformation::LaneId::kEgo:
+            return true;
+        case LaneInformation::LaneId::kLeft:
+            return (ego_global_lane_id - 1) != LaneInformation::GlobalLaneId::kInvalid;
+        case LaneInformation::LaneId::kRight:
+            return (ego_global_lane_id + 1) != LaneInformation::GlobalLaneId::kInvalid;
+        case LaneInformation::LaneId::kInvalid:
+        default:
+            return false;
+    }
+}
+
 }  // namespace motion_planning

@@ -1,3 +1,10 @@
+config_setting(
+    name = "debug_build",
+    values = {
+        "compilation_mode": "dbg",
+    },
+)
+
 cc_library(
     name = "motion_planning",
     srcs = glob([
@@ -12,6 +19,10 @@ cc_library(
         "-Wall",
         "-Werror",
     ],
+    defines = select({
+        ":debug_build": ["NDEBUG"],
+        "//conditions:default": [],
+    }),
     includes = ["include"],
     tags = ["lib"],
     visibility = [
@@ -25,18 +36,16 @@ cc_library(
 
 cc_test(
     name = "motion_planning_tests",
-    srcs = glob(
-        [
-            "test/**/*.cpp",
-            "test/**/*.h",
-        ],
-    ),
+    srcs = glob([
+        "test/**/*.cpp",
+        "test/**/*.h",
+    ]),
     copts = [
         "-std=c++14",
         "-Wall",
         "-Werror",
     ],
-    includes = ["test"],
+    includes = ["test/include"],
     tags = ["test"],
     visibility = ["//visibility:public"],
     deps = [
