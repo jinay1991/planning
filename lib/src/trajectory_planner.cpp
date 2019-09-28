@@ -208,8 +208,4 @@ GlobalCoordinates TrajectoryPlanner::GetGlobalCoordinates(const FrenetCoordinate
 
     return {x, y};
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> Rewrite IsDriableLane()
 }  // namespace motion_planning
