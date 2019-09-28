@@ -29,15 +29,9 @@ class MotionPlanning
     explicit MotionPlanning(std::shared_ptr<IDataSource>& data_source);
     ~MotionPlanning() = default;
 
-    void SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics);
-    void SetMapCoordinates(const std::vector<MapCoordinates>& map_coordinates);
-    void SetPreviousPath(const std::vector<GlobalCoordinates>& previous_path_global);
-    void SetPreviousPath(const std::vector<FrenetCoordinates>& previous_path_frenet);
-    void SetSensorFusion(const SensorFusion& sensor_fusion);
+    void GenerateTrajectories();
 
     Trajectory GetSelectedTrajectory() const;
-
-    void GenerateTrajectories();
 
   private:
     std::shared_ptr<IDataSource> data_source_;

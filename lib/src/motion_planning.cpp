@@ -34,11 +34,6 @@ void MotionPlanning::GenerateTrajectories()
     selected_trajectory_ = trajectory_selector_->GetSelectedTrajectory(prioritized_trajectories_);
 }
 
-void MotionPlanning::SetSensorFusion(const SensorFusion& sensor_fusion)
-{
-    trajectory_evaluator_->SetSensorFusion(sensor_fusion);
-}
-
 Trajectory MotionPlanning::GetSelectedTrajectory() const { return selected_trajectory_; }
 
 }  // namespace motion_planning
