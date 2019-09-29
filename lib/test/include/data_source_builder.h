@@ -64,6 +64,7 @@ class DataSourceBuilder
     DataSourceBuilder& WithFakePreviousPath(const std::int32_t n_wp)
     {
         previous_path_global_.resize(n_wp);
+        std::fill(previous_path_global_.begin(), previous_path_global_.end(), GlobalCoordinates{});
         return *this;
     }
 

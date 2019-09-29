@@ -105,8 +105,9 @@ Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const Maneuver::LaneId& la
     // Waypoints based on previous path
     auto trajectory = GetInitialTrajectory();
     const auto vehicle_dynamics = data_source_->GetVehicleDynamics();
+
     // Set further waypoints based on going further along highway in desired lane
-    std::int32_t lane = static_cast<std::int32_t>(lane_id);
+    const auto lane = static_cast<std::int32_t>(lane_id);
     trajectory.waypoints.push_back(
         GetGlobalCoordinates(FrenetCoordinates{vehicle_dynamics.frenet_coords.s + 30, 2.0 + (4.0 * lane)}));
     trajectory.waypoints.push_back(
@@ -117,13 +118,13 @@ Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const Maneuver::LaneId& la
     // Shift and rotate points to local coordinates
     const auto yaw = trajectory.yaw.value();
     const auto position = trajectory.position;
+    const auto shift_rotate_waypoints = [&](const auto& wp) {
+        const GlobalCoordinates shift_position{wp.x - position.x, wp.y - position.y};
+        return GlobalCoordinates{((shift_position.x * cos(-yaw)) - (shift_position.y * sin(-yaw))),
+                                 ((shift_position.x * sin(-yaw)) + (shift_position.y * cos(-yaw)))};
+    };
     std::transform(trajectory.waypoints.begin(), trajectory.waypoints.end(), trajectory.waypoints.begin(),
-                   [&yaw, &position](const auto& wp) -> GlobalCoordinates {
-                       const GlobalCoordinates shift_position{wp.x - position.x, wp.y - position.y};
-                       return GlobalCoordinates{((shift_position.x * cos(-yaw)) - (shift_position.y * sin(-yaw))),
-                                                ((shift_position.x * sin(-yaw)) + (shift_position.y * cos(-yaw)))};
-                   });
-
+                   shift_rotate_waypoints);
     return trajectory;
 }
 LaneInformation::GlobalLaneId TrajectoryPlanner::GetGlobalLaneId(const LaneInformation::LaneId& lane_id) const

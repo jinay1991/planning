@@ -9,6 +9,7 @@
 #include <motion_planning/trajectory_planner.h>
 #include <motion_planning/trajectory_prioritizer.h>
 #include <motion_planning/trajectory_selector.h>
+#include <iostream>
 
 namespace motion_planning
 {
@@ -24,7 +25,6 @@ MotionPlanning::MotionPlanning(std::shared_ptr<IDataSource>& data_source)
 void MotionPlanning::GenerateTrajectories()
 {
     const auto maneuvers = maneuver_generator_->Generate(units::velocity::meters_per_second_t{20});
-
     planned_trajectories_ = trajectory_planner_->GetPlannedTrajectories(maneuvers);
 
     rated_trajectories_ = trajectory_evaluator_->GetRatedTrajectories(planned_trajectories_);

@@ -59,16 +59,16 @@ Simulation::Simulation(const std::string& map_file)
                     // double car_speed = j[1]["speed"];
 
                     // Previous path data given to the Planner
-                    auto previous_path_x = j[1]["previous_path_x"];
-                    auto previous_path_y = j[1]["previous_path_y"];
+                    // auto previous_path_x = j[1]["previous_path_x"];
+                    // auto previous_path_y = j[1]["previous_path_y"];
 
                     // Previous path's end s and d values
-                    auto end_path_s = j[1]["end_path_s"];
-                    auto end_path_d = j[1]["end_path_d"];
+                    // auto end_path_s = j[1]["end_path_s"];
+                    // auto end_path_d = j[1]["end_path_d"];
 
                     // Sensor Fusion Data, a list of all other cars on the same side of
                     // the road.
-                    auto sensor_fusion = j[1]["sensor_fusion"];
+                    // auto sensor_fusion = j[1]["sensor_fusion"];
 
                     json msgJson;
 
@@ -76,9 +76,8 @@ Simulation::Simulation(const std::string& map_file)
                     std::vector<double> next_y_vals;
                     // ##############################################################
                     data_source_->SetMapCoordinates(map_waypoints_);
-                    // data_source_->SetGlobalLaneId(GetGlobalLaneId(motion_planning::FrenetCoordinates{
-                    //     j[1]["end_path_s"].get<double>(), j[1]["end_path_d"].get<double>()}));
 
+                    const auto sensor_fusion = j[1]["sensor_fusion"];
                     motion_planning::SensorFusion sf;
                     for (auto idx = 0U; idx < sensor_fusion.size(); ++idx)
                     {
@@ -108,6 +107,8 @@ Simulation::Simulation(const std::string& map_file)
                     vehicle_dynamics.velocity = units::velocity::meters_per_second_t{j[1]["speed"]};
                     data_source_->SetVehicleDynamics(vehicle_dynamics);
 
+                    const auto previous_path_x = j[1]["previous_path_x"];
+                    const auto previous_path_y = j[1]["previous_path_y"];
                     std::vector<motion_planning::GlobalCoordinates> previous_path_global;
                     std::vector<motion_planning::FrenetCoordinates> previous_path_frenet;
                     for (auto idx = 0U; idx < previous_path_x.size(); ++idx)
