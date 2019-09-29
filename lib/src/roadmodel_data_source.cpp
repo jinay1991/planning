@@ -18,10 +18,6 @@ RoadModelDataSource::RoadModelDataSource(const LaneInformation::GlobalLaneId& la
       previous_path_global_(previous_path_global)
 {
 }
-// void RoadModelDataSource::SetGlobalLaneId(const LaneInformation::GlobalLaneId& global_lane_id)
-// {
-//     global_lane_id_ = global_lane_id;
-// };
 
 void RoadModelDataSource::SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics)
 {
@@ -62,6 +58,7 @@ LaneInformation::GlobalLaneId RoadModelDataSource::GetGlobalLaneId() const
         return LaneInformation::GlobalLaneId::kInvalid;
     }
 }
+
 FrenetCoordinates RoadModelDataSource::GetPreviousPathEnd() const { return previous_path_end_frenet_; }
 VehicleDynamics RoadModelDataSource::GetVehicleDynamics() const { return vehicle_dynamics_; }
 std::vector<MapCoordinates> RoadModelDataSource::GetMapCoordinates() const { return map_coordinates_; }

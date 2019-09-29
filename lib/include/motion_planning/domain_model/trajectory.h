@@ -28,7 +28,11 @@ struct Trajectory
 /// @brief Compare Trajectory based on Cost and Lane Assignments
 inline bool operator>(const Trajectory& lhs, const Trajectory& rhs)
 {
-    return lhs.cost > rhs.cost || (lhs.cost == rhs.cost && lhs.lane_id < rhs.lane_id);
+    using LaneId = LaneInformation::LaneId;
+
+    return lhs.cost > rhs.cost ||
+           (lhs.cost == rhs.cost && (lhs.lane_id != LaneId::kInvalid || rhs.lane_id != LaneId::kInvalid) &&
+            lhs.lane_id < rhs.lane_id);
 }
 
 inline std::ostream& operator<<(std::ostream& out, const Trajectory& trajectory)

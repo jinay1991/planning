@@ -88,39 +88,39 @@ bool LaneEvaluator::IsDrivableLane(const LaneInformation::LaneId& lane_id) const
         {
             car_in_front |= (ego_position_predicted.s > obj_position_predicted.s) &&
                             IsObjectNear(ego_position_predicted, obj_position_predicted);
-            log_stream << "Ego {" << ego_global_lane_id << "} lane has object {" << obj_global_lane_id
-                       << "} in [Ego] Lane. "
-                       << "IsObjectNear(" << ego_position_predicted.s << ", " << obj_position_predicted.s
-                       << ")= " << std::boolalpha << IsObjectNear(ego_position_predicted, obj_position_predicted)
-                       << ". car_in_front? " << car_in_front << ". " << std::endl;
+            // log_stream << "Ego {" << ego_global_lane_id << "} lane has object {" << obj_global_lane_id
+            //            << "} in [Ego] Lane. "
+            //            << "IsObjectNear(" << ego_position_predicted.s << ", " << obj_position_predicted.s
+            //            << ")= " << std::boolalpha << IsObjectNear(ego_position_predicted, obj_position_predicted)
+            //            << ". car_in_front? " << car_in_front << ". " << std::endl;
         }
         else if (obj_lane_id == LaneInformation::LaneId::kLeft)
         {
             car_to_left |= (ego_position_predicted.s - gkFarDistanceThreshold.value()) < obj_position_predicted.s &&
                            IsObjectNear(ego_position_predicted, obj_position_predicted);
-            log_stream << "Ego {" << ego_global_lane_id << "} lane has object {" << obj_global_lane_id
-                       << "} in [Left] Lane. "
-                       << "IsObjectNear(" << ego_position_predicted.s << ", " << obj_position_predicted.s
-                       << ")= " << std::boolalpha << IsObjectNear(ego_position_predicted, obj_position_predicted)
-                       << ". car_to_left? " << car_to_left << ". " << std::endl;
+            // log_stream << "Ego {" << ego_global_lane_id << "} lane has object {" << obj_global_lane_id
+            //            << "} in [Left] Lane. "
+            //            << "IsObjectNear(" << ego_position_predicted.s << ", " << obj_position_predicted.s
+            //            << ")= " << std::boolalpha << IsObjectNear(ego_position_predicted, obj_position_predicted)
+            //            << ". car_to_left? " << car_to_left << ". " << std::endl;
         }
         else if (obj_lane_id == LaneInformation::LaneId::kRight)
         {
             car_to_right |= (ego_position_predicted.s - gkFarDistanceThreshold.value()) < obj_position_predicted.s &&
                             IsObjectNear(ego_position_predicted, obj_position_predicted);
-            log_stream << "Ego {" << ego_global_lane_id << "} lane has object {" << obj_global_lane_id
-                       << "} in [Right] Lane. "
-                       << "IsObjectNear(" << ego_position_predicted.s << ", " << obj_position_predicted.s
-                       << ")= " << std::boolalpha << IsObjectNear(ego_position_predicted, obj_position_predicted)
-                       << ". car_to_right? " << car_to_right << ". " << std::endl;
+            // log_stream << "Ego {" << ego_global_lane_id << "} lane has object {" << obj_global_lane_id
+            //            << "} in [Right] Lane. "
+            //            << "IsObjectNear(" << ego_position_predicted.s << ", " << obj_position_predicted.s
+            //            << ")= " << std::boolalpha << IsObjectNear(ego_position_predicted, obj_position_predicted)
+            //            << ". car_to_right? " << car_to_right << ". " << std::endl;
         }
         else
         {
-            log_stream << "Ego {" << ego_global_lane_id << "} lane has object {" << obj_global_lane_id
-                       << "} in [Invalid] Lane. "
-                       << "IsObjectNear(" << ego_position_predicted.s << ", " << obj_position_predicted.s
-                       << ")= " << std::boolalpha << IsObjectNear(ego_position_predicted, obj_position_predicted)
-                       << ". " << std::endl;
+            // log_stream << "Ego {" << ego_global_lane_id << "} lane has object {" << obj_global_lane_id
+            //            << "} in [Invalid] Lane. "
+            //            << "IsObjectNear(" << ego_position_predicted.s << ", " << obj_position_predicted.s
+            //            << ")= " << std::boolalpha << IsObjectNear(ego_position_predicted, obj_position_predicted)
+            //            << ". " << std::endl;
         }
     }
     const auto is_ego_in_valid_lane = (ego_global_lane_id != LaneInformation::GlobalLaneId::kInvalid);

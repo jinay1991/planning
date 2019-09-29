@@ -14,18 +14,18 @@ struct LaneInformation
 {
     enum class LaneId : std::uint8_t
     {
-        kLeft = 0,
-        kEgo = 1,
-        kRight = 2,
-        kInvalid = 255
+        kLeft = 0U,
+        kEgo = 1U,
+        kRight = 2U,
+        kInvalid = 255U
     };
 
     enum class GlobalLaneId : std::uint8_t
     {
-        kLeft = 0,
-        kCenter = 1,
-        kRight = 2,
-        kInvalid = 255
+        kLeft = 0U,
+        kCenter = 1U,
+        kRight = 2U,
+        kInvalid = 255U
     };
 
     LaneId lane_id;
@@ -93,6 +93,7 @@ inline std::ostream& operator<<(std::ostream& out, const LaneInformation::LaneId
         case LaneInformation::LaneId::kLeft:
             return out << "LaneId::kLeft";
         case LaneInformation::LaneId::kInvalid:
+        default:
             return out << "LaneId::kInvalid";
     }
 }
@@ -108,6 +109,7 @@ inline std::ostream& operator<<(std::ostream& out, const LaneInformation::Global
         case LaneInformation::GlobalLaneId::kLeft:
             return out << "GlobalLaneId::kLeft";
         case LaneInformation::GlobalLaneId::kInvalid:
+        default:
             return out << "GlobalLaneId::kInvalid";
     }
 }
