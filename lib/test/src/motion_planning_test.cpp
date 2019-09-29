@@ -22,8 +22,10 @@ class MotionPlanningSpecFixture : public ::testing::Test
     }
     virtual void TearDown() override {}
 
-    std::shared_ptr<IDataSource> data_source_;
     std::unique_ptr<MotionPlanning> motion_planning_;
+
+  private:
+    std::shared_ptr<IDataSource> data_source_;
 };
 
 TEST_F(MotionPlanningSpecFixture, DISABLED_GivenTypicalInputs_WhenGenerateTrajectories_ThenReturnSelectedTrajectory)

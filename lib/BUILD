@@ -34,12 +34,33 @@ cc_library(
     ],
 )
 
-cc_test(
-    name = "motion_planning_tests",
-    srcs = glob([
-        "test/**/*.cpp",
+# Test
+cc_library(
+    name = "motion_planning_test_utils",
+    hdrs = glob([
         "test/**/*.h",
     ]),
+    copts = [
+        "-std=c++14",
+        "-Wall",
+        "-Werror",
+    ],
+    strip_include_prefix = "test/include",
+    tags = ["test"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":motion_planning",
+    ],
+)
+
+cc_test(
+    name = "motion_planning_unit_tests",
+    srcs = glob(
+        [
+            "test/**/*.cpp",
+        ],
+        exclude = ["test/src/motion_planning_test.cpp"],
+    ),
     copts = [
         "-std=c++14",
         "-Wall",
@@ -50,6 +71,27 @@ cc_test(
     visibility = ["//visibility:public"],
     deps = [
         ":motion_planning",
+        ":motion_planning_test_utils",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "motion_planning_tests",
+    srcs = [
+        "test/src/motion_planning_test.cpp",
+    ],
+    copts = [
+        "-std=c++14",
+        "-Wall",
+        "-Werror",
+    ],
+    includes = ["test/include"],
+    tags = ["test"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":motion_planning",
+        ":motion_planning_test_utils",
         "@googletest//:gtest_main",
     ],
 )
