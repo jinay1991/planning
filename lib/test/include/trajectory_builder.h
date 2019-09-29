@@ -63,7 +63,7 @@ class TrajectoryBuilder
     TrajectoryBuilder& WithWaypoints(const GlobalCoordinates& start_position, const units::angle::radian_t start_yaw,
                                      const std::size_t count, const units::length::meter_t displacement)
     {
-        for (auto idx = 0; idx < count; ++idx)
+        for (auto idx = 0U; idx < count; ++idx)
         {
             trajectory_.waypoints.push_back(
                 GlobalCoordinates{start_position.x + (idx * displacement.value() * cos(start_yaw.value())),
