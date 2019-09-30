@@ -24,14 +24,7 @@ RatedTrajectories TrajectoryEvaluator::GetRatedTrajectories(const PlannedTraject
         {
             rated_trajectory.cost = std::numeric_limits<double>::infinity();
         }
-        else if (trajectory.lane_id == LaneInformation::LaneId::kEgo)
-        {
-            rated_trajectory.cost = std::numeric_limits<double>::lowest();
-        }
-        else
-        {
-            rated_trajectory.cost += 3;
-        }
+
         return rated_trajectory;
     };
     std::transform(planned_trajectories.begin(), planned_trajectories.end(), std::back_inserter(rated_trajectories),
