@@ -19,8 +19,19 @@ docker_build:
 
 image: registry.gitlab.com/jinay1991/motion_planning
 
+stages:
+  - check
+  - build
+  - test
+  - deploy
+
+clang-format:
+  stage: check
+  script:
+    - find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec cat {} \; | diff -u <(find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec clang-format-6.0 -style=file {} \;) -
+
 cppcheck:
-  stage: build
+  stage: check
   script:
     - cppcheck --template=gcc --enable=all --inconclusive --std=c++14 -I lib/include/ -I include/ lib/src/*.cpp src/*.cpp  > static_code_analysis.log
     - cppcheck --template=gcc --enable=all --inconclusive --std=c++14 -I lib/include/ -I include/ lib/src/*.cpp src/*.cpp --xml 2> static_code_analysis.xml
@@ -99,6 +110,7 @@ package:
   only:
     refs:
       - master
+      - schedules
 
 code_quality:
   image: docker:stable
