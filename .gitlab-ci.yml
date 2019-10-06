@@ -1,6 +1,15 @@
+image: registry.gitlab.com/jinay1991/motion_planning
+
+stages:
+  - check-image
+  - check
+  - build
+  - test
+  - deploy
+
 docker_build:
   image: docker:stable
-  stage: build
+  stage: check-image
   variables:
     DOCKER_DRIVER: overlay2
   allow_failure: true
@@ -17,18 +26,15 @@ docker_build:
       - Dockerfile
       - schedules
 
-image: registry.gitlab.com/jinay1991/motion_planning
-
-stages:
-  - check
-  - build
-  - test
-  - deploy
-
 clang-format:
   stage: check
   script:
     - find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec cat {} \; | diff -u <(find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec clang-format-6.0 -style=file {} \;) -
+
+buildifier:
+  stage: check
+  script:
+    - buildifier -v -d -r .
 
 cppcheck:
   stage: check
