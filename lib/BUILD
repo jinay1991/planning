@@ -34,7 +34,6 @@ cc_library(
     ],
 )
 
-# Test
 cc_library(
     name = "motion_planning_test_utils",
     hdrs = glob([

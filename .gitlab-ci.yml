@@ -84,16 +84,31 @@ code-coverage:
     when: on_success
     expire_in: 1 day
 
+doxygen:
+  stage: test
+  script:
+    - echo "Generating Doxygen Documentation"
+    - doxygen Doxyfile
+  artifacts:
+    paths:
+      - doc
+    expire_in: 1 day
+  only:
+    refs:
+      - master
+
 pages:
   stage: deploy
   dependencies:
     - code-coverage
     - cppcheck
+    - doxygen
   script:
     - mkdir -p reports
-    - echo "<!DOCTYPE html> <html> <head> <meta charset="utf-8"> <title>Motion Planning</title> </head> <body> <ul> <li><a href="coverage/">Code Coverage Report</a></li> <li><a href="static_code_analysis_report/">Static Code Analysis Report</a></li> </ul> </body> </html>" > reports/index.html
+    - echo "<!DOCTYPE html> <html> <head> <meta charset="utf-8"> <title>Motion Planning</title> </head> <body> <ul> <li><a href="coverage/">Code Coverage Report</a></li> <li><a href="static_code_analysis_report/">Static Code Analysis Report</a></li> <a href="doc/html">Doxygen Documentation</a></li> </ul> </body> </html>" > reports/index.html
     - mv coverage reports/coverage
-    - mv static_code_analysis_report/ reports/static_code_analysis_report/
+    - mv static_code_analysis_report/ reports/static_code_analysis_report
+    - mv doc/ reports/doc
     - mv reports/ public
   artifacts:
     paths:

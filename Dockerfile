@@ -27,6 +27,9 @@ RUN cd uWebSockets/build && make -j4 && make install
 RUN ln -s /usr/lib64/libuWS.so /usr/lib/libuWS.so
 RUN rm -r uWebSockets
 
+# Installation of dependencies to Doxygen
+RUN apt-get install -y doxygen graphviz
+
 # Installation of static code analysis
 RUN apt-get install -y cppcheck python python-pygments
 
