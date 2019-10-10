@@ -10,7 +10,7 @@ using namespace motion_planning;
 
 namespace
 {
-TEST(ManeuverTest, HasEgoManeuverAsDefault)
+TEST(ManeuverSpecTest, HasEgoManeuverAsDefault)
 {
     ASSERT_THAT(Maneuver(), ::testing::Eq(Maneuver(Maneuver::LaneId::kEgo, units::velocity::meters_per_second_t{0.0})));
 }

@@ -36,10 +36,8 @@ class GetLocalLaneSpec : public ::testing::TestWithParam<std::tuple<GlobalLaneId
 };
 TEST_P(GetLocalLaneSpec, GivenTypicalGlobalLaneId_WhenConverted_ThenReturnLocalLaneId)
 {
-    // Run
     const auto actual = lane_evaluator_->GetLocalLaneId(std::get<1>(GetParam()));
 
-    // Assert
     const auto expected = std::get<2>(GetParam());
     EXPECT_EQ(actual, expected);
 }
@@ -63,10 +61,8 @@ class GetGlobalLaneSpec : public ::testing::TestWithParam<std::tuple<FrenetCoord
 };
 TEST_P(GetGlobalLaneSpec, GivenTypicalFrenetCoordinates_WhenGetGlobalLaneId_ThenReturnGlobalLaneId)
 {
-    // Run
     const auto actual = lane_evaluator_->GetGlobalLaneId(std::get<0>(GetParam()));
 
-    // Assert
     EXPECT_EQ(actual, std::get<1>(GetParam()));
 }
 INSTANTIATE_TEST_CASE_P(LaneEvaluator, GetGlobalLaneSpec,
@@ -87,10 +83,8 @@ class IsObjectNearSpec : public ::testing::TestWithParam<std::tuple<FrenetCoordi
 };
 TEST_P(IsObjectNearSpec, GivenTypicalVehiclePositions_WhenEvaluatedIsObjectNear_ThenReturnBoolean)
 {
-    // Run
     const auto actual = lane_evaluator_->IsObjectNear(std::get<0>(GetParam()), std::get<1>(GetParam()));
 
-    // Assert
     const auto expected = std::get<2>(GetParam());
     EXPECT_EQ(actual, expected);
 }
@@ -122,10 +116,8 @@ class IsDrivableSpec : public ::testing::TestWithParam<std::tuple<GlobalLaneId, 
 
 TEST_P(IsDrivableSpec, GivenTypicalSensorFusion_WhenCheckedIsDrivableLane_ThenReturnBasedOnCollisionAvoidance)
 {
-    // Run
     const auto actual = lane_evaluator_->IsDrivableLane(LaneId::kEgo);
 
-    // Assert
     const auto expected = std::get<2>(GetParam());
     EXPECT_EQ(actual, expected);
 }

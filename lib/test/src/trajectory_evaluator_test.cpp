@@ -53,19 +53,15 @@ class TrajectoryEvaluatorSpec : public ::testing::Test
 };
 TEST_F(TrajectoryEvaluatorSpec, GivenTypicalPlannedTrajectories_WhenEvaluated_ThenReturnSameNumberOfTrajectories)
 {
-    // Run
     const auto actual = TrajectoryEvaluator(DataSourceBuilder().Build()).GetRatedTrajectories(planned_trajectories_);
 
-    // Assert
     EXPECT_EQ(actual.size(), planned_trajectories_.size());
 }
 
 TEST_F(TrajectoryEvaluatorSpec, GivenTypicalPlannedTrajectories_WhenNoObject_ThenReturnSameCostTrajectories)
 {
-    // Run
     const auto actual = TrajectoryEvaluator(DataSourceBuilder().Build()).GetRatedTrajectories(planned_trajectories_);
 
-    // Assert
     const auto expect_zero_cost = [&](const auto& trajectory) { EXPECT_DOUBLE_EQ(trajectory.cost, 0.0); };
     std::for_each(actual.begin(), actual.end(), expect_zero_cost);
 }
@@ -102,7 +98,6 @@ class TrajectoryEvaluatorSpecFixture : public ::testing::TestWithParam<std::tupl
 TEST_P(TrajectoryEvaluatorSpecFixture,
        GivenTypicalPlannedTrajectories_WhenObjectInEgoLane_ThenReturnHighCostToEgoTrajectory)
 {
-    // Run
     const auto ego_global_lane_id = std::get<0>(GetParam());
     const auto obj_global_lane_id = std::get<1>(GetParam());
     const auto actual =
@@ -112,8 +107,7 @@ TEST_P(TrajectoryEvaluatorSpecFixture,
                                 .Build())
             .GetRatedTrajectories(planned_trajectories_);
 
-    // Assert
-    const auto expect_zero_cost = [&](const auto& trajectory) {
+    const auto expect_cost = [&](const auto& trajectory) {
         if (trajectory.global_lane_id == GlobalLaneId::kInvalid || trajectory.global_lane_id == obj_global_lane_id)
         {
             EXPECT_DOUBLE_EQ(trajectory.cost, std::numeric_limits<double>::infinity());
@@ -123,7 +117,7 @@ TEST_P(TrajectoryEvaluatorSpecFixture,
             EXPECT_DOUBLE_EQ(trajectory.cost, 0.0);
         }
     };
-    std::for_each(actual.begin(), actual.end(), expect_zero_cost);
+    std::for_each(actual.begin(), actual.end(), expect_cost);
 }
 INSTANTIATE_TEST_CASE_P(
     TrajectoryEvaluator, TrajectoryEvaluatorSpecFixture,

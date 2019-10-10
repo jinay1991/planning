@@ -35,10 +35,8 @@ class MotionPlanningSpecFixture : public ::testing::Test
 
 TEST_F(MotionPlanningSpecFixture, GivenTypicalInputs_WhenGenerateTrajectories_ThenReturnSelectedTrajectory)
 {
-    // Run
     motion_planning_->GenerateTrajectories();
 
-    // Assert
     const auto actual = motion_planning_->GetSelectedTrajectory();
     EXPECT_GT(actual.waypoints.size(), 0U);
     EXPECT_EQ(actual.lane_id, LaneInformation::LaneId::kRight);
