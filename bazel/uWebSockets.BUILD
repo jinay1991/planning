@@ -1,3 +1,5 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
 config_setting(
     name = "darwin",
     constraint_values = ["@bazel_tools//platforms:osx"],
@@ -6,11 +8,15 @@ config_setting(
 cc_library(
     name = "libuv",
     srcs = select({
-        ":darwin": ["local/Cellar/libuv/1.31.0/lib/libuv.dylib"],
+        ":darwin": ["local/homebrew/opt/libuv/lib/libuv.dylib"],
         "//conditions:default": ["lib/x86_64-linux-gnu/libuv.so"],
     }),
+    hdrs = select({
+        ":darwin": glob(["local/homebrew/opt/libuv/include/**/*.h"]),
+        "//conditions:default": glob(["include/**/*.h"]),
+    }),
     includes = select({
-        ":darwin": ["local/Cellar/libuv/1.31.0/include/"],
+        ":darwin": ["local/homebrew/opt/libuv/include/"],
         "//conditions:default": ["include"],
     }),
     visibility = ["//visibility:public"],
@@ -19,11 +25,15 @@ cc_library(
 cc_library(
     name = "libz",
     srcs = select({
-        ":darwin": ["local/Cellar/zlib/1.2.11/lib/libz.dylib"],
+        ":darwin": ["lib/libz.dylib"],
         "//conditions:default": ["lib/x86_64-linux-gnu/libz.so"],
     }),
+    hdrs = select({
+        ":darwin": glob(["local/homebrew/opt/zlib/include/**/*.h"]),
+        "//conditions:default": glob(["include/*.h"]),
+    }),
     includes = select({
-        ":darwin": ["local/Cellar/zlib/1.2.11/include/"],
+        ":darwin": ["local/homebrew/opt/zlib/include/"],
         "//conditions:default": ["include"],
     }),
     visibility = ["//visibility:public"],
@@ -32,11 +42,15 @@ cc_library(
 cc_library(
     name = "libssl",
     srcs = select({
-        ":darwin": ["local/opt/openssl/lib/libssl.dylib"],
+        ":darwin": ["local/homebrew/opt/openssl/lib/libssl.dylib"],
         "//conditions:default": ["lib/x86_64-linux-gnu/libssl.so"],
     }),
+    hdrs = select({
+        ":darwin": glob(["local/homebrew/opt/openssl/include/**/*.h"]),
+        "//conditions:default": glob(["include/openssl/*.h"]),
+    }),
     includes = select({
-        ":darwin": ["local/opt/openssl/include"],
+        ":darwin": ["local/homebrew/opt/openssl/include"],
         "//conditions:default": ["include"],
     }),
     visibility = ["//visibility:public"],

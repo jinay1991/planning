@@ -1,9 +1,10 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_deb", "pkg_tar")
 
 cc_library(
     name = "simulation",
     srcs = glob(
-        include = ["src/**/*.cpp"],
+        ["src/**/*.cpp"],
         exclude = ["src/main.cpp"],
     ),
     hdrs = glob([
@@ -15,7 +16,6 @@ cc_library(
         "-Werror",
     ],
     includes = ["include"],
-    tags = ["lib"],
     visibility = [
         "//visibility:public",
     ],
@@ -38,7 +38,6 @@ cc_binary(
     ],
     includes = ["include"],
     linkstatic = True,
-    tags = ["bin"],
     visibility = [
         "//visibility:public",
     ],
@@ -66,7 +65,7 @@ pkg_tar(
         "//lib:motion_planning",
     ],
     extension = "tar.gz",
-    package_dir = "/opt/motion_planning/lib",
+    package_dir = "/opt/motion_planning",
     strip_prefix = "/",
     visibility = ["//visibility:public"],
 )
@@ -104,6 +103,6 @@ pkg_deb(
     homepage = "https://gitlab.com/jinay1991/motion_planning",
     maintainer = "https://gitlab.com/jinay1991",
     package = "motion_planning",
-    version = "0.0.1",
+    version = "0.0.2",
     visibility = ["//visibility:public"],
 )

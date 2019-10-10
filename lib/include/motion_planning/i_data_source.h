@@ -15,7 +15,6 @@ namespace motion_planning
 class IDataSource
 {
   public:
-    // virtual void SetGlobalLaneId(const LaneInformation::GlobalLaneId& global_lane_id) = 0;
     virtual void SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics) = 0;
     virtual void SetMapCoordinates(const std::vector<MapCoordinates>& map_coordinates) = 0;
     virtual void SetPreviousPath(const std::vector<GlobalCoordinates>& previous_path_global) = 0;
