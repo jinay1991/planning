@@ -86,7 +86,7 @@ smoke-test:
   script:
     - echo "Running Smoke Test"
     - bazel build //... --host_force_python=PY2
-    - dpkg -i *_amd64.deb
+    - cd bazel-bin && dpkg -i *_amd64.deb
     - ls /opt/motion_planning
   allow_failure: true
 
