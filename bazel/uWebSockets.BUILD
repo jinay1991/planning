@@ -8,15 +8,15 @@ config_setting(
 cc_library(
     name = "libuv",
     srcs = select({
-        ":darwin": ["local/homebrew/opt/libuv/lib/libuv.dylib"],
+        ":darwin": ["local/lib/libuv.dylib"],
         "//conditions:default": ["lib/x86_64-linux-gnu/libuv.so"],
     }),
     hdrs = select({
-        ":darwin": glob(["local/homebrew/opt/libuv/include/**/*.h"]),
+        ":darwin": glob(["local/include/**/*.h"]),
         "//conditions:default": glob(["include/**/*.h"]),
     }),
     includes = select({
-        ":darwin": ["local/homebrew/opt/libuv/include/"],
+        ":darwin": ["local/include/"],
         "//conditions:default": ["include"],
     }),
     visibility = ["//visibility:public"],
@@ -29,11 +29,11 @@ cc_library(
         "//conditions:default": ["lib/x86_64-linux-gnu/libz.so"],
     }),
     hdrs = select({
-        ":darwin": glob(["local/homebrew/opt/zlib/include/**/*.h"]),
+        ":darwin": glob(["include/**/*.h"]),
         "//conditions:default": glob(["include/*.h"]),
     }),
     includes = select({
-        ":darwin": ["local/homebrew/opt/zlib/include/"],
+        ":darwin": ["include/"],
         "//conditions:default": ["include"],
     }),
     visibility = ["//visibility:public"],
@@ -42,15 +42,15 @@ cc_library(
 cc_library(
     name = "libssl",
     srcs = select({
-        ":darwin": ["local/homebrew/opt/openssl/lib/libssl.dylib"],
+        ":darwin": ["local/opt/openssl/lib/libssl.dylib"],
         "//conditions:default": ["lib/x86_64-linux-gnu/libssl.so"],
     }),
     hdrs = select({
-        ":darwin": glob(["local/homebrew/opt/openssl/include/**/*.h"]),
+        ":darwin": glob(["local/opt/openssl/include/**/*.h"]),
         "//conditions:default": glob(["include/openssl/*.h"]),
     }),
     includes = select({
-        ":darwin": ["local/homebrew/opt/openssl/include"],
+        ":darwin": ["local/opt/openssl/include"],
         "//conditions:default": ["include"],
     }),
     visibility = ["//visibility:public"],
