@@ -1,5 +1,11 @@
+# ------------
+# Docker Image
+# ------------
 image: registry.gitlab.com/jinay1991/motion_planning
 
+# ------------
+# Various Jobs
+# ------------
 stages:
   - check-image
   - check
@@ -62,7 +68,7 @@ cppcheck:
 bazel-build:
   stage: build
   script:
-    - bazel build //... --host_force_python=PY2
+    - bazel build //... 
 
 # -----------
 # Stage: Test
@@ -72,7 +78,7 @@ bazel-test:
   dependencies:
     - bazel-build
   script:
-    - bazel test //... --host_force_python=PY2 --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:/tmp/test_results.xml"
+    - bazel test //...  --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:/tmp/test_results.xml"
   after_script:
     - cp /tmp/test_results.xml test_results.xml
   artifacts:
@@ -85,7 +91,7 @@ smoke-test:
   stage: test
   script:
     - echo "Running Smoke Test"
-    - bazel build //... --host_force_python=PY2
+    - bazel build //... 
     - cd bazel-bin && dpkg -i *_amd64.deb
     - ls /opt/motion_planning
   allow_failure: true
@@ -93,7 +99,7 @@ smoke-test:
 code-coverage:
   stage: test
   script:
-    - bazel test --compilation_mode dbg //... --host_force_python=PY2 --test_output=all --cache_test_results=false --collect_code_coverage=true
+    - bazel test --compilation_mode dbg //... --test_output=all --cache_test_results=false --collect_code_coverage=true
     - export OUTPUT_DIR=$(bazel info execution_root)
     - export COVERAGE_INFO=$(find $OUTPUT_DIR -name coverage.dat)
     - genhtml -s --num-spaces 4 --legend --highlight --sort -t "Motion Planning Code Coverage" --demangle-cpp --function-coverage --branch-coverage -o coverage $COVERAGE_INFO

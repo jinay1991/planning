@@ -56,6 +56,7 @@ pkg_tar(
     extension = "tar.gz",
     package_dir = "/opt/motion_planning/bin",
     strip_prefix = "/",
+    tags = ["manual"],
 )
 
 pkg_tar(
@@ -67,6 +68,7 @@ pkg_tar(
     extension = "tar.gz",
     package_dir = "/opt/motion_planning",
     strip_prefix = "/",
+    tags = ["manual"],
     visibility = ["//visibility:public"],
 )
 
@@ -79,6 +81,7 @@ pkg_tar(
     extension = "tar.gz",
     package_dir = "/opt/motion_planning",
     strip_prefix = "/",
+    tags = ["manual"],
     visibility = ["//visibility:public"],
 )
 
@@ -86,6 +89,7 @@ pkg_tar(
     name = "motion_planning_tar_pkg",
     testonly = True,
     extension = "tar.gz",
+    tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [
         ":motion_planning_bin_pkg",
@@ -103,6 +107,7 @@ pkg_deb(
     homepage = "https://gitlab.com/jinay1991/motion_planning",
     maintainer = "https://gitlab.com/jinay1991",
     package = "motion_planning",
+    tags = ["manual"],
     version = "0.0.2",
     visibility = ["//visibility:public"],
 )
