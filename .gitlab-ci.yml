@@ -176,7 +176,7 @@ package:
     - smoke-test
   script:
     - mkdir -p artifacts
-    - cp bazel-bin/*_amd64.deb artifacts/
+    - cp bazel-bin/*.deb artifacts/
   artifacts:
     paths:
       - artifacts/
