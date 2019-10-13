@@ -8,17 +8,6 @@ namespace motion_planning
 {
 RoadModelDataSource::RoadModelDataSource() : global_lane_id_{GlobalLaneId::kCenter} {}
 
-RoadModelDataSource::RoadModelDataSource(const GlobalLaneId& lane_id, const VehicleDynamics& vehicle_dynamics,
-                                         const MapCoordinatesList& map_coords,
-                                         const PreviousPathGlobal& previous_path_global,
-                                         const SensorFusion& sensor_fusion)
-    : global_lane_id_(lane_id),
-      vehicle_dynamics_(vehicle_dynamics),
-      map_coordinates_(map_coords),
-      previous_path_global_(previous_path_global)
-{
-}
-
 void RoadModelDataSource::SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics)
 {
     vehicle_dynamics_ = vehicle_dynamics;

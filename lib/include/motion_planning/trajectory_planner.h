@@ -31,7 +31,7 @@ class TrajectoryPlanner : public ITrajectoryPlanner
                                       const units::velocity::meters_per_second_t& target_velocity) const;
 
     /// @brief Calculate Trajectory for given lane_id, target velocity
-    Trajectory GetCalculatedTrajectory(const Maneuver::LaneId& lane_id) const;
+    Trajectory GetCalculatedTrajectory(const LaneId& lane_id) const;
 
     /// @brief Produces trajectories and optimizes for each maneuver
     Trajectories GetTrajectories(const std::vector<Maneuver>& maneuvers) const;

@@ -15,7 +15,11 @@ namespace
 class TrajectoryBuilder
 {
   public:
-    TrajectoryBuilder() { trajectory_.global_lane_id = LaneInformation::GlobalLaneId::kCenter; }
+    TrajectoryBuilder()
+    {
+        trajectory_.global_lane_id = LaneInformation::GlobalLaneId::kCenter;
+        trajectory_.waypoints.resize(10);
+    }
 
     TrajectoryBuilder& WithPosition(const GlobalCoordinates& position)
     {
@@ -63,6 +67,7 @@ class TrajectoryBuilder
     TrajectoryBuilder& WithWaypoints(const GlobalCoordinates& start_position, const units::angle::radian_t start_yaw,
                                      const std::size_t count, const units::length::meter_t displacement)
     {
+        trajectory_.waypoints.clear();
         for (auto idx = 0U; idx < count; ++idx)
         {
             trajectory_.waypoints.push_back(

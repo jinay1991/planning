@@ -100,7 +100,7 @@ Trajectory TrajectoryPlanner::GetOptimizedTrajectory(const Trajectory& calculate
     return optimized_trajectory;
 }
 
-Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const Maneuver::LaneId& lane_id) const
+Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) const
 {
     // Waypoints based on previous path
     auto trajectory = GetInitialTrajectory();

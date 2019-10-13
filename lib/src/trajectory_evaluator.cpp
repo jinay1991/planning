@@ -24,7 +24,6 @@ RatedTrajectories TrajectoryEvaluator::GetRatedTrajectories(const PlannedTraject
         {
             rated_trajectory.cost = std::numeric_limits<double>::infinity();
         }
-
         return rated_trajectory;
     };
     std::transform(planned_trajectories.begin(), planned_trajectories.end(), std::back_inserter(rated_trajectories),

@@ -5,14 +5,14 @@
 
 namespace motion_planning
 {
-Maneuver::Maneuver() : id_{Maneuver::LaneId::kEgo}, velocity_{units::velocity::meters_per_second_t{0.0}} {}
+Maneuver::Maneuver() : lane_id_{LaneId::kEgo}, velocity_{units::velocity::meters_per_second_t{0.0}} {}
 
-Maneuver::Maneuver(const Maneuver::LaneId& id, const units::velocity::meters_per_second_t& velocity)
-    : id_{id}, velocity_{velocity}
+Maneuver::Maneuver(const LaneId& lane_id, const units::velocity::meters_per_second_t& velocity)
+    : lane_id_{lane_id}, velocity_{velocity}
 {
 }
 
-Maneuver::LaneId Maneuver::GetLaneId() const { return id_; }
+LaneId Maneuver::GetLaneId() const { return lane_id_; }
 
 units::velocity::meters_per_second_t Maneuver::GetVelocity() const { return velocity_; }
 

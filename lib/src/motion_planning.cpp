@@ -24,7 +24,6 @@ MotionPlanning::MotionPlanning(std::shared_ptr<IDataSource>& data_source)
 
 void MotionPlanning::GenerateTrajectories()
 {
-    LOG_DEBUG("MotionPlanning", " === START ===\n");
     const auto maneuvers = maneuver_generator_->Generate(units::velocity::meters_per_second_t{20});
 
     planned_trajectories_ = trajectory_planner_->GetPlannedTrajectories(maneuvers);
@@ -34,7 +33,6 @@ void MotionPlanning::GenerateTrajectories()
     prioritized_trajectories_ = trajectory_prioritizer_->GetPrioritizedTrajectories(rated_trajectories_);
 
     selected_trajectory_ = trajectory_selector_->GetSelectedTrajectory(prioritized_trajectories_);
-    LOG_DEBUG("MotionPlanning", " === END ===\n");
 }
 
 Trajectory MotionPlanning::GetSelectedTrajectory() const { return selected_trajectory_; }

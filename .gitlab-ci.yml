@@ -139,11 +139,11 @@ smoke-test:
   script:
     - echo "Running Smoke Test"
     - bazel build //:motion_planning_deb_pkg --host_force_python=PY2
-    - cd bazel-bin && dpkg -i *_amd64.deb
+    - dpkg -i bazel-bin/*_amd64.deb
     - ls /opt/motion_planning
   artifacts:
     paths:
-      - bazel-bin/*_amd64.deb
+      - bazel-bin\/motion_planning_\d.\d.\d.amd64.deb
     expire_in: 1 day
   allow_failure: true
 
@@ -186,3 +186,4 @@ package:
     refs:
       - master
       - schedules
+  allow_failure: true
