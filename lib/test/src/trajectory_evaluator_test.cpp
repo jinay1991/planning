@@ -96,7 +96,7 @@ class TrajectoryEvaluatorSpecFixture : public ::testing::TestWithParam<std::tupl
 };
 
 TEST_P(TrajectoryEvaluatorSpecFixture,
-       GivenTypicalPlannedTrajectories_WhenObjectInEgoLane_ThenReturnHighCostToEgoTrajectory)
+       GivenTypicalPlannedTrajectories_WhenObjectInLane_ThenReturnHighCostToTrajectoryOnThatLane)
 {
     const auto ego_global_lane_id = std::get<0>(GetParam());
     const auto obj_global_lane_id = std::get<1>(GetParam());
