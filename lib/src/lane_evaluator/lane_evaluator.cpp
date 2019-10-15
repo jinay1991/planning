@@ -10,17 +10,21 @@ namespace motion_planning
 {
 LaneEvaluator::LaneEvaluator(std::shared_ptr<IDataSource>& data_source) : data_source_(data_source) {}
 
+bool LaneEvaluator::IsLeftLane(const FrenetCoordinates& coords) const { return (coords.d > 0 && coords.d < 4); }
+bool LaneEvaluator::IsCenterLane(const FrenetCoordinates& coords) const { return (coords.d > 4 && coords.d < 8); }
+bool LaneEvaluator::IsRightLane(const FrenetCoordinates& coords) const { return (coords.d > 8 && coords.d < 12); }
+
 LaneInformation::GlobalLaneId LaneEvaluator::GetGlobalLaneId(const FrenetCoordinates& coords) const
 {
-    if (coords.d > 0 && coords.d < 4)  // left lane (near to double solid lane marking)
+    if (IsLeftLane(coords))
     {
         return LaneInformation::GlobalLaneId::kLeft;
     }
-    else if (coords.d > 4 && coords.d < 8)  // center lane
+    else if (IsCenterLane(coords))
     {
         return LaneInformation::GlobalLaneId::kCenter;
     }
-    else if (coords.d > 8 && coords.d < 12)  // right lane (near to the edge of the road)
+    else if (IsRightLane(coords))
     {
         return LaneInformation::GlobalLaneId::kRight;
     }

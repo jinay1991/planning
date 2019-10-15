@@ -26,6 +26,10 @@ class LaneEvaluator
     bool IsValidLane(const LaneInformation::LaneId& lane_id) const;
 
   private:
+    bool IsLeftLane(const FrenetCoordinates& coords) const;
+    bool IsCenterLane(const FrenetCoordinates& coords) const;
+    bool IsRightLane(const FrenetCoordinates& coords) const;
+
     LaneInformation::GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& coords) const;
     LaneInformation::LaneId GetLocalLaneId(const LaneInformation::GlobalLaneId& global_lane_id) const;
     bool IsObjectNear(const FrenetCoordinates& ego_position, const FrenetCoordinates& obj_position) const;
