@@ -168,19 +168,6 @@ code_quality:
     reports:
       codequality: gl-code-quality-report.json
 
-smoke-test:
-  stage: test
-  script:
-    - echo "Running Smoke Test"
-    - bazel build //:motion_planning_deb_pkg --host_force_python=PY2
-    - dpkg -i bazel-bin/*_amd64.deb
-    - ls /opt/motion_planning
-  artifacts:
-    paths:
-      - bazel-bin\/motion_planning_\d.\d.\d.amd64.deb
-    expire_in: 1 day
-  allow_failure: true
-
 # -------------
 # Stage: Deploy
 # -------------
@@ -207,23 +194,3 @@ pages:
       - src/
       - lib/
       - include/
-
-package:
-  stage: deploy
-  dependencies:
-    - smoke-test
-  script:
-    - mkdir -p artifacts
-    - ls
-    - ls bazel-bin
-    - cp bazel-bin/*.deb artifacts/
-  artifacts:
-    paths:
-      - artifacts/
-    when: on_success
-    expire_in: 7 days
-  only:
-    refs:
-      - master
-      - schedules
-  allow_failure: true
