@@ -42,11 +42,21 @@ clang-format:
   stage: check
   script:
     - find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec cat {} \; | diff -u <(find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec clang-format-6.0 -style=file {} \;) -
+  only:
+    changes:
+      - src/
+      - lib/
+      - include/
 
 buildifier:
   stage: check
   script:
     - buildifier -v -d -r .
+  only:
+    changes:
+      - src/
+      - lib/
+      - include/
 
 cppcheck:
   stage: check
@@ -61,6 +71,11 @@ cppcheck:
       - static_code_analysis.xml
       - static_code_analysis.log
     expire_in: 7 days
+  only:
+    changes:
+      - src/
+      - lib/
+      - include/
 
 # ------------
 # Stage: Build
@@ -69,6 +84,11 @@ bazel-build:
   stage: build
   script:
     - bazel build //... 
+  only:
+    changes:
+      - src/
+      - lib/
+      - include/
 
 # -----------
 # Stage: Test
@@ -86,6 +106,11 @@ bazel-test:
       junit: test_results.xml
     name: TestResults
     when: on_success
+  only:
+    changes:
+      - src/
+      - lib/
+      - include/
 
 code-coverage:
   stage: test
@@ -101,6 +126,11 @@ code-coverage:
     name: code-coverage
     when: on_success
     expire_in: 1 day
+  only:
+    changes:
+      - src/
+      - lib/
+      - include/
 
 doxygen:
   stage: test
@@ -114,6 +144,10 @@ doxygen:
   only:
     refs:
       - master
+    changes:
+      - src/
+      - lib/
+      - include/
 
 code_quality:
   image: docker:stable
@@ -169,6 +203,10 @@ pages:
   only:
     refs:
       - master
+    changes:
+      - src/
+      - lib/
+      - include/
 
 package:
   stage: deploy
@@ -176,6 +214,8 @@ package:
     - smoke-test
   script:
     - mkdir -p artifacts
+    - ls
+    - ls bazel-bin
     - cp bazel-bin/*.deb artifacts/
   artifacts:
     paths:
