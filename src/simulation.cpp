@@ -41,12 +41,12 @@ Simulation::Simulation(const std::string& map_file)
         // The 2 signifies a websocket event
         if (length && length > 2 && data != nullptr && data[0] == '4' && data[1] == '2')
         {
-            auto s = HasData(data);
+            const auto s = HasData(data);
             if (s != "")
             {
-                auto j = json::parse(s);
+                const auto j = json::parse(s);
 
-                std::string event = j[0].get<std::string>();
+                const auto event = j[0].get<std::string>();
 
                 if (event == "telemetry")
                 {
@@ -72,9 +72,7 @@ Simulation::Simulation(const std::string& map_file)
                     msgJson["next_x"] = next_x_vals;
                     msgJson["next_y"] = next_y_vals;
 
-                    auto msg = "42[\"control\"," + msgJson.dump() + "]";
-
-                    // this_thread::sleep_for(chrono::milliseconds(1000));
+                    const auto msg = "42[\"control\"," + msgJson.dump() + "]";
                     ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
                 }
             }
@@ -116,10 +114,10 @@ const std::string Simulation::HasData(const std::string& s)
 void Simulation::UpdateDataSource(const json& msg)
 {
     data_source_->SetMapCoordinates(map_waypoints_);
-    data_source_->SetSensorFusion(GetSensorFusion(msg[1]));
-    data_source_->SetVehicleDynamics(GetVehicleDynamics(msg[1]));
-    data_source_->SetPreviousPath(GetPreviousPathGlobal(msg[1]));
-    data_source_->SetPreviousPathEnd(GetPreviousPathEnd(msg[1]));
+    data_source_->SetSensorFusion(GetSensorFusion(msg));
+    data_source_->SetVehicleDynamics(GetVehicleDynamics(msg));
+    data_source_->SetPreviousPath(GetPreviousPathGlobal(msg));
+    data_source_->SetPreviousPathEnd(GetPreviousPathEnd(msg));
 }
 motion_planning::FrenetCoordinates Simulation::GetPreviousPathEnd(const json& msg) const
 {
@@ -142,12 +140,12 @@ motion_planning::PreviousPathGlobal Simulation::GetPreviousPathGlobal(const json
 motion_planning::VehicleDynamics Simulation::GetVehicleDynamics(const json& msg) const
 {
     motion_planning::VehicleDynamics vehicle_dynamics;
-    vehicle_dynamics.global_coords.x = msg[1]["x"];
-    vehicle_dynamics.global_coords.y = msg[1]["y"];
-    vehicle_dynamics.frenet_coords.s = msg[1]["s"];
-    vehicle_dynamics.frenet_coords.d = msg[1]["d"];
-    vehicle_dynamics.yaw = units::angle::degree_t{msg[1]["yaw"]};
-    vehicle_dynamics.velocity = units::velocity::meters_per_second_t{msg[1]["speed"]};
+    vehicle_dynamics.global_coords.x = msg["x"].get<double>();
+    vehicle_dynamics.global_coords.y = msg["y"].get<double>();
+    vehicle_dynamics.frenet_coords.s = msg["s"].get<double>();
+    vehicle_dynamics.frenet_coords.d = msg["d"].get<double>();
+    vehicle_dynamics.yaw = units::angle::degree_t{msg["yaw"].get<double>()};
+    vehicle_dynamics.velocity = units::velocity::meters_per_second_t{msg["speed"].get<double>()};
 
     return vehicle_dynamics;
 }
