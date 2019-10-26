@@ -19,3 +19,14 @@ Autonomous Driving Motion Planning (with conjunction with Udacity Simulator)
     cd uWebSockets
     git checkout e94b6e1
     ```
+
+* Simulator
+    * Download prebuilt binaries
+        * [Linux](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_linux.zip) 
+        * [MacOS](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_mac.zip)
+        * [MacOS Catalina v10.15](https://github.com/jinay1991/motion_planning/releases/download/v1.1/term3_sim_mac_catalina.zip)
+        * [Windows](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_windows.zip)
+
+## GitHub Mirror
+
+https://github.com/jinay1991/motion_planning/
