@@ -34,10 +34,10 @@ class Simulation
   private:
     void InitializeMap();
     void UpdateDataSource(const json& msg);
-    motion_planning::FrenetCoordinates GetPreviousPathEnd(const json& msg) const;
-    motion_planning::PreviousPathGlobal GetPreviousPathGlobal(const json& msg) const;
-    motion_planning::VehicleDynamics GetVehicleDynamics(const json& msg) const;
-    motion_planning::SensorFusion GetSensorFusion(const json& msg) const;
+    static const motion_planning::FrenetCoordinates GetPreviousPathEnd(const json& msg);
+    static const motion_planning::PreviousPathGlobal GetPreviousPathGlobal(const json& msg);
+    static const motion_planning::VehicleDynamics GetVehicleDynamics(const json& msg);
+    static const motion_planning::SensorFusion GetSensorFusion(const json& msg);
 
     /// @brief Checks if the SocketIO event has JSON data.
     ///        If there is data the JSON object in string format will be returned,

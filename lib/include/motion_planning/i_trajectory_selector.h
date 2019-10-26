@@ -12,7 +12,7 @@ namespace motion_planning
 class ITrajectorySelector
 {
   public:
-    virtual Trajectory GetSelectedTrajectory(const PrioritizedTrajectories prioritized_trajectories) const = 0;
+    virtual Trajectory GetSelectedTrajectory(const PrioritizedTrajectories& prioritized_trajectories) const = 0;
 };
 }  // namespace motion_planning
 #endif  /// MOTION_PLANNING_I_TRAJECTORY_SELECTOR_H_

@@ -111,6 +111,7 @@ const std::string Simulation::HasData(const std::string& s)
     }
     return "";
 }
+
 void Simulation::UpdateDataSource(const json& msg)
 {
     data_source_->SetMapCoordinates(map_waypoints_);
@@ -119,14 +120,16 @@ void Simulation::UpdateDataSource(const json& msg)
     data_source_->SetPreviousPath(GetPreviousPathGlobal(msg));
     data_source_->SetPreviousPathEnd(GetPreviousPathEnd(msg));
 }
-motion_planning::FrenetCoordinates Simulation::GetPreviousPathEnd(const json& msg) const
+
+const motion_planning::FrenetCoordinates Simulation::GetPreviousPathEnd(const json& msg)
 {
     const auto end_path_s = msg["end_path_s"].get<double>();
     const auto end_path_d = msg["end_path_d"].get<double>();
     const auto previous_path_end = motion_planning::FrenetCoordinates{end_path_s, end_path_d};
     return previous_path_end;
 }
-motion_planning::PreviousPathGlobal Simulation::GetPreviousPathGlobal(const json& msg) const
+
+const motion_planning::PreviousPathGlobal Simulation::GetPreviousPathGlobal(const json& msg)
 {
     const auto previous_path_x = msg["previous_path_x"];
     const auto previous_path_y = msg["previous_path_y"];
@@ -137,7 +140,8 @@ motion_planning::PreviousPathGlobal Simulation::GetPreviousPathGlobal(const json
     }
     return previous_path_global;
 }
-motion_planning::VehicleDynamics Simulation::GetVehicleDynamics(const json& msg) const
+
+const motion_planning::VehicleDynamics Simulation::GetVehicleDynamics(const json& msg)
 {
     motion_planning::VehicleDynamics vehicle_dynamics;
     vehicle_dynamics.global_coords.x = msg["x"].get<double>();
@@ -149,7 +153,8 @@ motion_planning::VehicleDynamics Simulation::GetVehicleDynamics(const json& msg)
 
     return vehicle_dynamics;
 }
-motion_planning::SensorFusion Simulation::GetSensorFusion(const json& msg) const
+
+const motion_planning::SensorFusion Simulation::GetSensorFusion(const json& msg)
 {
     const auto sensor_fusion = msg["sensor_fusion"];
     motion_planning::SensorFusion sf;
