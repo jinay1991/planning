@@ -1,9 +1,10 @@
 ///
 /// @file
 ///
+#include <sstream>
+
 #include <logging/logging.h>
 #include <motion_planning/trajectory_prioritizer.h>
-#include <sstream>
 
 namespace motion_planning
 {

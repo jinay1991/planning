@@ -1,11 +1,10 @@
 ///
 /// @file
 ///
+#include <sstream>
 
 #include <logging/logging.h>
 #include <motion_planning/trajectory_evaluator.h>
-#include <algorithm>
-#include <sstream>
 
 namespace motion_planning
 {
@@ -18,16 +17,18 @@ RatedTrajectories TrajectoryEvaluator::GetRatedTrajectories(const PlannedTraject
 {
     RatedTrajectories rated_trajectories{};
 
+    std::copy_if(planned_trajectories.begin(), planned_trajectories.end(), std::back_inserter(rated_trajectories),
+                 [&](const auto& trajectory) { return lane_evaluator_->IsValidLane(trajectory.lane_id); });
+
     const auto adjust_costs = [&](const auto& trajectory) {
         auto rated_trajectory = trajectory;
-        if (!lane_evaluator_->IsDrivableLane(trajectory.lane_id))
+        if (trajectory.lane_id != LaneInformation::LaneId::kEgo)
         {
-            rated_trajectory.cost = std::numeric_limits<double>::infinity();
+            rated_trajectory.cost += 1;
         }
         return rated_trajectory;
     };
-    std::transform(planned_trajectories.begin(), planned_trajectories.end(), std::back_inserter(rated_trajectories),
-                   adjust_costs);
+    std::transform(rated_trajectories.begin(), rated_trajectories.end(), rated_trajectories.begin(), adjust_costs);
 
     std::stringstream log_stream;
     log_stream << "Evaluated trajectories: " << rated_trajectories.size() << std::endl;

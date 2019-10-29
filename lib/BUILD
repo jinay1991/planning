@@ -68,7 +68,10 @@ cc_test(
         "-Werror",
     ],
     includes = ["test/include"],
-    tags = ["test"],
+    tags = [
+        "test",
+        "unit",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         ":motion_planning",
@@ -88,7 +91,10 @@ cc_test(
         "-Werror",
     ],
     includes = ["test/include"],
-    tags = ["test"],
+    tags = [
+        "component",
+        "test",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         ":motion_planning",

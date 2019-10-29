@@ -1,20 +1,13 @@
 ///
 /// @file
 ///
-
-#include <logging/logging.h>
-#include <motion_planning/maneuver_generator.h>
 #include <motion_planning/motion_planning.h>
-#include <motion_planning/trajectory_evaluator.h>
-#include <motion_planning/trajectory_planner.h>
-#include <motion_planning/trajectory_prioritizer.h>
-#include <motion_planning/trajectory_selector.h>
-#include <iostream>
 
 namespace motion_planning
 {
 MotionPlanning::MotionPlanning(std::shared_ptr<IDataSource>& data_source)
-    : maneuver_generator_{std::make_unique<ManeuverGenerator>()},
+    : velocity_planner_{std::make_unique<VelocityPlanner>(data_source)},
+      maneuver_generator_{std::make_unique<ManeuverGenerator>()},
       trajectory_planner_{std::make_unique<TrajectoryPlanner>(data_source)},
       trajectory_evaluator_{std::make_unique<TrajectoryEvaluator>(data_source)},
       trajectory_prioritizer_{std::make_unique<TrajectoryPrioritizer>()},
@@ -24,7 +17,10 @@ MotionPlanning::MotionPlanning(std::shared_ptr<IDataSource>& data_source)
 
 void MotionPlanning::GenerateTrajectories()
 {
-    const auto maneuvers = maneuver_generator_->Generate(units::velocity::meters_per_second_t{20});
+    velocity_planner_->CalculateTargetVelocity();
+    const auto target_velocity = velocity_planner_->GetTargetVelocity();
+
+    const auto maneuvers = maneuver_generator_->Generate(target_velocity);
 
     planned_trajectories_ = trajectory_planner_->GetPlannedTrajectories(maneuvers);
 

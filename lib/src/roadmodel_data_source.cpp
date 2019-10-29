@@ -1,7 +1,6 @@
 ///
 /// @file
 ///
-
 #include <motion_planning/roadmodel_data_source.h>
 
 namespace motion_planning
@@ -30,15 +29,19 @@ void RoadModelDataSource::SetSensorFusion(const SensorFusion& sensor_fusion) { s
 GlobalLaneId RoadModelDataSource::GetGlobalLaneId() const
 {
     const auto coords = vehicle_dynamics_.frenet_coords;
-    if (coords.d > 0 && coords.d < 4)  // left lane (near to double solid lane marking)
+    const auto is_left_lane = (coords.d > 0 && coords.d < 4);
+    const auto is_center_lane = (coords.d > 4 && coords.d < 8);
+    const auto is_right_lane = (coords.d > 8 && coords.d < 12);
+
+    if (is_left_lane)
     {
         return GlobalLaneId::kLeft;
     }
-    else if (coords.d > 4 && coords.d < 8)  // center lane
+    else if (is_center_lane)
     {
         return GlobalLaneId::kCenter;
     }
-    else if (coords.d > 8 && coords.d < 12)  // right lane (near to the edge of the road)
+    else if (is_right_lane)
     {
         return GlobalLaneId::kRight;
     }

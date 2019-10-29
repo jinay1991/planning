@@ -1,6 +1,7 @@
 ///
 /// @file
 ///
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <motion_planning/motion_planning.h>
@@ -39,8 +40,8 @@ TEST_F(MotionPlanningSpecFixture, GivenTypicalInputs_WhenGenerateTrajectories_Th
 
     const auto actual = motion_planning_->GetSelectedTrajectory();
     EXPECT_GT(actual.waypoints.size(), 0U);
-    EXPECT_EQ(actual.lane_id, LaneInformation::LaneId::kRight);
-    EXPECT_EQ(actual.global_lane_id, LaneInformation::GlobalLaneId::kRight);
+    EXPECT_EQ(actual.lane_id, LaneInformation::LaneId::kEgo);
+    EXPECT_EQ(actual.global_lane_id, LaneInformation::GlobalLaneId::kCenter);
 }
 
 // TEST_F(MotionPlanningFixture, GivenTypicalInputs_WhenGenerateManeuvers_ThenReturnThreeManeuvers) {}

@@ -2,11 +2,12 @@
 /// @file
 ///
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <units.h>
+
 #include <motion_planning/roadmodel_data_source.h>
 #include <motion_planning/trajectory_evaluator.h>
-#include <motion_planning/trajectory_planner.h>
-#include <units.h>
 
 #include "data_source_builder.h"
 #include "trajectory_builder.h"
@@ -58,7 +59,7 @@ TEST_F(TrajectoryEvaluatorSpec, GivenTypicalPlannedTrajectories_WhenEvaluated_Th
     EXPECT_EQ(actual.size(), planned_trajectories_.size());
 }
 
-TEST_F(TrajectoryEvaluatorSpec, GivenTypicalPlannedTrajectories_WhenNoObject_ThenReturnSameCostTrajectories)
+TEST_F(TrajectoryEvaluatorSpec, DISABLED_GivenTypicalPlannedTrajectories_WhenNoObject_ThenReturnSameCostTrajectories)
 {
     const auto actual = TrajectoryEvaluator(DataSourceBuilder().Build()).GetRatedTrajectories(planned_trajectories_);
 
@@ -96,7 +97,7 @@ class TrajectoryEvaluatorSpecFixture : public ::testing::TestWithParam<std::tupl
 };
 
 TEST_P(TrajectoryEvaluatorSpecFixture,
-       GivenTypicalPlannedTrajectories_WhenObjectInLane_ThenReturnHighCostToTrajectoryOnThatLane)
+       DISABLED_GivenTypicalPlannedTrajectories_WhenObjectInLane_ThenReturnHighCostToTrajectoryOnThatLane)
 {
     const auto ego_global_lane_id = std::get<0>(GetParam());
     const auto obj_global_lane_id = std::get<1>(GetParam());

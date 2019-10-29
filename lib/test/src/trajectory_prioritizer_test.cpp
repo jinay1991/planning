@@ -1,11 +1,12 @@
 ///
 /// @file
 ///
-
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <units.h>
+
 #include <motion_planning/trajectory_planner.h>
 #include <motion_planning/trajectory_prioritizer.h>
-#include <units.h>
 
 #include "trajectory_builder.h"
 

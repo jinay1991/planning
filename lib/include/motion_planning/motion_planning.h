@@ -4,6 +4,8 @@
 #ifndef MOTION_PLANNING_MOTION_PLANNING_H_
 #define MOTION_PLANNING_MOTION_PLANNING_H_
 
+#include <memory>
+
 #include <motion_planning/domain_model/lane.h>
 #include <motion_planning/domain_model/sensor_fusion.h>
 #include <motion_planning/domain_model/trajectory.h>
@@ -17,9 +19,11 @@
 #include <motion_planning/i_trajectory_selector.h>
 #include <motion_planning/maneuver.h>
 #include <motion_planning/maneuver_generator.h>
+#include <motion_planning/trajectory_evaluator.h>
 #include <motion_planning/trajectory_planner.h>
 #include <motion_planning/trajectory_prioritizer.h>
 #include <motion_planning/trajectory_selector.h>
+#include <motion_planning/velocity_planner/velocity_planner.h>
 
 namespace motion_planning
 {
@@ -36,6 +40,7 @@ class MotionPlanning
   private:
     std::shared_ptr<IDataSource> data_source_;
 
+    std::unique_ptr<VelocityPlanner> velocity_planner_;
     std::unique_ptr<IManeuverGenerator> maneuver_generator_;
     std::unique_ptr<ITrajectoryPlanner> trajectory_planner_;
     std::unique_ptr<ITrajectoryEvaluator> trajectory_evaluator_;
