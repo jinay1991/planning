@@ -1,4 +1,4 @@
-# Motion Planning
+# Motion Planning 
 
 [![pipeline status](https://gitlab.com/jinay1991/motion_planning/badges/master/pipeline.svg)](https://gitlab.com/jinay1991/motion_planning/commits/master)
 
@@ -7,7 +7,7 @@
 [Scrum Board](https://gitlab.com/jinay1991/motion_planning/-/boards)
 
 
-Autonomous Driving Motion Planning (with conjunction with Udacity Simulator)
+Autonomous Driving Motion Planning (with conjunction with Udacity Simulator) **WIP**
 
 ## Dependencies
 
