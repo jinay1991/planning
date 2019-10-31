@@ -6,6 +6,7 @@
 
 #include <units.h>
 #include <algorithm>
+#include <iterator>
 #include <memory>
 
 #include <motion_planning/i_data_source.h>
