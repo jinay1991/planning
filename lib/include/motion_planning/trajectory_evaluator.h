@@ -8,6 +8,7 @@
 #include <motion_planning/i_data_source.h>
 #include <motion_planning/i_trajectory_evaluator.h>
 #include <motion_planning/lane_evaluator/lane_evaluator.h>
+#include <algorithm>
 #include <memory>
 
 namespace motion_planning
