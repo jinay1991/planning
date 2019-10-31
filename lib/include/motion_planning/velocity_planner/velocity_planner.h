@@ -5,6 +5,7 @@
 #define MOTION_PLANNING_VELOCITY_PLANNER_H_
 
 #include <units.h>
+#include <algorithm>
 #include <memory>
 
 #include <motion_planning/i_data_source.h>
