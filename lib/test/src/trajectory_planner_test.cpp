@@ -40,5 +40,5 @@ TEST_F(TrajectoryPlannerSpec, GivenTypicalManeuvers_WhenEvaluated_ThenReturnSame
 
     EXPECT_EQ(actual.size(), maneuvers_.size());
 }
-}  // namespace 
+}  // namespace
 }  // namespace motion_planning
