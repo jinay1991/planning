@@ -52,28 +52,6 @@ INSTANTIATE_TEST_CASE_P(LaneEvaluator, GetLocalLaneSpec,
                                           std::make_tuple(GlobalLaneId::kRight, GlobalLaneId::kLeft, LaneId::kInvalid),
                                           std::make_tuple(GlobalLaneId::kRight, GlobalLaneId::kRight, LaneId::kEgo)));
 
-class GetGlobalLaneSpec : public ::testing::TestWithParam<std::tuple<FrenetCoordinates, GlobalLaneId>>
-{
-  protected:
-    virtual void SetUp() override { lane_evaluator_ = std::make_unique<LaneEvaluator>(DataSourceBuilder().Build()); }
-
-    std::unique_ptr<LaneEvaluator> lane_evaluator_;
-};
-TEST_P(GetGlobalLaneSpec, GivenTypicalFrenetCoordinates_WhenGetGlobalLaneId_ThenReturnGlobalLaneId)
-{
-    const auto actual = lane_evaluator_->GetGlobalLaneId(std::get<0>(GetParam()));
-
-    EXPECT_EQ(actual, std::get<1>(GetParam()));
-}
-INSTANTIATE_TEST_CASE_P(LaneEvaluator, GetGlobalLaneSpec,
-                        ::testing::Values(std::make_tuple(FrenetCoordinates{0, 0}, GlobalLaneId::kInvalid),
-                                          std::make_tuple(FrenetCoordinates{0, 2}, GlobalLaneId::kLeft),
-                                          std::make_tuple(FrenetCoordinates{0, 4}, GlobalLaneId::kInvalid),
-                                          std::make_tuple(FrenetCoordinates{0, 6}, GlobalLaneId::kCenter),
-                                          std::make_tuple(FrenetCoordinates{0, 8}, GlobalLaneId::kInvalid),
-                                          std::make_tuple(FrenetCoordinates{0, 10}, GlobalLaneId::kRight),
-                                          std::make_tuple(FrenetCoordinates{0, 12}, GlobalLaneId::kInvalid)));
-
 class IsObjectNearSpec : public ::testing::TestWithParam<std::tuple<FrenetCoordinates, FrenetCoordinates, bool>>
 {
   protected:

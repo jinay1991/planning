@@ -26,22 +26,21 @@ void RoadModelDataSource::SetPreviousPathEnd(const FrenetCoordinates& frenet_coo
 
 void RoadModelDataSource::SetSensorFusion(const SensorFusion& sensor_fusion) { sensor_fusion_ = sensor_fusion; }
 
-GlobalLaneId RoadModelDataSource::GetGlobalLaneId() const
-{
-    const auto coords = vehicle_dynamics_.frenet_coords;
-    const auto is_left_lane = (coords.d > 0 && coords.d < 4);
-    const auto is_center_lane = (coords.d > 4 && coords.d < 8);
-    const auto is_right_lane = (coords.d > 8 && coords.d < 12);
+bool RoadModelDataSource::IsLeftLane(const FrenetCoordinates& coords) const { return (coords.d > 0 && coords.d < 4); }
+bool RoadModelDataSource::IsCenterLane(const FrenetCoordinates& coords) const { return (coords.d > 4 && coords.d < 8); }
+bool RoadModelDataSource::IsRightLane(const FrenetCoordinates& coords) const { return (coords.d > 8 && coords.d < 12); }
 
-    if (is_left_lane)
+GlobalLaneId RoadModelDataSource::GetGlobalLaneId(const FrenetCoordinates& coords) const
+{
+    if (IsLeftLane(coords))
     {
         return GlobalLaneId::kLeft;
     }
-    else if (is_center_lane)
+    else if (IsCenterLane(coords))
     {
         return GlobalLaneId::kCenter;
     }
-    else if (is_right_lane)
+    else if (IsRightLane(coords))
     {
         return GlobalLaneId::kRight;
     }
@@ -51,6 +50,7 @@ GlobalLaneId RoadModelDataSource::GetGlobalLaneId() const
     }
 }
 
+GlobalLaneId RoadModelDataSource::GetGlobalLaneId() const { return GetGlobalLaneId(vehicle_dynamics_.frenet_coords); }
 FrenetCoordinates RoadModelDataSource::GetPreviousPathEnd() const { return previous_path_end_frenet_; }
 VehicleDynamics RoadModelDataSource::GetVehicleDynamics() const { return vehicle_dynamics_; }
 MapCoordinatesList RoadModelDataSource::GetMapCoordinates() const { return map_coordinates_; }

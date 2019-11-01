@@ -26,6 +26,7 @@ class IDataSource
     virtual void SetPreviousPathEnd(const FrenetCoordinates& frenet_coords) = 0;
     virtual void SetSensorFusion(const SensorFusion& sensor_fusion) = 0;
 
+    virtual GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& frenet_coords) const = 0;
     virtual GlobalLaneId GetGlobalLaneId() const = 0;
     virtual FrenetCoordinates GetPreviousPathEnd() const = 0;
     virtual VehicleDynamics GetVehicleDynamics() const = 0;

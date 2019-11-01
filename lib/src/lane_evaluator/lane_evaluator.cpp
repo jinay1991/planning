@@ -11,30 +11,6 @@ namespace motion_planning
 {
 LaneEvaluator::LaneEvaluator(std::shared_ptr<IDataSource>& data_source) : data_source_(data_source) {}
 
-bool LaneEvaluator::IsLeftLane(const FrenetCoordinates& coords) const { return (coords.d > 0 && coords.d < 4); }
-bool LaneEvaluator::IsCenterLane(const FrenetCoordinates& coords) const { return (coords.d > 4 && coords.d < 8); }
-bool LaneEvaluator::IsRightLane(const FrenetCoordinates& coords) const { return (coords.d > 8 && coords.d < 12); }
-
-LaneInformation::GlobalLaneId LaneEvaluator::GetGlobalLaneId(const FrenetCoordinates& coords) const
-{
-    if (IsLeftLane(coords))
-    {
-        return LaneInformation::GlobalLaneId::kLeft;
-    }
-    else if (IsCenterLane(coords))
-    {
-        return LaneInformation::GlobalLaneId::kCenter;
-    }
-    else if (IsRightLane(coords))
-    {
-        return LaneInformation::GlobalLaneId::kRight;
-    }
-    else
-    {
-        return LaneInformation::GlobalLaneId::kInvalid;
-    }
-}
-
 bool LaneEvaluator::IsObjectNear(const FrenetCoordinates& ego_position, const FrenetCoordinates& obj_position) const
 {
     const auto is_near = (std::fabs(obj_position.s - ego_position.s) < gkFarDistanceThreshold.value());
@@ -82,7 +58,7 @@ bool LaneEvaluator::IsDrivableLane(const LaneInformation::LaneId& lane_id) const
         // Object Properties
         const auto obj_velocity = obj.velocity;
         const auto obj_position = obj.frenet_coords;
-        const auto obj_global_lane_id = GetGlobalLaneId(obj_position);
+        const auto obj_global_lane_id = data_source_->GetGlobalLaneId(obj_position);
         const auto obj_lane_id = GetLocalLaneId(obj_global_lane_id);
         const auto obj_position_predicted =
             FrenetCoordinates{obj_position.s + (previous_path_size * 0.02 * obj_velocity.value()), obj_position.d};

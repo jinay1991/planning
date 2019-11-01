@@ -14,20 +14,25 @@ class RoadModelDataSource : public IDataSource
   public:
     RoadModelDataSource();
 
-    void SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics) override;
-    void SetMapCoordinates(const MapCoordinatesList& map_coordinates) override;
-    void SetPreviousPath(const PreviousPathGlobal& previous_path_global) override;
-    void SetPreviousPathEnd(const FrenetCoordinates& frenet_coords) override;
-    void SetSensorFusion(const SensorFusion& sensor_fusion) override;
+    virtual void SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics) override;
+    virtual void SetMapCoordinates(const MapCoordinatesList& map_coordinates) override;
+    virtual void SetPreviousPath(const PreviousPathGlobal& previous_path_global) override;
+    virtual void SetPreviousPathEnd(const FrenetCoordinates& frenet_coords) override;
+    virtual void SetSensorFusion(const SensorFusion& sensor_fusion) override;
 
-    GlobalLaneId GetGlobalLaneId() const override;
-    FrenetCoordinates GetPreviousPathEnd() const override;
-    VehicleDynamics GetVehicleDynamics() const override;
-    MapCoordinatesList GetMapCoordinates() const override;
-    PreviousPathGlobal GetPreviousPathInGlobalCoords() const override;
-    SensorFusion GetSensorFusion() const override;
+    virtual GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& frenet_coords) const override;
+    virtual GlobalLaneId GetGlobalLaneId() const override;
+    virtual FrenetCoordinates GetPreviousPathEnd() const override;
+    virtual VehicleDynamics GetVehicleDynamics() const override;
+    virtual MapCoordinatesList GetMapCoordinates() const override;
+    virtual PreviousPathGlobal GetPreviousPathInGlobalCoords() const override;
+    virtual SensorFusion GetSensorFusion() const override;
 
   private:
+    virtual bool IsLeftLane(const FrenetCoordinates& coords) const;
+    virtual bool IsCenterLane(const FrenetCoordinates& coords) const;
+    virtual bool IsRightLane(const FrenetCoordinates& coords) const;
+
     GlobalLaneId global_lane_id_{GlobalLaneId::kInvalid};
     VehicleDynamics vehicle_dynamics_{};
     MapCoordinatesList map_coordinates_{};
