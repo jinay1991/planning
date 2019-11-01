@@ -4,12 +4,13 @@
 #ifndef MOTION_PLANNING_TRAJECTORY_EVALUATOR_H_
 #define MOTION_PLANNING_TRAJECTORY_EVALUATOR_H_
 
-#include <motion_planning/domain_model/sensor_fusion.h>
-#include <motion_planning/i_data_source.h>
-#include <motion_planning/i_trajectory_evaluator.h>
-#include <motion_planning/lane_evaluator/lane_evaluator.h>
 #include <algorithm>
 #include <memory>
+
+#include "motion_planning/domain_model/sensor_fusion.h"
+#include "motion_planning/i_data_source.h"
+#include "motion_planning/i_trajectory_evaluator.h"
+#include "motion_planning/lane_evaluator/lane_evaluator.h"
 
 namespace motion_planning
 {

@@ -3,8 +3,8 @@
 ///
 #include <sstream>
 
-#include <logging/logging.h>
-#include <motion_planning/trajectory_prioritizer.h>
+#include "logging/logging.h"
+#include "motion_planning/trajectory_prioritizer.h"
 
 namespace motion_planning
 {

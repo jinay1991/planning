@@ -5,8 +5,9 @@
 #ifndef MOTION_PLANNING_DOMAIN_MODEL_SENSOR_FUSION_H_
 #define MOTION_PLANNING_DOMAIN_MODEL_SENSOR_FUSION_H_
 
-#include <motion_planning/domain_model/vehicle_dynamics.h>
 #include <vector>
+
+#include "motion_planning/domain_model/vehicle_dynamics.h"
 
 namespace motion_planning
 {

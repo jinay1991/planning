@@ -5,10 +5,11 @@
 #ifndef SENSOR_FUSION_BUILDER_H_
 #define SENSOR_FUSION_BUILDER_H_
 
-#include <motion_planning/domain_model/sensor_fusion.h>
-#include <motion_planning/domain_model/vehicle_dynamics.h>
 #include <units.h>
 #include <cstdint>
+
+#include "motion_planning/domain_model/sensor_fusion.h"
+#include "motion_planning/domain_model/vehicle_dynamics.h"
 
 namespace motion_planning
 {

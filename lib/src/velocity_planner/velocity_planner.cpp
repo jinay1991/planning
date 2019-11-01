@@ -1,8 +1,7 @@
 ///
 /// @file
 ///
-
-#include <motion_planning/velocity_planner/velocity_planner.h>
+#include "motion_planning/velocity_planner/velocity_planner.h"
 
 namespace motion_planning
 {

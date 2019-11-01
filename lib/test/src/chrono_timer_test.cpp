@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 #include <thread>
 
-#include <timer/chrono_timer.h>
+#include "timer/chrono_timer.h"
 
 namespace timer
 {

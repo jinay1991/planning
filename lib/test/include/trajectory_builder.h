@@ -4,9 +4,10 @@
 #ifndef TRAJECTORY_BUILDER_H_
 #define TRAJECTORY_BUILDER_H_
 
-#include <motion_planning/domain_model/trajectory.h>
-#include <motion_planning/maneuver.h>
 #include <units.h>
+
+#include "motion_planning/domain_model/trajectory.h"
+#include "motion_planning/maneuver.h"
 
 using namespace motion_planning;
 

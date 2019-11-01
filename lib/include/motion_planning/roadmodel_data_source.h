@@ -5,7 +5,7 @@
 #ifndef MOTION_PLANNING_ROADMODEL_DATA_SOURCE_H_
 #define MOTION_PLANNING_ROADMODEL_DATA_SOURCE_H_
 
-#include <motion_planning/i_data_source.h>
+#include "motion_planning/i_data_source.h"
 
 namespace motion_planning
 {

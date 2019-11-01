@@ -4,9 +4,10 @@
 #ifndef MOTION_PLANNING_DOMAIN_MODEL_VEHICLE_DYNAMICS_H_
 #define MOTION_PLANNING_DOMAIN_MODEL_VEHICLE_DYNAMICS_H_
 
-#include <motion_planning/domain_model/lane.h>
 #include <units.h>
 #include <cstdint>
+
+#include "motion_planning/domain_model/lane.h"
 
 namespace motion_planning
 {

@@ -9,7 +9,7 @@
 #include <iterator>
 #include <memory>
 
-#include <motion_planning/i_data_source.h>
+#include "motion_planning/i_data_source.h"
 
 namespace motion_planning
 {

@@ -1,8 +1,8 @@
 ///
 /// @file
 ///
-#include <logging/logging.h>
-#include <motion_planning/trajectory_selector.h>
+#include "motion_planning/trajectory_selector.h"
+#include "logging/logging.h"
 
 namespace motion_planning
 {

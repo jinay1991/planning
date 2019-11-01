@@ -6,8 +6,8 @@
 #include <gtest/gtest.h>
 #include <units.h>
 
-#include <motion_planning/roadmodel_data_source.h>
-#include <motion_planning/trajectory_evaluator.h>
+#include "motion_planning/roadmodel_data_source.h"
+#include "motion_planning/trajectory_evaluator.h"
 
 #include "data_source_builder.h"
 #include "trajectory_builder.h"

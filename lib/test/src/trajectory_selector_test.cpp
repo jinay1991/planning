@@ -4,8 +4,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <motion_planning/trajectory_prioritizer.h>
-#include <motion_planning/trajectory_selector.h>
+#include "motion_planning/trajectory_prioritizer.h"
+#include "motion_planning/trajectory_selector.h"
 
 #include "trajectory_builder.h"
 

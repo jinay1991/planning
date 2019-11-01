@@ -4,7 +4,7 @@
 #ifndef TIMER_TIMER_H_
 #define TIMER_TIMER_H_
 
-#include <timer/i_timer.h>
+#include "timer/i_timer.h"
 
 namespace timer
 {

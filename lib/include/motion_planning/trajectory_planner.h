@@ -4,11 +4,12 @@
 #ifndef MOTION_PLANNING_TRAJECTORY_PLANNER_H_
 #define MOTION_PLANNING_TRAJECTORY_PLANNER_H_
 
-#include <logging/logging.h>
-#include <motion_planning/i_data_source.h>
-#include <motion_planning/i_trajectory_planner.h>
 #include <spline.h>
 #include <memory>
+
+#include "logging/logging.h"
+#include "motion_planning/i_data_source.h"
+#include "motion_planning/i_trajectory_planner.h"
 
 namespace motion_planning
 {

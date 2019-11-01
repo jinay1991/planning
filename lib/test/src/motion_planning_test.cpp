@@ -4,8 +4,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <motion_planning/motion_planning.h>
-#include <motion_planning/roadmodel_data_source.h>
+#include "motion_planning/motion_planning.h"
+#include "motion_planning/roadmodel_data_source.h"
 
 #include "data_source_builder.h"
 

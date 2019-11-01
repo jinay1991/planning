@@ -5,10 +5,11 @@
 #ifndef MOTION_PLANNING_I_TRAJECTORY_PLANNER_H_
 #define MOTION_PLANNING_I_TRAJECTORY_PLANNER_H_
 
-#include <motion_planning/domain_model/trajectory.h>
-#include <motion_planning/domain_model/vehicle_dynamics.h>
-#include <motion_planning/maneuver.h>
 #include <vector>
+
+#include "motion_planning/domain_model/trajectory.h"
+#include "motion_planning/domain_model/vehicle_dynamics.h"
+#include "motion_planning/maneuver.h"
 
 namespace motion_planning
 {

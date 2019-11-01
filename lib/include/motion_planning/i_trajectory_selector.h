@@ -4,8 +4,8 @@
 #ifndef MOTION_PLANNING_I_TRAJECTORY_SELECTOR_H_
 #define MOTION_PLANNING_I_TRAJECTORY_SELECTOR_H_
 
-#include <motion_planning/domain_model/trajectory.h>
-#include <motion_planning/i_trajectory_prioritizer.h>
+#include "motion_planning/domain_model/trajectory.h"
+#include "motion_planning/i_trajectory_prioritizer.h"
 
 namespace motion_planning
 {

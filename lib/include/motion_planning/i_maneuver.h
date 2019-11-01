@@ -5,8 +5,9 @@
 #ifndef MOTION_PLANNING_I_MANEUVER_H_
 #define MOTION_PLANNING_I_MANEUVER_H_
 
-#include <motion_planning/domain_model/lane.h>
 #include <units.h>
+
+#include "motion_planning/domain_model/lane.h"
 
 namespace motion_planning
 {

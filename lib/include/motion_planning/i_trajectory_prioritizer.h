@@ -4,9 +4,10 @@
 #ifndef MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H_
 #define MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H_
 
-#include <motion_planning/domain_model/trajectory.h>
-#include <motion_planning/i_trajectory_planner.h>
 #include <queue>
+
+#include "motion_planning/domain_model/trajectory.h"
+#include "motion_planning/i_trajectory_planner.h"
 
 namespace motion_planning
 {

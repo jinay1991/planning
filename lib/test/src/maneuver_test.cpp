@@ -5,7 +5,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <motion_planning/maneuver.h>
+#include "motion_planning/maneuver.h"
 
 using namespace motion_planning;
 

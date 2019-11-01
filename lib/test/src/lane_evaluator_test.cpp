@@ -4,14 +4,13 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <sstream>
 
-#include <motion_planning/roadmodel_data_source.h>
+#include "motion_planning/roadmodel_data_source.h"
 
 #include "data_source_builder.h"
 
 #define private public
-#include <motion_planning/lane_evaluator/lane_evaluator.h>
+#include "motion_planning/lane_evaluator/lane_evaluator.h"
 
 using namespace motion_planning;
 

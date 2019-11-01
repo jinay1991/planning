@@ -5,10 +5,11 @@
 #ifndef MOTION_PLANNING_I_TRAJECTORY_EVALUATOR_H_
 #define MOTION_PLANNING_I_TRAJECTORY_EVALUATOR_H_
 
-#include <motion_planning/domain_model/sensor_fusion.h>
-#include <motion_planning/domain_model/trajectory.h>
-#include <motion_planning/i_trajectory_planner.h>
 #include <vector>
+
+#include "motion_planning/domain_model/sensor_fusion.h"
+#include "motion_planning/domain_model/trajectory.h"
+#include "motion_planning/i_trajectory_planner.h"
 
 namespace motion_planning
 {

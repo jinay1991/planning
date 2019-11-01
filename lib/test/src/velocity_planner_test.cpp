@@ -5,8 +5,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <motion_planning/domain_model/lane.h>
-#include <motion_planning/velocity_planner/velocity_planner.h>
+#include "motion_planning/domain_model/lane.h"
+#include "motion_planning/velocity_planner/velocity_planner.h"
 
 #include "data_source_builder.h"
 
