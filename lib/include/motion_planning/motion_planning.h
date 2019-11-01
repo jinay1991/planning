@@ -31,7 +31,6 @@ class MotionPlanning
 {
   public:
     explicit MotionPlanning(std::shared_ptr<IDataSource>& data_source);
-    ~MotionPlanning() = default;
 
     void GenerateTrajectories();
 

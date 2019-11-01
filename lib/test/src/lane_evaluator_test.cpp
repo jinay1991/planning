@@ -19,6 +19,34 @@ namespace
 using GlobalLaneId = LaneInformation::GlobalLaneId;
 using LaneId = LaneInformation::LaneId;
 
+class IsValidLaneIdSpec : public ::testing::TestWithParam<std::tuple<GlobalLaneId, LaneId, bool>>
+{
+  protected:
+    virtual void SetUp() override
+    {
+        lane_evaluator_ =
+            std::make_unique<LaneEvaluator>(DataSourceBuilder().WithGlobalLaneId(std::get<0>(GetParam())).Build());
+    }
+
+    std::unique_ptr<LaneEvaluator> lane_evaluator_;
+};
+TEST_P(IsValidLaneIdSpec, GivenTypicalLandId_WhenEvaluatedIsValidLaneId_ThenReturnBoolean)
+{
+    const auto actual = lane_evaluator_->IsValidLane(std::get<1>(GetParam()));
+
+    const auto expected = std::get<2>(GetParam());
+    EXPECT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_CASE_P(LaneEvaluator, IsValidLaneIdSpec,
+                        ::testing::Values(std::make_tuple(GlobalLaneId::kCenter, LaneId::kEgo, true),
+                                          std::make_tuple(GlobalLaneId::kCenter, LaneId::kLeft, true),
+                                          std::make_tuple(GlobalLaneId::kCenter, LaneId::kRight, true),
+                                          std::make_tuple(GlobalLaneId::kLeft, LaneId::kLeft, false),
+                                          std::make_tuple(GlobalLaneId::kLeft, LaneId::kEgo, true),
+                                          std::make_tuple(GlobalLaneId::kRight, LaneId::kRight, false),
+                                          std::make_tuple(GlobalLaneId::kRight, LaneId::kEgo, true),
+                                          std::make_tuple(GlobalLaneId::kCenter, LaneId::kInvalid, false)));
+
 class GetLocalLaneSpec : public ::testing::TestWithParam<std::tuple<GlobalLaneId, GlobalLaneId, LaneId>>
 {
   protected:
@@ -76,7 +104,7 @@ INSTANTIATE_TEST_CASE_P(
         std::make_tuple(FrenetCoordinates{0, 0}, FrenetCoordinates{gkFarDistanceThreshold.value(), 0}, false),
         std::make_tuple(FrenetCoordinates{0, 0}, FrenetCoordinates{gkFarDistanceThreshold.value() + 15, 0}, false)));
 
-class IsDrivableSpec : public ::testing::TestWithParam<std::tuple<GlobalLaneId, GlobalLaneId, bool>>
+class IsDrivableSpec : public ::testing::TestWithParam<std::tuple<GlobalLaneId, GlobalLaneId, LaneId, bool>>
 {
   protected:
     virtual void SetUp() override
@@ -93,27 +121,31 @@ class IsDrivableSpec : public ::testing::TestWithParam<std::tuple<GlobalLaneId, 
 
 TEST_P(IsDrivableSpec, GivenTypicalSensorFusion_WhenCheckedIsDrivableLane_ThenReturnBasedOnCollisionAvoidance)
 {
-    const auto actual = lane_evaluator_->IsDrivableLane(LaneId::kEgo);
+    const auto actual = lane_evaluator_->IsDrivableLane(std::get<2>(GetParam()));
 
-    const auto expected = std::get<2>(GetParam());
+    const auto expected = std::get<3>(GetParam());
     EXPECT_EQ(actual, expected);
 }
-INSTANTIATE_TEST_CASE_P(LaneEvaluator, IsDrivableSpec,
-                        ::testing::Values(std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kCenter, false),
-                                          std::make_tuple(GlobalLaneId::kRight, GlobalLaneId::kCenter, true),
-                                          std::make_tuple(GlobalLaneId::kLeft, GlobalLaneId::kCenter, true),
-                                          std::make_tuple(GlobalLaneId::kInvalid, GlobalLaneId::kCenter, false),
-                                          std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kLeft, true),
-                                          std::make_tuple(GlobalLaneId::kRight, GlobalLaneId::kLeft, true),
-                                          std::make_tuple(GlobalLaneId::kLeft, GlobalLaneId::kLeft, false),
-                                          std::make_tuple(GlobalLaneId::kInvalid, GlobalLaneId::kLeft, false),
-                                          std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kRight, true),
-                                          std::make_tuple(GlobalLaneId::kRight, GlobalLaneId::kRight, false),
-                                          std::make_tuple(GlobalLaneId::kLeft, GlobalLaneId::kRight, true),
-                                          std::make_tuple(GlobalLaneId::kInvalid, GlobalLaneId::kRight, false),
-                                          std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kInvalid, true),
-                                          std::make_tuple(GlobalLaneId::kRight, GlobalLaneId::kInvalid, true),
-                                          std::make_tuple(GlobalLaneId::kLeft, GlobalLaneId::kInvalid, true),
-                                          std::make_tuple(GlobalLaneId::kInvalid, GlobalLaneId::kInvalid, false)));
+INSTANTIATE_TEST_CASE_P(
+    LaneEvaluator, IsDrivableSpec,
+    ::testing::Values(std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kCenter, LaneId::kEgo, false),
+                      std::make_tuple(GlobalLaneId::kRight, GlobalLaneId::kCenter, LaneId::kEgo, true),
+                      std::make_tuple(GlobalLaneId::kLeft, GlobalLaneId::kCenter, LaneId::kEgo, true),
+                      std::make_tuple(GlobalLaneId::kInvalid, GlobalLaneId::kCenter, LaneId::kEgo, false),
+                      std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kLeft, LaneId::kEgo, true),
+                      std::make_tuple(GlobalLaneId::kRight, GlobalLaneId::kLeft, LaneId::kEgo, true),
+                      std::make_tuple(GlobalLaneId::kLeft, GlobalLaneId::kLeft, LaneId::kEgo, false),
+                      std::make_tuple(GlobalLaneId::kInvalid, GlobalLaneId::kLeft, LaneId::kEgo, false),
+                      std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kRight, LaneId::kEgo, true),
+                      std::make_tuple(GlobalLaneId::kRight, GlobalLaneId::kRight, LaneId::kEgo, false),
+                      std::make_tuple(GlobalLaneId::kLeft, GlobalLaneId::kRight, LaneId::kEgo, true),
+                      std::make_tuple(GlobalLaneId::kInvalid, GlobalLaneId::kRight, LaneId::kEgo, false),
+                      std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kInvalid, LaneId::kEgo, true),
+                      std::make_tuple(GlobalLaneId::kRight, GlobalLaneId::kInvalid, LaneId::kEgo, true),
+                      std::make_tuple(GlobalLaneId::kLeft, GlobalLaneId::kInvalid, LaneId::kEgo, true),
+                      std::make_tuple(GlobalLaneId::kInvalid, GlobalLaneId::kInvalid, LaneId::kEgo, false),
+                      std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kRight, LaneId::kRight, false),
+                      std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kLeft, LaneId::kLeft, false),
+                      std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kLeft, LaneId::kInvalid, false)));
 
 }  // namespace

@@ -26,7 +26,6 @@ class MotionPlanningSpecFixture : public ::testing::Test
 
         motion_planning_ = std::make_unique<MotionPlanning>(data_source_);
     }
-    virtual void TearDown() override {}
 
     std::unique_ptr<MotionPlanning> motion_planning_;
 

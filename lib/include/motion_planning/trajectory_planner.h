@@ -44,7 +44,7 @@ class TrajectoryPlanner : public ITrajectoryPlanner
     LaneInformation::GlobalLaneId GetGlobalLaneId(const LaneInformation::LaneId& lane_id) const;
 
     /// @brief Value of PI = 22/7 = 3.14.... (use of M_PI)
-    static constexpr inline double PI() { return M_PI; }
+    double PI() const;
 
     std::shared_ptr<IDataSource> data_source_;
 };

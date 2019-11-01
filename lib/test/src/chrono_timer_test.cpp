@@ -20,6 +20,7 @@ TEST_P(ChronoTimerSpecFixture, GivenTypicalDuration_WhenStartTimer_ThenTimeoutOn
 {
     const auto duration = GetParam();
     timer_.SetTimer(duration);
+
     timer_.Start();
     ASSERT_TRUE(timer_.IsRunning());
     ASSERT_FALSE(timer_.IsTimeout());
@@ -31,5 +32,16 @@ TEST_P(ChronoTimerSpecFixture, GivenTypicalDuration_WhenStartTimer_ThenTimeoutOn
 }
 INSTANTIATE_TEST_CASE_P(BoundaryValueCheck, ChronoTimerSpecFixture,
                         ::testing::Values(std::chrono::seconds{1}, std::chrono::milliseconds{500}));
+
+TEST_F(ChronoTimerSpecFixture, GivenTypicalTimer_WhenStopped_ThenStoppedTimer)
+{
+    timer_.SetTimer(std::chrono::seconds(10));
+    timer_.Start();
+    ASSERT_TRUE(timer_.IsRunning());
+    ASSERT_FALSE(timer_.IsTimeout());
+
+    timer_.Stop();
+    EXPECT_FALSE(timer_.IsRunning());
+}
 }  // namespace
 }  // namespace timer

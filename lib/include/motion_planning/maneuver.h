@@ -12,7 +12,6 @@ class Maneuver : public IManeuver
 {
   public:
     Maneuver();
-
     explicit Maneuver(const LaneId& lane_id, const units::velocity::meters_per_second_t& velocity);
 
     LaneId GetLaneId() const;

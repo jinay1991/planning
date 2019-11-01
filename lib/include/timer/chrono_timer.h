@@ -11,9 +11,6 @@ namespace timer
 class ChronoTimer : public ITimer
 {
   public:
-    ChronoTimer() = default;
-    virtual ~ChronoTimer() = default;
-
     virtual void Start() override;
     virtual void Stop() override;
 

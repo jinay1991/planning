@@ -17,6 +17,8 @@ PlannedTrajectories TrajectoryPlanner::GetPlannedTrajectories(const std::vector<
     return trajectories;
 }
 
+double TrajectoryPlanner::PI() const { return M_PI; }
+
 Trajectory TrajectoryPlanner::GetInitialTrajectory() const
 {
     Trajectory trajectory;
