@@ -48,6 +48,9 @@ void VelocityPlanner::CalculateTargetVelocity()
     std::for_each(sensor_fusion.objs.begin(), sensor_fusion.objs.end(), adjust_velocity);
 }
 
-units::velocity::meters_per_second_t VelocityPlanner::GetTargetVelocity() const { return target_velocity_; }
+units::velocity::meters_per_second_t VelocityPlanner::GetTargetVelocity() const
+{
+    return std::min(target_velocity_, units::velocity::meters_per_second_t{23.0});
+}
 
 }  // namespace motion_planning
