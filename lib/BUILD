@@ -81,7 +81,7 @@ cc_test(
 )
 
 cc_test(
-    name = "motion_planning_tests",
+    name = "motion_planning_component_tests",
     srcs = [
         "test/src/motion_planning_test.cpp",
     ],

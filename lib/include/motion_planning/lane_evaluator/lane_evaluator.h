@@ -15,8 +15,6 @@
 
 namespace motion_planning
 {
-static const auto gkFarDistanceThreshold = units::length::meter_t{30.0};
-
 class LaneEvaluator
 {
   public:

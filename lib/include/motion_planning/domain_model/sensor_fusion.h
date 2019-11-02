@@ -11,6 +11,8 @@
 
 namespace motion_planning
 {
+static const auto gkFarDistanceThreshold = units::length::meter_t{30.0};
+
 struct ObjectFusion
 {
     std::int32_t idx;

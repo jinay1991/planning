@@ -46,8 +46,7 @@ class AccelerationSpecFixture
     virtual void SetUp() override { VelocityPlannerSpec::Init(std::get<0>(GetParam()), std::get<1>(GetParam())); }
 };
 
-TEST_P(AccelerationSpecFixture,
-       DISABLED_GivenNoClosestInPathVehicle_WhenCalculateTargetVelocity_ThenAcceleratedTargetVelocity)
+TEST_P(AccelerationSpecFixture, GivenNoClosestInPathVehicle_WhenCalculateTargetVelocity_ThenAcceleratedTargetVelocity)
 {
     const auto actual = unit_->GetTargetVelocity();
 
