@@ -13,6 +13,8 @@ RUN apt-get install -y wget
 RUN echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
 RUN curl https://bazel.build/bazel-release.pub.gpg | apt-key add -
 RUN apt-get update && apt-get install -y bazel
+
+# Installation of Bazel Tools
 RUN wget https://github.com/bazelbuild/buildtools/releases/download/0.29.0/buildifier
 RUN chmod +x buildifier
 RUN mv buildifier /usr/bin
@@ -28,7 +30,7 @@ RUN ln -s /usr/lib64/libuWS.so /usr/lib/libuWS.so
 RUN rm -r uWebSockets
 
 # Installation of dependencies to Doxygen
-RUN apt-get install -y doxygen graphviz
+RUN apt-get install -y doxygen graphviz plantuml
 
 # Installation of static code analysis
 RUN apt-get install -y cppcheck python python-pygments
