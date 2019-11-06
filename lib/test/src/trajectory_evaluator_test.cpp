@@ -111,7 +111,6 @@ TEST_P(TrajectoryEvaluatorSpecFixture,
                             .GetRatedTrajectories(planned_trajectories_);
 
     const auto expected_cost = [&](const auto& trajectory) {
-        std::cout << trajectory << ", obj_global_lane_id: " << obj_global_lane_id << std::endl;
         if (trajectory.global_lane_id == GlobalLaneId::kInvalid || trajectory.global_lane_id == obj_global_lane_id)
         {
             EXPECT_DOUBLE_EQ(trajectory.cost, std::numeric_limits<double>::infinity());

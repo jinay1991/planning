@@ -26,12 +26,13 @@ class VelocityPlanner
   private:
     bool IsClosestInPathVehicleInFront(const ObjectFusion& object_fusion) const;
 
-    units::velocity::meters_per_second_t target_velocity_{0.0};
-    units::velocity::meters_per_second_t max_allowed_velocity_{23.0};
-    std::shared_ptr<IDataSource> data_source_;
+    const units::frequency::hertz_t frequency_;
+    const units::velocity::meters_per_second_t speed_limit_;
+    const units::acceleration::meters_per_second_squared_t deceleration_;
+    const units::acceleration::meters_per_second_squared_t acceleration_;
 
-    const units::acceleration::meters_per_second_squared_t deceleration_{-5.0};
-    const units::acceleration::meters_per_second_squared_t acceleration_{5.0};
+    units::velocity::meters_per_second_t target_velocity_;
+    std::shared_ptr<IDataSource> data_source_;
 };
 }  // namespace motion_planning
 

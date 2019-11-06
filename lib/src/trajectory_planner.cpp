@@ -1,9 +1,8 @@
 ///
 /// @file
 ///
-#include <sstream>
-
 #include "motion_planning/trajectory_planner.h"
+#include "logging/logging.h"
 
 using namespace units::literals;
 
@@ -180,6 +179,8 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
     }
     std::stringstream log_stream;
     log_stream << "Planned trajectories: " << trajectories.size() << std::endl;
+    std::for_each(trajectories.begin(), trajectories.end(),
+                  [&log_stream](const auto& trajectory) { log_stream << " (+) " << trajectory << std::endl; });
     LOG_DEBUG("TrajectoryPlanner", log_stream.str());
     return trajectories;
 }

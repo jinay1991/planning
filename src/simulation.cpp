@@ -149,7 +149,7 @@ const motion_planning::VehicleDynamics Simulation::GetVehicleDynamics(const json
     vehicle_dynamics.frenet_coords.s = msg["s"].get<double>();
     vehicle_dynamics.frenet_coords.d = msg["d"].get<double>();
     vehicle_dynamics.yaw = units::angle::degree_t{msg["yaw"].get<double>()};
-    vehicle_dynamics.velocity = units::velocity::meters_per_second_t{msg["speed"].get<double>()};
+    vehicle_dynamics.velocity = units::velocity::miles_per_hour_t{msg["speed"].get<double>()};
 
     return vehicle_dynamics;
 }

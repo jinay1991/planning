@@ -7,7 +7,6 @@
 #include <spline.h>
 #include <memory>
 
-#include "logging/logging.h"
 #include "motion_planning/i_data_source.h"
 #include "motion_planning/i_trajectory_planner.h"
 

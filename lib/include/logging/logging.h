@@ -5,6 +5,7 @@
 #define LOGGING_H_
 
 #include <iostream>
+#include <sstream>
 
 #ifdef NDEBUG
 #define LOG_INFO(module, msg) std::cout << " [INFO]:" << module << ": " << msg;
