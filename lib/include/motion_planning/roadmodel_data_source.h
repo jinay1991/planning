@@ -17,11 +17,11 @@ class RoadModelDataSource : public IDataSource
     virtual void SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics) override;
     virtual void SetMapCoordinates(const MapCoordinatesList& map_coordinates) override;
     virtual void SetPreviousPath(const PreviousPathGlobal& previous_path_global) override;
-    virtual void SetPreviousPathEnd(const FrenetCoordinates& frenet_coords) override;
+    virtual void SetPreviousPathEnd(const FrenetCoordinates& coords) override;
     virtual void SetSensorFusion(const SensorFusion& sensor_fusion) override;
     virtual void SetSpeedLimit(const units::velocity::meters_per_second_t& speed_limit) override;
 
-    virtual GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& frenet_coords) const override;
+    virtual GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& coords) const override;
     virtual GlobalLaneId GetGlobalLaneId() const override;
     virtual FrenetCoordinates GetPreviousPathEnd() const override;
     virtual VehicleDynamics GetVehicleDynamics() const override;

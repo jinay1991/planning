@@ -42,9 +42,6 @@ class TrajectoryPlanner : public ITrajectoryPlanner
     /// @brief Converts Local Lane Id to Global Lane Id (using ego's global lane)
     LaneInformation::GlobalLaneId GetGlobalLaneId(const LaneInformation::LaneId& lane_id) const;
 
-    /// @brief Value of PI = 22/7 = 3.14.... (use of M_PI)
-    double PI() const;
-
     std::shared_ptr<IDataSource> data_source_;
 };
 }  // namespace motion_planning

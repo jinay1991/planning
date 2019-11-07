@@ -119,6 +119,7 @@ void Simulation::UpdateDataSource(const json& msg)
     data_source_->SetVehicleDynamics(GetVehicleDynamics(msg));
     data_source_->SetPreviousPath(GetPreviousPathGlobal(msg));
     data_source_->SetPreviousPathEnd(GetPreviousPathEnd(msg));
+    data_source_->SetSpeedLimit(units::velocity::miles_per_hour_t{49.5});
 }
 
 const motion_planning::FrenetCoordinates Simulation::GetPreviousPathEnd(const json& msg)

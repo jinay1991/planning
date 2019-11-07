@@ -16,8 +16,6 @@ PlannedTrajectories TrajectoryPlanner::GetPlannedTrajectories(const std::vector<
     return trajectories;
 }
 
-double TrajectoryPlanner::PI() const { return M_PI; }
-
 Trajectory TrajectoryPlanner::GetInitialTrajectory() const
 {
     Trajectory trajectory;
@@ -205,7 +203,7 @@ GlobalCoordinates TrajectoryPlanner::GetGlobalCoordinates(const FrenetCoordinate
     double seg_x = map_coordinates[prev_wp].global_coords.x + seg_s * cos(heading);
     double seg_y = map_coordinates[prev_wp].global_coords.y + seg_s * sin(heading);
 
-    double perp_heading = heading - PI() / 2;
+    double perp_heading = heading - units::constants::pi() / 2;
 
     double x = seg_x + frenet_coords.d * cos(perp_heading);
     double y = seg_y + frenet_coords.d * sin(perp_heading);

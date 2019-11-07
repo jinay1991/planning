@@ -16,6 +16,7 @@ class GetGlobalLaneSpec : public ::testing::TestWithParam<std::tuple<FrenetCoord
 
     std::unique_ptr<IDataSource> data_source_;
 };
+
 TEST_P(GetGlobalLaneSpec, GivenTypicalFrenetCoordinates_WhenGetGlobalLaneId_ThenReturnGlobalLaneId)
 {
     const auto actual = data_source_->GetGlobalLaneId(std::get<0>(GetParam()));

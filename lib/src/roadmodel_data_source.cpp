@@ -22,10 +22,7 @@ void RoadModelDataSource::SetPreviousPath(const PreviousPathGlobal& previous_pat
 {
     previous_path_global_ = previous_path_global;
 }
-void RoadModelDataSource::SetPreviousPathEnd(const FrenetCoordinates& frenet_coords)
-{
-    previous_path_end_frenet_ = frenet_coords;
-}
+void RoadModelDataSource::SetPreviousPathEnd(const FrenetCoordinates& coords) { previous_path_end_frenet_ = coords; }
 
 void RoadModelDataSource::SetSensorFusion(const SensorFusion& sensor_fusion) { sensor_fusion_ = sensor_fusion; }
 
