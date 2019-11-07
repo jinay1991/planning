@@ -21,13 +21,13 @@ class VelocityPlanner
                              const units::velocity::meters_per_second_t& target_velocity);
     virtual ~VelocityPlanner() = default;
 
-    void CalculateTargetVelocity();
+    virtual void CalculateTargetVelocity();
 
-    units::velocity::meters_per_second_t GetTargetVelocity() const;
+    virtual units::velocity::meters_per_second_t GetTargetVelocity() const;
 
   private:
-    bool IsClosestInPathVehicleInFront(const ObjectFusion& object_fusion) const;
-    units::velocity::meters_per_second_t GetDeltaVelocity() const;
+    virtual bool IsClosestInPathVehicleInFront(const ObjectFusion& object_fusion) const;
+    virtual units::velocity::meters_per_second_t GetDeltaVelocity() const;
 
     const units::frequency::hertz_t frequency_;
     const units::acceleration::meters_per_second_squared_t deceleration_;

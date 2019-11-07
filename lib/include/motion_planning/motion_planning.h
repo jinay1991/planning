@@ -32,9 +32,9 @@ class MotionPlanning
   public:
     explicit MotionPlanning(std::shared_ptr<IDataSource>& data_source);
 
-    void GenerateTrajectories();
+    virtual void GenerateTrajectories();
 
-    Trajectory GetSelectedTrajectory() const;
+    virtual Trajectory GetSelectedTrajectory() const;
 
   private:
     std::shared_ptr<IDataSource> data_source_;

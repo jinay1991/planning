@@ -11,7 +11,7 @@ namespace motion_planning
 class TrajectoryPrioritizer : public ITrajectoryPrioritizer
 {
   public:
-    PrioritizedTrajectories GetPrioritizedTrajectories(const PlannedTrajectories& trajectories) const override;
+    virtual PrioritizedTrajectories GetPrioritizedTrajectories(const PlannedTrajectories& trajectories) const override;
 };
 }  // namespace motion_planning
 

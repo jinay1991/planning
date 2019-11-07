@@ -14,9 +14,9 @@ class Maneuver : public IManeuver
     Maneuver();
     explicit Maneuver(const LaneId& lane_id, const units::velocity::meters_per_second_t& velocity);
 
-    LaneId GetLaneId() const;
+    virtual LaneId GetLaneId() const;
 
-    units::velocity::meters_per_second_t GetVelocity() const;
+    virtual units::velocity::meters_per_second_t GetVelocity() const;
 
     inline bool operator==(const Maneuver& rhs) const { return lane_id_ == rhs.lane_id_ && velocity_ == rhs.velocity_; }
 

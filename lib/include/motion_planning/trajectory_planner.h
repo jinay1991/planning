@@ -20,27 +20,27 @@ class TrajectoryPlanner : public ITrajectoryPlanner
     explicit TrajectoryPlanner(std::shared_ptr<IDataSource>& data_source);
 
     /// @brief Provide Planned Trajectories
-    PlannedTrajectories GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const override;
+    virtual PlannedTrajectories GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const override;
 
   private:
     /// @brief Calculates intial waypoints for trajectory based on previous path/waypoints
-    Trajectory GetInitialTrajectory() const;
+    virtual Trajectory GetInitialTrajectory() const;
 
     /// @brief Smoothen/Optimize Trajectory with Spline for target_velocity
-    Trajectory GetOptimizedTrajectory(const Trajectory& calculated_trajectory,
+    virtual Trajectory GetOptimizedTrajectory(const Trajectory& calculated_trajectory,
                                       const units::velocity::meters_per_second_t& target_velocity) const;
 
     /// @brief Calculate Trajectory for given lane_id, target velocity
-    Trajectory GetCalculatedTrajectory(const LaneId& lane_id) const;
+    virtual Trajectory GetCalculatedTrajectory(const LaneId& lane_id) const;
 
     /// @brief Produces trajectories and optimizes for each maneuver
-    Trajectories GetTrajectories(const std::vector<Maneuver>& maneuvers) const;
+    virtual Trajectories GetTrajectories(const std::vector<Maneuver>& maneuvers) const;
 
     /// @brief Converts Frenet Coordinates to Global Coordinates (using map)
-    GlobalCoordinates GetGlobalCoordinates(const FrenetCoordinates& frenet_coords) const;
+    virtual GlobalCoordinates GetGlobalCoordinates(const FrenetCoordinates& frenet_coords) const;
 
     /// @brief Converts Local Lane Id to Global Lane Id (using ego's global lane)
-    LaneInformation::GlobalLaneId GetGlobalLaneId(const LaneInformation::LaneId& lane_id) const;
+    virtual LaneInformation::GlobalLaneId GetGlobalLaneId(const LaneInformation::LaneId& lane_id) const;
 
     std::shared_ptr<IDataSource> data_source_;
 };
