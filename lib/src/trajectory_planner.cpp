@@ -8,7 +8,7 @@ using namespace units::literals;
 
 namespace motion_planning
 {
-TrajectoryPlanner::TrajectoryPlanner(std::shared_ptr<IDataSource>& data_source) : data_source_(data_source) {}
+TrajectoryPlanner::TrajectoryPlanner(std::shared_ptr<IDataSource>& data_source) : data_source_{data_source} {}
 
 PlannedTrajectories TrajectoryPlanner::GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const
 {

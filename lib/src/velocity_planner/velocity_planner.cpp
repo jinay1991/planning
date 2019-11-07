@@ -38,9 +38,6 @@ bool VelocityPlanner::IsClosestInPathVehicleInFront(const ObjectFusion& object_f
     const auto is_in_lane = (obj_lane_id == ego_lane_id);
     const auto is_higher_ego_velocity = (ego_velocity >= obj_velocity);
 
-    std::cout << "is_near: " << is_near << ", is_in_front: " << is_in_front << ", distance: " << distance
-              << ", lane: " << obj_lane_id << std::endl;
-
     return (is_near && is_in_front && is_in_lane && is_higher_ego_velocity);
 }
 units::velocity::meters_per_second_t VelocityPlanner::GetDeltaVelocity() const

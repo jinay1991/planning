@@ -16,29 +16,40 @@ namespace
 using GlobalLaneId = LaneInformation::GlobalLaneId;
 using LaneId = LaneInformation::LaneId;
 
-class TrajectoryPlannerSpec : public ::testing::Test
+class TrajectoryPlannerSpec : public ::testing::TestWithParam<PreviousPathGlobal>
 {
-  public:
-    virtual void SetUp() override
-    {
-        const auto previous_path_global = PreviousPathGlobal{};
-        const auto map_waypoints = std::vector<MapCoordinates>{
-            MapCoordinates{GlobalCoordinates{784.6001, 1135.571}, FrenetCoordinates{0, 0, -0.02359831, -0.9997216}}};
-        auto data_source =
-            DataSourceBuilder().WithPreviousPath(previous_path_global).WithMapCoordinates(map_waypoints).Build();
-
-        trajectory_planner_ = std::make_unique<TrajectoryPlanner>(data_source);
-    }
-
   protected:
-    std::unique_ptr<ITrajectoryPlanner> trajectory_planner_;
-    const std::vector<Maneuver> maneuvers_{Maneuver{LaneId::kEgo, units::velocity::meters_per_second_t{10.0}}};
+    const std::vector<MapCoordinates> map_waypoints_{
+        MapCoordinates{GlobalCoordinates{784.6001, 1135.571}, FrenetCoordinates{0, 0, -0.02359831, -0.9997216}}};
+    const units::velocity::meters_per_second_t target_velocity_{10.0};
 };
-TEST_F(TrajectoryPlannerSpec, GivenTypicalManeuvers_WhenEvaluated_ThenReturnSameNumberOfPlannedTrajectories)
-{
-    const auto actual = trajectory_planner_->GetPlannedTrajectories(maneuvers_);
 
-    EXPECT_EQ(actual.size(), maneuvers_.size());
+TEST_F(TrajectoryPlannerSpec, GivenInvalidManeuver_WhenEvaluated_ThenReturnInvalidPlannedTrajectory)
+{
+    const auto maneuvers = std::vector<Maneuver>{Maneuver{LaneId::kInvalid, target_velocity_}};
+    auto data_source =
+        DataSourceBuilder().WithPreviousPath(PreviousPathGlobal{}).WithMapCoordinates(map_waypoints_).Build();
+
+    const auto actual = TrajectoryPlanner(data_source).GetPlannedTrajectories(maneuvers);
+
+    EXPECT_EQ(actual.size(), maneuvers.size());
+    EXPECT_EQ(actual[0].global_lane_id, GlobalLaneId::kInvalid);
 }
+
+TEST_P(TrajectoryPlannerSpec, GivenTypicalManeuvers_WhenEvaluated_ThenReturnPlannedTrajectories)
+{
+    const auto maneuvers = std::vector<Maneuver>{Maneuver{LaneId::kEgo, target_velocity_}};
+    auto data_source = DataSourceBuilder().WithPreviousPath(GetParam()).WithMapCoordinates(map_waypoints_).Build();
+
+    const auto actual = TrajectoryPlanner(data_source).GetPlannedTrajectories(maneuvers);
+
+    EXPECT_EQ(actual.size(), maneuvers.size());
+    EXPECT_EQ(actual[0].global_lane_id, GlobalLaneId::kCenter);
+}
+INSTANTIATE_TEST_CASE_P(
+    TrajectoryPlanner, TrajectoryPlannerSpec,
+    ::testing::Values(PreviousPathGlobal{}, PreviousPathGlobal{GlobalCoordinates{1, 2}, GlobalCoordinates{2, 2}},
+                      PreviousPathGlobal{GlobalCoordinates{1, 2}, GlobalCoordinates{2, 2}, GlobalCoordinates{3, 2}}));
+
 }  // namespace
 }  // namespace motion_planning
