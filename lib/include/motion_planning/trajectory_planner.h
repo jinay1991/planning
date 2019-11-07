@@ -28,7 +28,7 @@ class TrajectoryPlanner : public ITrajectoryPlanner
 
     /// @brief Smoothen/Optimize Trajectory with Spline for target_velocity
     virtual Trajectory GetOptimizedTrajectory(const Trajectory& calculated_trajectory,
-                                      const units::velocity::meters_per_second_t& target_velocity) const;
+                                              const units::velocity::meters_per_second_t& target_velocity) const;
 
     /// @brief Calculate Trajectory for given lane_id, target velocity
     virtual Trajectory GetCalculatedTrajectory(const LaneId& lane_id) const;

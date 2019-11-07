@@ -41,7 +41,7 @@ docker_build:
 clang-format:
   stage: check
   script:
-    - find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec cat {} \; | diff -u <(find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec clang-format-6.0 -style=file {} \;) -
+    - find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec cat {} \; | diff -u <(find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec clang-format-6.0 -style=file {} -verbose \;) -
 
 buildifier:
   stage: check
