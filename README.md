@@ -18,6 +18,8 @@
 * Launch Simulator 
 * Run `./bazel-bin/client-app data/highway-map.csv`
 
+![Screenshot](example/screenshot_01.png)
+
 ## Dependencies
 
 * [Bazel](https://docs.bazel.build/versions/1.1.0/getting-started.html) 
