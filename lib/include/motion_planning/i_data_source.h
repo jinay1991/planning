@@ -25,6 +25,7 @@ class IDataSource
     virtual void SetPreviousPath(const PreviousPathGlobal& previous_path_global) = 0;
     virtual void SetPreviousPathEnd(const FrenetCoordinates& frenet_coords) = 0;
     virtual void SetSensorFusion(const SensorFusion& sensor_fusion) = 0;
+    virtual void SetSpeedLimit(const units::velocity::meters_per_second_t& speed_limit) = 0;
 
     virtual GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& frenet_coords) const = 0;
     virtual GlobalLaneId GetGlobalLaneId() const = 0;
@@ -33,6 +34,7 @@ class IDataSource
     virtual MapCoordinatesList GetMapCoordinates() const = 0;
     virtual PreviousPathGlobal GetPreviousPathInGlobalCoords() const = 0;
     virtual SensorFusion GetSensorFusion() const = 0;
+    virtual units::velocity::meters_per_second_t GetSpeedLimit() const = 0;
 };
 }  // namespace motion_planning
 #endif  /// MOTION_PLANNING_I_DATA_SOURCE_H_

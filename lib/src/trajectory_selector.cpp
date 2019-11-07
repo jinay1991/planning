@@ -11,7 +11,7 @@ Trajectory TrajectorySelector::GetSelectedTrajectory(const PrioritizedTrajectori
     const auto selected_trajectory = prioritized_trajectories.top();
     std::stringstream log_stream;
     log_stream << "Selected trajectory (lane_id): " << selected_trajectory.global_lane_id << std::endl;
-    log_stream << "(+)" << selected_trajectory << std::endl;
+    log_stream << " (+) " << selected_trajectory << std::endl;
     LOG_DEBUG("TrajectorySelector", log_stream.str());
     return selected_trajectory;
 };

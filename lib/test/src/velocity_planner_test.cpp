@@ -22,19 +22,20 @@ class VelocityPlannerSpec
   public:
     virtual void Init(const units::velocity::meters_per_second_t& obj_velocity, const GlobalLaneId& obj_lane_id)
     {
-        unit_ = std::make_unique<VelocityPlanner>(DataSourceBuilder()
-                                                      .WithVelocity(units::velocity::meters_per_second_t{17.0})
-                                                      .WithGlobalLaneId(GlobalLaneId::kCenter)
-                                                      .WithObjectInLane(obj_lane_id, obj_velocity)
-                                                      .Build());
+        data_source_ = DataSourceBuilder()
+                           .WithVelocity(velocity_)
+                           .WithGlobalLaneId(GlobalLaneId::kCenter)
+                           .WithDistance(units::length::meter_t{0.0})
+                           .WithObjectInLane(obj_lane_id, obj_velocity)
+                           .Build();
+        unit_ = std::make_unique<VelocityPlanner>(data_source_, velocity_);
 
         unit_->CalculateTargetVelocity();
     }
 
   protected:
-    const units::velocity::meters_per_second_t ego_accelerated_velocity_{17.2};
-    const units::velocity::meters_per_second_t ego_decelerated_velocity_{16.8};
-
+    const units::velocity::meters_per_second_t velocity_{17.0};
+    std::shared_ptr<IDataSource> data_source_;
     std::unique_ptr<VelocityPlanner> unit_;
 };
 
@@ -50,7 +51,8 @@ TEST_P(AccelerationSpecFixture, GivenNoClosestInPathVehicle_WhenCalculateTargetV
 {
     const auto actual = unit_->GetTargetVelocity();
 
-    EXPECT_EQ(actual, ego_accelerated_velocity_);
+    EXPECT_GT(actual, velocity_);
+    EXPECT_LT(actual, data_source_->GetSpeedLimit());
 }
 
 INSTANTIATE_TEST_CASE_P(VelocityPlanner, AccelerationSpecFixture,
@@ -72,7 +74,8 @@ TEST_P(DecelerationSpecFixture, GivenClosestInPathVehicle_WhenCalculateTargetVel
 {
     const auto actual = unit_->GetTargetVelocity();
 
-    EXPECT_EQ(actual, ego_decelerated_velocity_);
+    EXPECT_LT(actual, velocity_);
+    EXPECT_LT(actual, data_source_->GetSpeedLimit());
 }
 
 INSTANTIATE_TEST_CASE_P(VelocityPlanner, DecelerationSpecFixture,

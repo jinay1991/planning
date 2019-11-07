@@ -22,12 +22,11 @@ RatedTrajectories TrajectoryEvaluator::GetRatedTrajectories(const PlannedTraject
 
     const auto adjust_costs = [&](const auto& trajectory) {
         auto rated_trajectory = trajectory;
-        // if (!lane_evaluator_->IsDrivableLane(trajectory.lane_id))
-        // {
-        //     rated_trajectory.cost = std::numeric_limits<double>::infinity();
-        // }
-        // else
-        if (trajectory.lane_id != LaneInformation::LaneId::kEgo)
+        if (!lane_evaluator_->IsDrivableLane(trajectory.lane_id))
+        {
+            rated_trajectory.cost = std::numeric_limits<double>::infinity();
+        }
+        else if (trajectory.lane_id != LaneInformation::LaneId::kEgo)
         {
             rated_trajectory.cost += 1;
         }

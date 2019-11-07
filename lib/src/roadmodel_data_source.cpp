@@ -5,7 +5,10 @@
 
 namespace motion_planning
 {
-RoadModelDataSource::RoadModelDataSource() : global_lane_id_{GlobalLaneId::kCenter} {}
+RoadModelDataSource::RoadModelDataSource()
+    : global_lane_id_{GlobalLaneId::kCenter}, speed_limit_{units::velocity::meters_per_second_t{22.12848}}
+{
+}
 
 void RoadModelDataSource::SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics)
 {
@@ -25,6 +28,11 @@ void RoadModelDataSource::SetPreviousPathEnd(const FrenetCoordinates& frenet_coo
 }
 
 void RoadModelDataSource::SetSensorFusion(const SensorFusion& sensor_fusion) { sensor_fusion_ = sensor_fusion; }
+
+void RoadModelDataSource::SetSpeedLimit(const units::velocity::meters_per_second_t& speed_limit)
+{
+    speed_limit_ = speed_limit;
+};
 
 bool RoadModelDataSource::IsLeftLane(const FrenetCoordinates& coords) const { return (coords.d > 0 && coords.d < 4); }
 bool RoadModelDataSource::IsCenterLane(const FrenetCoordinates& coords) const { return (coords.d > 4 && coords.d < 8); }
@@ -56,5 +64,5 @@ VehicleDynamics RoadModelDataSource::GetVehicleDynamics() const { return vehicle
 MapCoordinatesList RoadModelDataSource::GetMapCoordinates() const { return map_coordinates_; }
 PreviousPathGlobal RoadModelDataSource::GetPreviousPathInGlobalCoords() const { return previous_path_global_; }
 SensorFusion RoadModelDataSource::GetSensorFusion() const { return sensor_fusion_; }
-
+units::velocity::meters_per_second_t RoadModelDataSource::GetSpeedLimit() const { return speed_limit_; }
 }  // namespace motion_planning

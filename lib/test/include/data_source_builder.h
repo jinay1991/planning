@@ -24,14 +24,17 @@ class DataSourceBuilder
     DataSourceBuilder() : data_source_{std::make_shared<RoadModelDataSource>()}
     {
         this->WithFakePreviousPath(50)
-            .WithGlobalLaneId(LaneInformation::GlobalLaneId::kCenter)
-            .WithVelocity(units::velocity::meters_per_second_t{17.0});
+            .WithDistance(units::length::meter_t{24.0})
+            .WithGlobalLaneId(GlobalLaneId::kCenter)
+            .WithVelocity(units::velocity::meters_per_second_t{17.0})
+            .WithSpeedLimit(units::velocity::meters_per_second_t{22.12848});
     }
 
-    DataSourceBuilder& WithGlobalLaneId(const LaneInformation::GlobalLaneId& global_lane_id)
+    DataSourceBuilder& WithGlobalLaneId(const GlobalLaneId& global_lane_id)
     {
-        this->WithPreviousPathEnd(GetCoordinates(global_lane_id));
-        this->WithFrenetCoordinates(GetCoordinates(global_lane_id));
+        const auto lateral_distance = units::length::meter_t{GetCoordinates(global_lane_id).d};
+        previous_path_end_frenet_.d = lateral_distance.value();
+        vehicle_dynamics_.frenet_coords.d = lateral_distance.value();
         vehicle_dynamics_.global_lane_id = global_lane_id;
         return *this;
     }
@@ -48,7 +51,7 @@ class DataSourceBuilder
         return *this;
     }
 
-    DataSourceBuilder& WithObjectInLane(const LaneInformation::GlobalLaneId& global_lane_id,
+    DataSourceBuilder& WithObjectInLane(const GlobalLaneId& global_lane_id,
                                         const units::velocity::meters_per_second_t& velocity)
     {
         this->WithSensorFusion(SensorFusionBuilder()
@@ -58,6 +61,13 @@ class DataSourceBuilder
                                                          .WithVelocity(velocity)
                                                          .Build())
                                    .Build());
+        return *this;
+    }
+
+    DataSourceBuilder& WithDistance(const units::length::meter_t& longitudinal_distance)
+    {
+        previous_path_end_frenet_.s = longitudinal_distance.value();
+        vehicle_dynamics_.frenet_coords.s = longitudinal_distance.value();
         return *this;
     }
 
@@ -97,7 +107,11 @@ class DataSourceBuilder
         previous_path_global_ = previous_path_global;
         return *this;
     }
-
+    DataSourceBuilder& WithSpeedLimit(const units::velocity::meters_per_second_t& speed_limit)
+    {
+        speed_limit_ = speed_limit;
+        return *this;
+    }
     std::shared_ptr<IDataSource>& Build()
     {
         data_source_->SetPreviousPath(previous_path_global_);
@@ -105,24 +119,25 @@ class DataSourceBuilder
         data_source_->SetVehicleDynamics(vehicle_dynamics_);
         data_source_->SetSensorFusion(sensor_fusion_);
         data_source_->SetMapCoordinates(map_coords_);
+        data_source_->SetSpeedLimit(speed_limit_);
         return data_source_;
     }
 
-    static const FrenetCoordinates GetCoordinates(const LaneInformation::GlobalLaneId& global_lane_id)
+    static const FrenetCoordinates GetCoordinates(const GlobalLaneId& global_lane_id)
     {
-        auto coords = FrenetCoordinates{24, 0};
+        auto coords = FrenetCoordinates{24.0, 0.0};
         switch (global_lane_id)
         {
-            case LaneInformation::GlobalLaneId::kLeft:
+            case GlobalLaneId::kLeft:
                 coords.d = 2;
                 break;
-            case LaneInformation::GlobalLaneId::kCenter:
+            case GlobalLaneId::kCenter:
                 coords.d = 6;
                 break;
-            case LaneInformation::GlobalLaneId::kRight:
+            case GlobalLaneId::kRight:
                 coords.d = 10;
                 break;
-            case LaneInformation::GlobalLaneId::kInvalid:
+            case GlobalLaneId::kInvalid:
             default:
                 coords.d = 14;
                 break;
@@ -134,8 +149,9 @@ class DataSourceBuilder
     VehicleDynamics vehicle_dynamics_{};
     FrenetCoordinates previous_path_end_frenet_{};
     PreviousPathGlobal previous_path_global_{};
-    std::vector<MapCoordinates> map_coords_{};
+    MapCoordinatesList map_coords_{};
     SensorFusion sensor_fusion_{};
+    units::velocity::meters_per_second_t speed_limit_{};
 
     std::shared_ptr<IDataSource> data_source_;
 };

@@ -17,6 +17,8 @@ class VelocityPlanner
 {
   public:
     explicit VelocityPlanner(std::shared_ptr<IDataSource> data_source);
+    explicit VelocityPlanner(std::shared_ptr<IDataSource> data_source,
+                             const units::velocity::meters_per_second_t& target_velocity);
     virtual ~VelocityPlanner() = default;
 
     void CalculateTargetVelocity();
@@ -25,9 +27,9 @@ class VelocityPlanner
 
   private:
     bool IsClosestInPathVehicleInFront(const ObjectFusion& object_fusion) const;
+    units::velocity::meters_per_second_t GetDeltaVelocity() const;
 
     const units::frequency::hertz_t frequency_;
-    const units::velocity::meters_per_second_t speed_limit_;
     const units::acceleration::meters_per_second_squared_t deceleration_;
     const units::acceleration::meters_per_second_squared_t acceleration_;
 

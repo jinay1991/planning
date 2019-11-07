@@ -19,6 +19,7 @@ class RoadModelDataSource : public IDataSource
     virtual void SetPreviousPath(const PreviousPathGlobal& previous_path_global) override;
     virtual void SetPreviousPathEnd(const FrenetCoordinates& frenet_coords) override;
     virtual void SetSensorFusion(const SensorFusion& sensor_fusion) override;
+    virtual void SetSpeedLimit(const units::velocity::meters_per_second_t& speed_limit) override;
 
     virtual GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& frenet_coords) const override;
     virtual GlobalLaneId GetGlobalLaneId() const override;
@@ -27,6 +28,7 @@ class RoadModelDataSource : public IDataSource
     virtual MapCoordinatesList GetMapCoordinates() const override;
     virtual PreviousPathGlobal GetPreviousPathInGlobalCoords() const override;
     virtual SensorFusion GetSensorFusion() const override;
+    virtual units::velocity::meters_per_second_t GetSpeedLimit() const override;
 
   private:
     virtual bool IsLeftLane(const FrenetCoordinates& coords) const;
@@ -39,6 +41,7 @@ class RoadModelDataSource : public IDataSource
     PreviousPathGlobal previous_path_global_{};
     FrenetCoordinates previous_path_end_frenet_{};
     SensorFusion sensor_fusion_{};
+    units::velocity::meters_per_second_t speed_limit_{};
 };
 }  // namespace motion_planning
 
