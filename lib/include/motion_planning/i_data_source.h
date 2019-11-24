@@ -13,9 +13,10 @@
 namespace motion_planning
 {
 using GlobalLaneId = LaneInformation::GlobalLaneId;
+using LaneId = LaneInformation::LaneId;
 using MapCoordinatesList = std::vector<MapCoordinates>;
-using PreviousPathGlobal = std::vector<GlobalCoordinates>;
 using PreviousPathFrenet = std::vector<FrenetCoordinates>;
+using PreviousPathGlobal = std::vector<GlobalCoordinates>;
 
 class IDataSource
 {

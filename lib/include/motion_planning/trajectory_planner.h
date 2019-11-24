@@ -40,7 +40,7 @@ class TrajectoryPlanner : public ITrajectoryPlanner
     virtual GlobalCoordinates GetGlobalCoordinates(const FrenetCoordinates& frenet_coords) const;
 
     /// @brief Converts Local Lane Id to Global Lane Id (using ego's global lane)
-    virtual LaneInformation::GlobalLaneId GetGlobalLaneId(const LaneInformation::LaneId& lane_id) const;
+    virtual GlobalLaneId GetGlobalLaneId(const LaneId& lane_id) const;
 
     std::shared_ptr<IDataSource> data_source_;
 };

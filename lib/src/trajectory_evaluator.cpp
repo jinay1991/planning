@@ -26,7 +26,7 @@ RatedTrajectories TrajectoryEvaluator::GetRatedTrajectories(const PlannedTraject
         {
             rated_trajectory.cost = std::numeric_limits<double>::infinity();
         }
-        else if (trajectory.lane_id != LaneInformation::LaneId::kEgo)
+        else if (trajectory.lane_id != LaneId::kEgo)
         {
             rated_trajectory.cost += 1;
         }

@@ -126,22 +126,24 @@ Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) con
                    shift_rotate_waypoints);
     return trajectory;
 }
-LaneInformation::GlobalLaneId TrajectoryPlanner::GetGlobalLaneId(const LaneInformation::LaneId& lane_id) const
+
+GlobalLaneId TrajectoryPlanner::GetGlobalLaneId(const LaneId& lane_id) const
 {
     const auto ego_global_lane_id = data_source_->GetGlobalLaneId();
     switch (lane_id)
     {
-        case LaneInformation::LaneId::kEgo:
+        case LaneId::kEgo:
             return ego_global_lane_id;
-        case LaneInformation::LaneId::kLeft:
+        case LaneId::kLeft:
             return ego_global_lane_id - 1;
-        case LaneInformation::LaneId::kRight:
+        case LaneId::kRight:
             return ego_global_lane_id + 1;
-        case LaneInformation::LaneId::kInvalid:
+        case LaneId::kInvalid:
         default:
-            return LaneInformation::GlobalLaneId::kInvalid;
+            return GlobalLaneId::kInvalid;
     }
 }
+
 Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& maneuvers) const
 {
     Trajectories trajectories;
@@ -210,4 +212,5 @@ GlobalCoordinates TrajectoryPlanner::GetGlobalCoordinates(const FrenetCoordinate
 
     return {x, y};
 }
+
 }  // namespace motion_planning
