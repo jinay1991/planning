@@ -17,26 +17,26 @@ bool LaneEvaluator::IsObjectNear(const FrenetCoordinates& ego_position, const Fr
     return is_near;
 }
 
-LaneInformation::LaneId LaneEvaluator::GetLocalLaneId(const LaneInformation::GlobalLaneId& global_lane_id) const
+LaneId LaneEvaluator::GetLocalLaneId(const GlobalLaneId& global_lane_id) const
 {
     const auto ego_global_lane_id = data_source_->GetGlobalLaneId();
 
     if (ego_global_lane_id == global_lane_id)
     {
-        return LaneInformation::LaneId::kEgo;
+        return LaneId::kEgo;
     }
     else if (ego_global_lane_id - 1 == global_lane_id)
     {
-        return LaneInformation::LaneId::kLeft;
+        return LaneId::kLeft;
     }
     else if (ego_global_lane_id + 1 == global_lane_id)
     {
-        return LaneInformation::LaneId::kRight;
+        return LaneId::kRight;
     }
-    return LaneInformation::LaneId::kInvalid;
+    return LaneId::kInvalid;
 }
 
-bool LaneEvaluator::IsDrivableLane(const LaneInformation::LaneId& lane_id) const
+bool LaneEvaluator::IsDrivableLane(const LaneId& lane_id) const
 {
     std::stringstream log_stream;
 
@@ -64,17 +64,17 @@ bool LaneEvaluator::IsDrivableLane(const LaneInformation::LaneId& lane_id) const
             FrenetCoordinates{obj_position.s + (previous_path_size * 0.02 * obj_velocity.value()), obj_position.d};
 
         // Object is in query lane
-        if (obj_lane_id == LaneInformation::LaneId::kEgo)
+        if (obj_lane_id == LaneId::kEgo)
         {
             car_in_front |= (ego_position_predicted.s > obj_position_predicted.s) &&
                             IsObjectNear(ego_position_predicted, obj_position_predicted);
         }
-        else if (obj_lane_id == LaneInformation::LaneId::kLeft)
+        else if (obj_lane_id == LaneId::kLeft)
         {
             car_to_left |= (ego_position_predicted.s - gkFarDistanceThreshold.value()) < obj_position_predicted.s &&
                            IsObjectNear(ego_position_predicted, obj_position_predicted);
         }
-        else if (obj_lane_id == LaneInformation::LaneId::kRight)
+        else if (obj_lane_id == LaneId::kRight)
         {
             car_to_right |= (ego_position_predicted.s - gkFarDistanceThreshold.value()) < obj_position_predicted.s &&
                             IsObjectNear(ego_position_predicted, obj_position_predicted);
@@ -84,20 +84,20 @@ bool LaneEvaluator::IsDrivableLane(const LaneInformation::LaneId& lane_id) const
             /* do nothing */
         }
     }
-    const auto is_ego_in_valid_lane = (ego_global_lane_id != LaneInformation::GlobalLaneId::kInvalid);
+    const auto is_ego_in_valid_lane = (ego_global_lane_id != GlobalLaneId::kInvalid);
     bool is_drivable = false;
     switch (lane_id)
     {
-        case LaneInformation::LaneId::kEgo:
-            is_drivable = IsValidLane(LaneInformation::LaneId::kEgo) && is_ego_in_valid_lane && !car_in_front;
+        case LaneId::kEgo:
+            is_drivable = IsValidLane(LaneId::kEgo) && is_ego_in_valid_lane && !car_in_front;
             break;
-        case LaneInformation::LaneId::kLeft:
-            is_drivable = IsValidLane(LaneInformation::LaneId::kLeft) && is_ego_in_valid_lane && !car_to_left;
+        case LaneId::kLeft:
+            is_drivable = IsValidLane(LaneId::kLeft) && is_ego_in_valid_lane && !car_to_left;
             break;
-        case LaneInformation::LaneId::kRight:
-            is_drivable = IsValidLane(LaneInformation::LaneId::kRight) && is_ego_in_valid_lane && !car_to_right;
+        case LaneId::kRight:
+            is_drivable = IsValidLane(LaneId::kRight) && is_ego_in_valid_lane && !car_to_right;
             break;
-        case LaneInformation::LaneId::kInvalid:
+        case LaneId::kInvalid:
         default:
             is_drivable = false;
             break;
@@ -108,19 +108,19 @@ bool LaneEvaluator::IsDrivableLane(const LaneInformation::LaneId& lane_id) const
     return is_drivable;
 }
 
-bool LaneEvaluator::IsValidLane(const LaneInformation::LaneId& lane_id) const
+bool LaneEvaluator::IsValidLane(const LaneId& lane_id) const
 {
     const auto ego_global_lane_id = data_source_->GetGlobalLaneId();
 
     switch (lane_id)
     {
-        case LaneInformation::LaneId::kEgo:
+        case LaneId::kEgo:
             return true;
-        case LaneInformation::LaneId::kLeft:
-            return (ego_global_lane_id - 1) != LaneInformation::GlobalLaneId::kInvalid;
-        case LaneInformation::LaneId::kRight:
-            return (ego_global_lane_id + 1) != LaneInformation::GlobalLaneId::kInvalid;
-        case LaneInformation::LaneId::kInvalid:
+        case LaneId::kLeft:
+            return (ego_global_lane_id - 1) != GlobalLaneId::kInvalid;
+        case LaneId::kRight:
+            return (ego_global_lane_id + 1) != GlobalLaneId::kInvalid;
+        case LaneId::kInvalid:
         default:
             return false;
     }

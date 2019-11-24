@@ -20,6 +20,7 @@ void ChronoTimer::Stop()
 }
 
 bool ChronoTimer::IsRunning() const { return is_started_ && !IsTimeout(); }
+
 bool ChronoTimer::IsTimeout() const { return is_started_ && ((std::chrono::system_clock::now() - start_) > duration_); }
 
 void ChronoTimer::SetTimer(const std::chrono::system_clock::duration& duration) { duration_ = duration; }
