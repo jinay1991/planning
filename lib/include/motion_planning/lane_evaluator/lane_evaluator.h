@@ -6,7 +6,9 @@
 #define MOTION_PLANNING_LANE_EVALUATOR_H_
 
 #include <units.h>
+#include <chrono>
 #include <memory>
+#include <sstream>
 
 #include "motion_planning/domain_model/lane.h"
 #include "motion_planning/domain_model/sensor_fusion.h"

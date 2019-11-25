@@ -17,9 +17,11 @@ RatedTrajectories TrajectoryEvaluator::GetRatedTrajectories(const PlannedTraject
 {
     RatedTrajectories rated_trajectories{};
 
+    // discard invalid lane trajectories
     std::copy_if(planned_trajectories.begin(), planned_trajectories.end(), std::back_inserter(rated_trajectories),
                  [&](const auto& trajectory) { return lane_evaluator_->IsValidLane(trajectory.lane_id); });
 
+    // update costs for each trajectory
     const auto adjust_costs = [&](const auto& trajectory) {
         auto rated_trajectory = trajectory;
         if (!lane_evaluator_->IsDrivableLane(trajectory.lane_id))
@@ -30,6 +32,11 @@ RatedTrajectories TrajectoryEvaluator::GetRatedTrajectories(const PlannedTraject
         {
             rated_trajectory.cost += 1;
         }
+        else
+        {
+            // Ego Lane cost to minimal if drivable (i.e. cost=0)
+        }
+
         return rated_trajectory;
     };
     std::transform(rated_trajectories.begin(), rated_trajectories.end(), rated_trajectories.begin(), adjust_costs);

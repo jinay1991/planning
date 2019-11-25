@@ -4,20 +4,21 @@
 #ifndef SIMULATION_SIMULATION_H_
 #define SIMULATION_SIMULATION_H_
 
+#include <math.h>
 #include <spline.h>
 #include <uWS/uWS.h>
 #include <Eigen/Core>
 #include <Eigen/QR>
 #include <fstream>
-#include <iostream>
+#include <iomanip>
 #include <json.hpp>
 #include <memory>
 #include <sstream>
 #include <string>
 #include <vector>
 
-#include <motion_planning/motion_planning.h>
-#include <motion_planning/roadmodel_data_source.h>
+#include "motion_planning/motion_planning.h"
+#include "motion_planning/roadmodel_data_source.h"
 
 namespace sim
 {

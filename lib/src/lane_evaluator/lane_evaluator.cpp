@@ -1,11 +1,8 @@
 ///
 /// @file
 ///
-#include <chrono>
-#include <sstream>
-
-#include "logging/logging.h"
 #include "motion_planning/lane_evaluator/lane_evaluator.h"
+#include "logging/logging.h"
 
 namespace motion_planning
 {

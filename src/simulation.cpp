@@ -2,10 +2,8 @@
 /// @file
 ///
 
-#include <math.h>
-#include <simulation/simulation.h>
-#include <iomanip>
-#include <string>
+#include "simulation/simulation.h"
+#include "logging/logging.h"
 
 namespace sim
 {
@@ -58,7 +56,14 @@ Simulation::Simulation(const std::string& map_file)
                     // ##############################################################
                     UpdateDataSource(j[1]);
 
+                    const auto start = std::chrono::system_clock::now();
                     motion_planning_->GenerateTrajectories();
+                    const auto elapsed_time =
+                        std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - start)
+                            .count();
+                    std::stringstream log_stream;
+                    log_stream << "Time taken by GenerateTrajectories(): " << elapsed_time << "usec" << std::endl;
+                    LOG_DEBUG("Simulation", log_stream.str());
 
                     const auto trajectory = motion_planning_->GetSelectedTrajectory();
 
@@ -85,16 +90,17 @@ Simulation::Simulation(const std::string& map_file)
         }
     });
 
-    h_.onConnection(
-        [&](uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) { std::cout << "Connected!!!" << std::endl; });
+    h_.onConnection([&](uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) {
+        LOG_INFO("Simulation", "Connected" << std::endl;);
+    });
 
     h_.onDisconnection([&](uWS::WebSocket<uWS::SERVER> ws, std::int32_t code, char* message, size_t length) {
         ws.close();
-        std::cout << "Disconnected" << std::endl;
+        LOG_INFO("Simulation", "Disconnected" << std::endl;);
     });
 }
 
-Simulation::~Simulation() { std::cout << "Destructed!!" << std::endl; }
+Simulation::~Simulation() { LOG_INFO("Simulation", "Destructed!!" << std::endl;); }
 
 const std::string Simulation::HasData(const std::string& s)
 {
@@ -185,11 +191,11 @@ void Simulation::Run()
     std::int32_t port = 4567;
     if (h_.listen(port))
     {
-        std::cout << "Listening to port " << port << std::endl;
+        LOG_INFO("Simulation", "Listening to port " << port << std::endl;);
     }
     else
     {
-        std::cerr << "Failed to listen to port" << std::endl;
+        LOG_ERROR("Simulation", "Failed to listen to port" << std::endl;);
         return;
     }
     h_.run();
