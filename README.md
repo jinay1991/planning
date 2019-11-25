@@ -6,7 +6,12 @@
 
 [[Issue Board](https://gitlab.com/jinay1991/motion_planning/-/boards)]
 
-**WIP** Autonomous Driving Motion Planning (with conjunction with Udacity Simulator) 
+Autonomous Driving Motion Planning (with conjunction with Udacity Simulator) 
+
+## Developer Notes
+
+Please remember that Repository work is Under Progress and may contain incomplete functionality for some of the components.
+Keep track of Issue Tracker to see current status of the Work or report new issue if you encounter.
 
 ## Build
 

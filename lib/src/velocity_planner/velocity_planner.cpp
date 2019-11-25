@@ -1,9 +1,8 @@
 ///
 /// @file
 ///
-#include <logging/logging.h>
-
 #include "motion_planning/velocity_planner/velocity_planner.h"
+#include "logging/logging.h"
 
 namespace motion_planning
 {
