@@ -19,7 +19,7 @@ class TrajectoryEvaluator : public ITrajectoryEvaluator
   public:
     explicit TrajectoryEvaluator(std::shared_ptr<IDataSource>& data_source);
 
-    virtual RatedTrajectories GetRatedTrajectories(const PlannedTrajectories& planned_trajectories) const override;
+    virtual Trajectories GetRatedTrajectories(const Trajectories& optimized_trajectories) const override;
 
   private:
     std::unique_ptr<LaneEvaluator> lane_evaluator_;

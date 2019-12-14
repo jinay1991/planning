@@ -20,7 +20,7 @@ TEST(TrajectoryPrioritizerTest, GivenTypicalTrajectories_WhenPrioritized_ThenRet
     const auto left_trajectory = TrajectoryBuilder().WithLaneId(LaneId::kLeft).WithCost(2.0).Build();
     const auto right_trajectory = TrajectoryBuilder().WithLaneId(LaneId::kRight).WithCost(3.0).Build();
 
-    const auto trajectories = PlannedTrajectories{ego_trajectory, left_trajectory, right_trajectory};
+    const auto trajectories = Trajectories{ego_trajectory, left_trajectory, right_trajectory};
 
     auto actual = TrajectoryPrioritizer().GetPrioritizedTrajectories(trajectories);
     EXPECT_EQ(actual.top().maneuver.GetLaneId(), LaneId::kEgo);
@@ -42,7 +42,7 @@ TEST(TrajectoryPrioritizerTest,
     const auto left_trajectory = TrajectoryBuilder().WithLaneId(LaneId::kLeft).WithCost(3.0).Build();
     const auto right_trajectory = TrajectoryBuilder().WithLaneId(LaneId::kRight).WithCost(3.0).Build();
 
-    const auto trajectories = PlannedTrajectories{ego_trajectory, left_trajectory, right_trajectory};
+    const auto trajectories = Trajectories{ego_trajectory, left_trajectory, right_trajectory};
 
     auto actual = TrajectoryPrioritizer().GetPrioritizedTrajectories(trajectories);
     EXPECT_EQ(actual.top().maneuver.GetLaneId(), LaneId::kRight);

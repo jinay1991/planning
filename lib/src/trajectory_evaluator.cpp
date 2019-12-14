@@ -13,12 +13,12 @@ TrajectoryEvaluator::TrajectoryEvaluator(std::shared_ptr<IDataSource>& data_sour
 {
 }
 
-RatedTrajectories TrajectoryEvaluator::GetRatedTrajectories(const PlannedTrajectories& planned_trajectories) const
+Trajectories TrajectoryEvaluator::GetRatedTrajectories(const Trajectories& optimized_trajectories) const
 {
-    RatedTrajectories rated_trajectories{};
+    Trajectories rated_trajectories{};
 
     // discard invalid lane trajectories
-    std::copy_if(planned_trajectories.begin(), planned_trajectories.end(), std::back_inserter(rated_trajectories),
+    std::copy_if(optimized_trajectories.begin(), optimized_trajectories.end(), std::back_inserter(rated_trajectories),
                  [&](const auto& trajectory) { return lane_evaluator_->IsValidLane(trajectory.lane_id); });
 
     // update costs for each trajectory

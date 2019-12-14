@@ -13,12 +13,10 @@
 
 namespace motion_planning
 {
-using RatedTrajectories = std::vector<Trajectory>;
-
 class ITrajectoryEvaluator
 {
   public:
-    virtual RatedTrajectories GetRatedTrajectories(const PlannedTrajectories& planned_trajectories) const = 0;
+    virtual Trajectories GetRatedTrajectories(const Trajectories& optimized_trajectories) const = 0;
 };
 }  // namespace motion_planning
 #endif  /// MOTION_PLANNING_I_TRAJECTORY_EVALUATOR_H_

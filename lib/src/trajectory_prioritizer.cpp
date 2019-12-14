@@ -20,7 +20,7 @@ void PrintQueue(T q)
     LOG_DEBUG("TrajectoryPrioritizer", log_stream.str());
 }
 
-PrioritizedTrajectories TrajectoryPrioritizer::GetPrioritizedTrajectories(const PlannedTrajectories& trajectories) const
+PrioritizedTrajectories TrajectoryPrioritizer::GetPrioritizedTrajectories(const Trajectories& trajectories) const
 {
     PrioritizedTrajectories prioritized_trajectories;
     for (auto& trajectory : trajectories)

@@ -16,7 +16,7 @@ using PrioritizedTrajectories = std::priority_queue<Trajectory, std::vector<Traj
 class ITrajectoryPrioritizer
 {
   public:
-    virtual PrioritizedTrajectories GetPrioritizedTrajectories(const PlannedTrajectories& trajectories) const = 0;
+    virtual PrioritizedTrajectories GetPrioritizedTrajectories(const Trajectories& trajectories) const = 0;
 };
 }  // namespace motion_planning
 #endif  /// MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H_

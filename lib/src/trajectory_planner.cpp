@@ -4,13 +4,11 @@
 #include "motion_planning/trajectory_planner.h"
 #include "logging/logging.h"
 
-using namespace units::literals;
-
 namespace motion_planning
 {
 TrajectoryPlanner::TrajectoryPlanner(std::shared_ptr<IDataSource>& data_source) : data_source_{data_source} {}
 
-PlannedTrajectories TrajectoryPlanner::GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const
+Trajectories TrajectoryPlanner::GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const
 {
     const auto trajectories = GetTrajectories(maneuvers);
     return trajectories;
@@ -49,54 +47,6 @@ Trajectory TrajectoryPlanner::GetInitialTrajectory() const
     }
 
     return trajectory;
-}
-
-Trajectory TrajectoryPlanner::GetOptimizedTrajectory(const Trajectory& calculated_trajectory,
-                                                     const units::velocity::meters_per_second_t& target_velocity) const
-{
-    Trajectory optimized_trajectory;
-    // split waypoints to ptsx and ptsy for spline utility
-    std::vector<double> ptsx;
-    std::vector<double> ptsy;
-    std::transform(calculated_trajectory.waypoints.begin(), calculated_trajectory.waypoints.end(),
-                   std::back_inserter(ptsx), [](const auto& wp) { return wp.x; });
-    std::transform(calculated_trajectory.waypoints.begin(), calculated_trajectory.waypoints.end(),
-                   std::back_inserter(ptsy), [](const auto& wp) { return wp.y; });
-
-    tk::spline spline;
-
-    spline.set_points(ptsx, ptsy);
-
-    // spline waypoints at 30m intervals
-    auto target_position = GlobalCoordinates{30.0, spline(30.0)};
-    double target_dist = sqrt((target_position.x * target_position.x) + (target_position.y * target_position.y));
-
-    double x_add_on = 0;
-
-    const auto yaw = calculated_trajectory.yaw.value();
-    const auto position = calculated_trajectory.position;
-
-    for (std::size_t i = 1; i <= 50 - data_source_->GetPreviousPathInGlobalCoords().size(); i++)
-    {
-        double N = (target_dist / (0.02f * target_velocity.value()));
-        double x_point = x_add_on + (target_position.x / N);
-        double y_point = spline(x_point);
-
-        x_add_on = x_point;
-
-        double x_ref = x_point;
-        double y_ref = y_point;
-
-        x_point = (x_ref * cos(yaw) - y_ref * sin(yaw));
-        y_point = (x_ref * sin(yaw) + y_ref * cos(yaw));
-
-        x_point += position.x;
-        y_point += position.y;
-
-        optimized_trajectory.waypoints.push_back(GlobalCoordinates{x_point, y_point});
-    }
-
-    return optimized_trajectory;
 }
 
 Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) const
@@ -153,7 +103,6 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
     {
         Trajectory trajectory{};
         const auto lane_id = maneuver.GetLaneId();
-        const auto target_velocity = maneuver.GetVelocity();
 
         /// update waypoints with old path inputs
         trajectory.waypoints.insert(trajectory.waypoints.end(), previous_path_global.begin(),
@@ -167,16 +116,14 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
         /// calculate further waypoints for next path
         const auto calculated_trajectory = GetCalculatedTrajectory(lane_id);
 
-        /// optimize calculated trajectory with spline equation to produce minimal jerk trajectory
-        const auto optimized_trajectory = GetOptimizedTrajectory(calculated_trajectory, target_velocity);
-
         /// update waypoints
-        trajectory.waypoints.insert(trajectory.waypoints.end(), optimized_trajectory.waypoints.begin(),
-                                    optimized_trajectory.waypoints.end());
+        trajectory.waypoints.insert(trajectory.waypoints.end(), calculated_trajectory.waypoints.begin(),
+                                    calculated_trajectory.waypoints.end());
 
         /// append to trajectories
         trajectories.push_back(trajectory);
     }
+
     std::stringstream log_stream;
     log_stream << "Planned trajectories: " << trajectories.size() << std::endl;
     std::for_each(trajectories.begin(), trajectories.end(),
