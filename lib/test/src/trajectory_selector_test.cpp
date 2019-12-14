@@ -19,7 +19,7 @@ TEST(TrajectorySelectorTest, GivenTypicalTrajectories_WhenPrioritized_ThenSelect
     const auto left_trajectory = TrajectoryBuilder().WithLaneId(LaneId::kLeft).WithCost(2.0).Build();
     const auto right_trajectory = TrajectoryBuilder().WithLaneId(LaneId::kRight).WithCost(3.0).Build();
 
-    const auto trajectories = PlannedTrajectories{ego_trajectory, left_trajectory, right_trajectory};
+    const auto trajectories = Trajectories{ego_trajectory, left_trajectory, right_trajectory};
     const auto prioritized_trajectories = TrajectoryPrioritizer().GetPrioritizedTrajectories(trajectories);
     const auto actual = TrajectorySelector().GetSelectedTrajectory(prioritized_trajectories);
 

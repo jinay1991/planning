@@ -26,6 +26,9 @@ struct Trajectory
 
     Maneuver maneuver{};
 };
+
+using Trajectories = std::vector<Trajectory>;
+
 /// @brief Compare Trajectory based on Cost and Lane Assignments
 inline bool operator>(const Trajectory& lhs, const Trajectory& rhs)
 {
@@ -42,6 +45,7 @@ inline std::ostream& operator<<(std::ostream& out, const Trajectory& trajectory)
                << ", global_lane: " << trajectory.global_lane_id << ", velocity: " << trajectory.maneuver.GetVelocity()
                << ", cost: " << trajectory.cost << "}";
 }
+
 }  // namespace motion_planning
 
 #endif  /// MOTION_PLANNING_DOMAIN_MODEL_TRAJECTORY_H_

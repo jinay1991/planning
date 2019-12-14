@@ -13,12 +13,10 @@
 
 namespace motion_planning
 {
-using PlannedTrajectories = std::vector<Trajectory>;
-
 class ITrajectoryPlanner
 {
   public:
-    virtual PlannedTrajectories GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const = 0;
+    virtual Trajectories GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const = 0;
 };
 }  // namespace motion_planning
 #endif  /// MOTION_PLANNING_I_TRAJECTORY_PLANNER_H_

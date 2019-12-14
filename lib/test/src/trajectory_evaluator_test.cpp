@@ -49,7 +49,7 @@ class TrajectoryEvaluatorSpec : public ::testing::Test
     const Trajectory ego_trajectory_;
     const Trajectory left_trajectory_;
     const Trajectory right_trajectory_;
-    const PlannedTrajectories planned_trajectories_;
+    const Trajectories planned_trajectories_;
 };
 TEST_F(TrajectoryEvaluatorSpec, GivenTypicalPlannedTrajectories_WhenEvaluated_ThenReturnSameNumberOfTrajectories)
 {
@@ -92,10 +92,10 @@ class TrajectoryEvaluatorSpecFixture : public ::testing::TestWithParam<std::tupl
                                           .WithGlobalLaneId(ego_global_lane_id + 1)
                                           .WithTargetVelocity(target_velocity)
                                           .Build();
-        planned_trajectories_ = PlannedTrajectories{ego_trajectory, left_trajectory, right_trajectory};
+        planned_trajectories_ = Trajectories{ego_trajectory, left_trajectory, right_trajectory};
     }
 
-    PlannedTrajectories planned_trajectories_{};
+    Trajectories planned_trajectories_{};
 };
 
 TEST_P(TrajectoryEvaluatorSpecFixture,
