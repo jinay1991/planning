@@ -6,8 +6,6 @@
 
 [[Issue Board](https://gitlab.com/jinay1991/motion_planning/-/boards)]
 
-Autonomous Driving Motion Planning (with conjunction with Udacity Simulator) 
-
 This repository contains one of the subsystem for Autonomous Driving Platform.
 
 ### Autonomous Driving Platform Subsystems
@@ -20,6 +18,8 @@ This repository contains one of the subsystem for Autonomous Driving Platform.
 
 Please remember that Repository work is `In Progress` and may contain incomplete/broken functionality for some of the components.
 Keep track of Issue Tracker to see current status of the Work or report new issue if you encounter or contact maintainer of the repository (listed in `CONTRIBUTING.md`) to get clarity on the issues.
+
+This repository is primarily hosted on [GitLab](https://gitlab.com/jinay1991/motion_planning) and Mirrored on [GitHub](https://github.com/jinay1991/motion_planning). For latest information on Repository, please look into [GitLab](https://gitlab.com/jinay1991/motion_planning).
 
 ## Build
 
