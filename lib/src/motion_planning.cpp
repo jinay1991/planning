@@ -3,6 +3,7 @@
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include "motion_planning/motion_planning.h"
+#include "logging/logging.h"
 #include "motion_planning/maneuver.h"
 #include "motion_planning/maneuver_generator.h"
 #include "motion_planning/trajectory_evaluator.h"
@@ -10,7 +11,6 @@
 #include "motion_planning/trajectory_planner.h"
 #include "motion_planning/trajectory_prioritizer.h"
 #include "motion_planning/trajectory_selector.h"
-
 namespace motion_planning
 {
 MotionPlanning::MotionPlanning(std::shared_ptr<IDataSource>& data_source)

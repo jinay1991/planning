@@ -98,6 +98,8 @@ void Simulation::InitializeMap()
         iss >> wp.frenet_coords.dy;
         map_waypoints_.push_back(wp);
     }
+
+    LOG(INFO) << "Read " << map_waypoints_.size() << " map points";
 }
 
 const std::string Simulation::HasData(const std::string& s)
