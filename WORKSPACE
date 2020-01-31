@@ -1,43 +1,5 @@
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "new_git_repository")
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+workspace(name = "planning")
 
-new_git_repository(
-    name = "googletest",
-    build_file = "//bazel:gtest.BUILD",
-    remote = "https://github.com/google/googletest",
-    tag = "release-1.8.1",
-)
+load("@planning//third_party:dependencies.bzl", "third_party_dependencies")
 
-new_git_repository(
-    name = "nholthaus",
-    build_file = "//bazel:nholthaus.BUILD",
-    remote = "https://github.com/nholthaus/units",
-    tag = "v2.3.1",
-)
-
-new_git_repository(
-    name = "nlohmann",
-    build_file = "//bazel:nlohmann.BUILD",
-    remote = "https://github.com/nlohmann/json",
-    tag = "v3.7.0",
-)
-
-new_git_repository(
-    name = "spline",
-    branch = "master",
-    build_file = "//bazel:spline.BUILD",
-    remote = "https://github.com/ttk592/spline",
-)
-
-http_archive(
-    name = "eigen3",
-    build_file = "//bazel:eigen3.BUILD",
-    strip_prefix = "eigen-eigen-323c052e1731",
-    url = "https://bitbucket.org/eigen/eigen/get/3.3.7.zip",
-)
-
-new_local_repository(
-    name = "uWebSockets",
-    build_file = "//bazel:uWebSockets.BUILD",
-    path = "/usr/",
-)
+third_party_dependencies()

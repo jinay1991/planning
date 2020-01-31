@@ -37,15 +37,17 @@ This repository is primarily hosted on [GitLab](https://gitlab.com/jinay1991/mot
 
 ## Dependencies
 
+* `libssl`
+
+    On macOS, `brew install libssl`
+    On Linux, `apt-get install libssl-dev`
+
+* `libuv`
+    
+    On macOS, `brew install libuv`
+    On Linux, `apt-get install libuv1-dev`
+
 * [Bazel](https://docs.bazel.build/versions/1.1.0/getting-started.html) 
-* [uWebSockets](https://github.com/uWebSockets/uWebSockets)
-  * Run either `install-mac.sh` or `install-ubuntu.sh`.
-  * If you install from source, checkout to commit `e94b6e1`, i.e.
-    ```
-    git clone https://github.com/uWebSockets/uWebSockets
-    cd uWebSockets
-    git checkout e94b6e1
-    ```
 * Simulator
     * Download prebuilt binaries
         * [Linux](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_linux.zip) 
@@ -80,18 +82,18 @@ If one want to use Docker Image for quick and easy built-test. Follow below step
 2. Pull Latest Docker Image 
 
     ```
-    ~$ docker pull registry.gitlab.com/jinay1991/motion_planning:latest
+    docker pull registry.gitlab.com/ad_platform/planning:latest
     ```
 
 3. Launch Docker Container for the downloaded image and share checked out repository with docker container
 
     ```
-    motion_planning~$ docker run -it -v $(pwd):/workspace registry.gitlab.com/jinay1991/motion_planning:latest
+    docker run -it -v $(pwd):/workspace registry.gitlab.com/ad_platform/planning:latest
     ```
 
 4. Build and test within docker container
 
     ```
-    workspace~# bazel build //... 
-    workspace~# bazel test //... --test_output=all
+    bazel build //... 
+    bazel test //... --test_output=all
     ```
