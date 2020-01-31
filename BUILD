@@ -1,3 +1,12 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "testdata",
+    srcs = [
+        "data/highway_map.csv",
+    ],
+)
+
 cc_library(
     name = "simulation",
     srcs = glob(
@@ -13,9 +22,6 @@ cc_library(
         "-Werror",
     ],
     includes = ["include"],
-    visibility = [
-        "//visibility:public",
-    ],
     deps = [
         "//lib:motion_planning",
         "@eigen",
@@ -33,11 +39,9 @@ cc_binary(
         "-Wall",
         "-Werror",
     ],
+    data = [":testdata"],
     includes = ["include"],
     linkstatic = True,
-    visibility = [
-        "//visibility:public",
-    ],
     deps = [
         ":simulation",
     ],

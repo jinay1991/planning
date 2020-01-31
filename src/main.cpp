@@ -3,14 +3,19 @@
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include <iostream>
+#include <memory>
 
+#include "argument_parser/argument_parser.h"
 #include "simulation/simulation.h"
 
 int main(int argc, char* argv[])
 {
     try
     {
-        sim::Simulation sim{argv[1]};
+        std::unique_ptr<perception::IArgumentParser> argument_parser =
+            std::make_unique<perception::ArgumentParser>(argc, argv);
+        auto cli_options = argument_parser->GetParsedArgs();
+        sim::Simulation sim{cli_options.map_name};
         sim.Run();
     }
     catch (std::exception& e)

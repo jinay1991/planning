@@ -18,6 +18,7 @@
 #include <string>
 #include <vector>
 
+#include "argument_parser/i_argument_parser.h"
 #include "motion_planning/motion_planning.h"
 #include "motion_planning/roadmodel_data_source.h"
 
