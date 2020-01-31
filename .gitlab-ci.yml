@@ -1,7 +1,7 @@
 # ------------
 # Docker Image
 # ------------
-image: registry.gitlab.com/jinay1991/motion_planning
+image: registry.gitlab.com/ad_platform/planning
 
 # ------------
 # Various Jobs

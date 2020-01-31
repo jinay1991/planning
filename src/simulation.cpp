@@ -2,7 +2,6 @@
 /// @file simulation.cpp
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
-
 #include "simulation/simulation.h"
 #include "logging/logging.h"
 
@@ -82,6 +81,8 @@ Simulation::~Simulation() { LOG(INFO) << "Destructed!!"; }
 
 void Simulation::InitializeMap()
 {
+    LOG(INFO) << "Using " << map_file_;
+
     // Load up map values for waypoint's x,y,s and d normalized normal vectors
     std::ifstream in_map_(map_file_.c_str(), std::ifstream::in);
 
