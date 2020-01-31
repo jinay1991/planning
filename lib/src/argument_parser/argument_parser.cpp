@@ -12,7 +12,7 @@ namespace
 void PrintUsage()
 {
     LOG(INFO) << "Command Line Options: \n"
-              << "--map_data, -m: map data\n"
+              << "--map_data, -m: path to map data\n"
               << "--verbose, -v: [0|1] print more information\n"
               << "--help, -h: print help\n";
 }
