@@ -10,6 +10,11 @@ RUN apt-get install -y libtool clang-format-6.0
 RUN apt-get install -y git curl
 RUN apt-get install -y wget
 
+# Installation of python
+RUN apt-get install -y python python-pip python-pygments
+RUN python -m pip install -U pip
+RUN python -m pip install -U future
+
 # Installation of python3
 RUN apt-get install -y python3 python3-pip python3-pygments
 RUN python3 -m pip install -U pip 

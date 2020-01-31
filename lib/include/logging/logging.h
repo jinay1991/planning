@@ -35,7 +35,7 @@ class LoggingWrapper
         WARN = 1,
         ERROR = 2,
         FATAL = 3,
-        DEBUG = 4, 
+        DEBUG = 4,
     };
 
     /// @brief Constructor
@@ -73,9 +73,9 @@ class LoggingWrapper
 
 /// @brief Checks for Assertion. If condition is false, Log FATAL Error and exit program.
 /// @param [in] condition - condition to be evaluated
-#define ASSERT_CHECK(condition)                                                                  \
+#define ASSERT_CHECK(condition)                                                              \
     planning::logging::LoggingWrapper(planning::logging::LoggingWrapper::LogSeverity::FATAL, \
-                                        (condition) ? false : true)                              \
+                                      (condition) ? false : true)                            \
         .Stream()
 
 /// @brief Checks for Assertion for Comparision. If a and b are not same, Log FATAL Error and exit program.
