@@ -36,8 +36,6 @@ LaneId LaneEvaluator::GetLocalLaneId(const GlobalLaneId& global_lane_id) const
 
 bool LaneEvaluator::IsDrivableLane(const LaneId& lane_id) const
 {
-    std::stringstream log_stream;
-
     bool car_in_front = false;
     bool car_to_left = false;
     bool car_to_right = false;
@@ -101,8 +99,7 @@ bool LaneEvaluator::IsDrivableLane(const LaneId& lane_id) const
             break;
     }
 
-    log_stream << "Is {" << lane_id << "} drivable? " << std::boolalpha << is_drivable ;
-    LOG(DEBUG) << log_stream.str();
+    LOG(DEBUG) << "Is {" << lane_id << "} drivable? " << std::boolalpha << is_drivable;
     return is_drivable;
 }
 

@@ -70,12 +70,11 @@ Simulation::Simulation(const std::string& map_file)
         }
     });
 
-    h_.onConnection(
-        [&](uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) { LOG(INFO) << "Connected"; });
+    h_.onConnection([&](uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) { LOG(INFO) << "Connected"; });
 
     h_.onDisconnection([&](uWS::WebSocket<uWS::SERVER> ws, std::int32_t code, char* message, size_t length) {
         ws.close();
-        LOG(INFO) <<  "Disconnected" ;
+        LOG(INFO) << "Disconnected";
     });
 }
 

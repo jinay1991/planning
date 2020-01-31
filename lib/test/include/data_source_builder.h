@@ -2,7 +2,6 @@
 /// @file data_source_builder.h
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
-
 #ifndef DATA_SOURCE_BUILDER_H_
 #define DATA_SOURCE_BUILDER_H_
 

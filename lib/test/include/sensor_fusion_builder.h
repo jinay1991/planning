@@ -2,7 +2,6 @@
 /// @file sensor_fusion_builder.h
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
-
 #ifndef SENSOR_FUSION_BUILDER_H_
 #define SENSOR_FUSION_BUILDER_H_
 
