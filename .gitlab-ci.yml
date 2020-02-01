@@ -62,22 +62,33 @@ cppcheck:
       - static_code_analysis.log
     expire_in: 7 days
 
+
+code_quality:
+  image: docker:stable
+  stage: test
+  variables:
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
+  services:
+    - docker:stable-dind
+  script:
+    - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
+    - docker run
+      --env SOURCE_CODE="$PWD"
+      --volume "$PWD":/code
+      --volume /var/run/docker.sock:/var/run/docker.sock
+      "registry.gitlab.com/gitlab-org/security-products/codequality:$SP_VERSION" /code
+  artifacts:
+    reports:
+      codequality: gl-code-quality-report.json
+
 # ------------
 # Stage: Build
 # ------------
-bazel-build:
+bazel-build-and-test:
   stage: build
   script:
     - bazel build //... 
-
-# -----------
-# Stage: Test
-# -----------
-bazel-test:
-  stage: test
-  dependencies:
-    - bazel-build
-  script:
     - bazel test //...  --test_output=all --cache_test_results=false --test_arg="--gtest_output=xml:/tmp/test_results.xml"
   after_script:
     - cp /tmp/test_results.xml test_results.xml
@@ -86,7 +97,10 @@ bazel-test:
       junit: test_results.xml
     name: TestResults
     when: on_success
-
+  
+# -----------
+# Stage: Test
+# -----------
 code-coverage:
   stage: test
   script:
@@ -114,25 +128,6 @@ doxygen:
   only:
     refs:
       - master
-
-code_quality:
-  image: docker:stable
-  stage: test
-  variables:
-    DOCKER_DRIVER: overlay2
-  allow_failure: true
-  services:
-    - docker:stable-dind
-  script:
-    - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
-    - docker run
-      --env SOURCE_CODE="$PWD"
-      --volume "$PWD":/code
-      --volume /var/run/docker.sock:/var/run/docker.sock
-      "registry.gitlab.com/gitlab-org/security-products/codequality:$SP_VERSION" /code
-  artifacts:
-    reports:
-      codequality: gl-code-quality-report.json
 
 # -------------
 # Stage: Deploy

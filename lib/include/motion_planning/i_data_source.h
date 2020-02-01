@@ -35,7 +35,7 @@ class IDataSource
     virtual void SetPreviousPath(const PreviousPathGlobal& previous_path_global) = 0;
 
     /// @brief Set Previous Path End (Last point of previous trajectory)
-    virtual void SetPreviousPathEnd(const FrenetCoordinates& frenet_coords) = 0;
+    virtual void SetPreviousPathEnd(const FrenetCoordinates& coords) = 0;
 
     /// @brief Set SensorFusion (Objects)
     virtual void SetSensorFusion(const SensorFusion& sensor_fusion) = 0;
@@ -44,7 +44,7 @@ class IDataSource
     virtual void SetSpeedLimit(const units::velocity::meters_per_second_t& speed_limit) = 0;
 
     /// @brief Get Global LaneId based on provided Frenet Coordinates
-    virtual GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& frenet_coords) const = 0;
+    virtual GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& coords) const = 0;
 
     /// @brief Get Global LaneId based for ego vehicle
     virtual GlobalLaneId GetGlobalLaneId() const = 0;

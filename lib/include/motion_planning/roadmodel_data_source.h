@@ -26,7 +26,7 @@ class RoadModelDataSource : public IDataSource
     virtual void SetPreviousPath(const PreviousPathGlobal& previous_path_global) override;
 
     /// @brief Set Previous Path End (Last point of previous trajectory)
-    virtual void SetPreviousPathEnd(const FrenetCoordinates& frenet_coords) override;
+    virtual void SetPreviousPathEnd(const FrenetCoordinates& coords) override;
 
     /// @brief Set SensorFusion (Objects)
     virtual void SetSensorFusion(const SensorFusion& sensor_fusion) override;
@@ -35,7 +35,7 @@ class RoadModelDataSource : public IDataSource
     virtual void SetSpeedLimit(const units::velocity::meters_per_second_t& speed_limit) override;
 
     /// @brief Get Global LaneId based on provided Frenet Coordinates
-    virtual GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& frenet_coords) const override;
+    virtual GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& coords) const override;
 
     /// @brief Get Global LaneId based for ego vehicle
     virtual GlobalLaneId GetGlobalLaneId() const override;
