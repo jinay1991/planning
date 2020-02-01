@@ -5,7 +5,7 @@
 #include "argument_parser/argument_parser.h"
 #include "logging/logging.h"
 
-namespace perception
+namespace planning
 {
 namespace
 {
@@ -50,7 +50,7 @@ CLIOptions ArgumentParser::ParseArgs(int argc, char* argv[])
         switch (c)
         {
             case 'm':
-                cli_options_.map_name = strtod(optarg, nullptr);
+                cli_options_.map_name = optarg;
                 LOG(INFO) << "map_name: " << cli_options_.map_name;
                 break;
             case 'v':
@@ -68,4 +68,4 @@ CLIOptions ArgumentParser::ParseArgs(int argc, char* argv[])
     return cli_options_;
 }
 
-}  // namespace perception
+}  // namespace planning

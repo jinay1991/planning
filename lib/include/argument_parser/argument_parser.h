@@ -14,7 +14,7 @@
 #include "argument_parser/cli_options.h"
 #include "argument_parser/i_argument_parser.h"
 
-namespace perception
+namespace planning
 {
 /// @brief Argument Parser class
 class ArgumentParser : public IArgumentParser
@@ -49,6 +49,6 @@ class ArgumentParser : public IArgumentParser
     std::string optstring_;
 };
 
-}  // namespace perception
+}  // namespace planning
 
 #endif  /// PERCEPTION_ARGUMENT_PARSER_ARGUMENT_PARSER_H_

@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <string>
 
-namespace perception
+namespace planning
 {
 /// @brief Contains Command Line Interface (CLI) Options
 struct CLIOptions
@@ -21,5 +21,5 @@ struct CLIOptions
     bool verbose = false;
 };
 
-}  // namespace perception
+}  // namespace planning
 #endif  /// PERCEPTION_ARGUMENT_PARSER_CLI_OPTIONS_H_

@@ -8,7 +8,7 @@
 
 #include "argument_parser/cli_options.h"
 
-namespace perception
+namespace planning
 {
 /// @brief Argument Parser Interface class
 class IArgumentParser
@@ -24,6 +24,6 @@ class IArgumentParser
     /// @brief Parse Arguments from argc, argv
     virtual CLIOptions ParseArgs(int argc, char** argv) = 0;
 };
-}  // namespace perception
+}  // namespace planning
 
 #endif  /// PERCEPTION_ARGUMENT_PARSER_I_ARGUMENT_PARSER_H_

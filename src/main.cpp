@@ -12,8 +12,8 @@ int main(int argc, char* argv[])
 {
     try
     {
-        std::unique_ptr<perception::IArgumentParser> argument_parser =
-            std::make_unique<perception::ArgumentParser>(argc, argv);
+        std::unique_ptr<planning::IArgumentParser> argument_parser =
+            std::make_unique<planning::ArgumentParser>(argc, argv);
         auto cli_options = argument_parser->GetParsedArgs();
         sim::Simulation sim{cli_options.map_name};
         sim.Run();
