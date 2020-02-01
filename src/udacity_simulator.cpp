@@ -1,85 +1,35 @@
 ///
-/// @file simulation.cpp
+/// @file udacity_simulator.cpp
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
-#include "simulation/simulation.h"
+#include "simulator/udacity_simulator.h"
 #include "logging/logging.h"
 
 namespace sim
 {
-Simulation::Simulation(const std::string& map_file)
+UdacitySimulator::UdacitySimulator(const std::string& map_file)
     : map_file_{map_file},
       data_source_{std::make_shared<motion_planning::RoadModelDataSource>()},
       motion_planning_{std::make_unique<motion_planning::MotionPlanning>(data_source_)}
 {
+}
+
+void UdacitySimulator::Init()
+{
     InitializeMap();
 
-    h_.onMessage([&](uWS::WebSocket<uWS::SERVER> ws, char* data, size_t length, uWS::OpCode opCode) {
-        // "42" at the start of the message means there's a websocket message event.
-        // The 4 signifies a websocket message
-        // The 2 signifies a websocket event
-        if (length && length > 2 && data != nullptr && data[0] == '4' && data[1] == '2')
-        {
-            const auto s = HasData(data);
-            if (s != "")
-            {
-                const auto j = json::parse(s);
-
-                const auto event = j[0].get<std::string>();
-
-                if (event == "telemetry")
-                {
-                    json msgJson;
-
-                    std::vector<double> next_x_vals;
-                    std::vector<double> next_y_vals;
-
-                    // ##############################################################
-                    UpdateDataSource(j[1]);
-
-                    const auto start = std::chrono::system_clock::now();
-                    motion_planning_->GenerateTrajectories();
-                    const auto elapsed_time =
-                        std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - start)
-                            .count();
-                    LOG(DEBUG) << "Time taken by GenerateTrajectories(): " << elapsed_time << "usec";
-
-                    const auto trajectory = motion_planning_->GetSelectedTrajectory();
-
-                    for (const auto& wp : trajectory.waypoints)
-                    {
-                        next_x_vals.push_back(wp.x);
-                        next_y_vals.push_back(wp.y);
-                    }
-                    // ##############################################################
-                    // sequentially every .02 seconds
-                    msgJson["next_x"] = next_x_vals;
-                    msgJson["next_y"] = next_y_vals;
-
-                    const auto msg = "42[\"control\"," + msgJson.dump() + "]";
-                    ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
-                }
-            }
-            else
-            {
-                // Manual driving
-                std::string msg = "42[\"manual\",{}]";
-                ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
-            }
-        }
+    h_.onMessage([&](uWS::WebSocket<uWS::SERVER> ws, char* data, size_t length, uWS::OpCode op_code) {
+        ReceiveCallback(ws, data, length, op_code);
     });
 
-    h_.onConnection([&](uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) { LOG(INFO) << "Connected"; });
+    h_.onConnection([&](uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) { ConnectCallback(ws, req); });
 
     h_.onDisconnection([&](uWS::WebSocket<uWS::SERVER> ws, std::int32_t code, char* message, size_t length) {
-        ws.close();
-        LOG(INFO) << "Disconnected";
+        DisconnectCallback(ws, code, message, length);
     });
 }
 
-Simulation::~Simulation() { LOG(INFO) << "Destructed!!"; }
-
-void Simulation::InitializeMap()
+void UdacitySimulator::InitializeMap()
 {
     LOG(INFO) << "Using " << map_file_;
 
@@ -102,7 +52,90 @@ void Simulation::InitializeMap()
     LOG(INFO) << "Read " << map_waypoints_.size() << " map points";
 }
 
-const std::string Simulation::HasData(const std::string& s)
+void UdacitySimulator::ReceiveCallback(uWS::WebSocket<uWS::SERVER> ws, char* data, size_t length, uWS::OpCode op_code)
+{
+    // "42" at the start of the message means there's a websocket message event.
+    // The 4 signifies a websocket message
+    // The 2 signifies a websocket event
+    if (length && length > 2 && data != nullptr && data[0] == '4' && data[1] == '2')
+    {
+        const auto s = HasData(data);
+        if (s != "")
+        {
+            const auto j = json::parse(s);
+
+            const auto event = j[0].get<std::string>();
+
+            if (event == "telemetry")
+            {
+                json msgJson;
+
+                std::vector<double> next_x_vals;
+                std::vector<double> next_y_vals;
+
+                // ##############################################################
+                UpdateDataSource(j[1]);
+
+                const auto start = std::chrono::system_clock::now();
+                motion_planning_->GenerateTrajectories();
+                const auto elapsed_time =
+                    std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - start)
+                        .count();
+                LOG(DEBUG) << "Time taken by GenerateTrajectories(): " << elapsed_time << "usec";
+
+                const auto trajectory = motion_planning_->GetSelectedTrajectory();
+
+                for (const auto& wp : trajectory.waypoints)
+                {
+                    next_x_vals.push_back(wp.x);
+                    next_y_vals.push_back(wp.y);
+                }
+                // ##############################################################
+                // sequentially every .02 seconds
+                msgJson["next_x"] = next_x_vals;
+                msgJson["next_y"] = next_y_vals;
+
+                const auto msg = "42[\"control\"," + msgJson.dump() + "]";
+                ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
+            }
+        }
+        else
+        {
+            // Manual driving
+            std::string msg = "42[\"manual\",{}]";
+            ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
+        }
+    }
+}
+
+void UdacitySimulator::ConnectCallback(uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req)
+{
+    LOG(INFO) << "Connected";
+}
+
+void UdacitySimulator::Listen()
+{
+    std::int32_t port = 4567;
+    if (h_.listen(port))
+    {
+        LOG(INFO) << "Listening to port " << port;
+    }
+    else
+    {
+        LOG(ERROR) << "Failed to listen to port";
+        return;
+    }
+    h_.run();
+}
+
+void UdacitySimulator::DisconnectCallback(uWS::WebSocket<uWS::SERVER> ws, std::int32_t code, char* message,
+                                          size_t length)
+{
+    ws.close();
+    LOG(INFO) << "Disconnected";
+}
+
+const std::string UdacitySimulator::HasData(const std::string& s)
 {
     auto found_null = s.find("null");
     auto b1 = s.find_first_of("[");
@@ -118,7 +151,7 @@ const std::string Simulation::HasData(const std::string& s)
     return "";
 }
 
-void Simulation::UpdateDataSource(const json& msg)
+void UdacitySimulator::UpdateDataSource(const json& msg)
 {
     data_source_->SetMapCoordinates(map_waypoints_);
     data_source_->SetSensorFusion(GetSensorFusion(msg));
@@ -128,7 +161,7 @@ void Simulation::UpdateDataSource(const json& msg)
     data_source_->SetSpeedLimit(units::velocity::miles_per_hour_t{49.5});
 }
 
-const motion_planning::FrenetCoordinates Simulation::GetPreviousPathEnd(const json& msg)
+const motion_planning::FrenetCoordinates UdacitySimulator::GetPreviousPathEnd(const json& msg)
 {
     const auto end_path_s = msg["end_path_s"].get<double>();
     const auto end_path_d = msg["end_path_d"].get<double>();
@@ -136,7 +169,7 @@ const motion_planning::FrenetCoordinates Simulation::GetPreviousPathEnd(const js
     return previous_path_end;
 }
 
-const motion_planning::PreviousPathGlobal Simulation::GetPreviousPathGlobal(const json& msg)
+const motion_planning::PreviousPathGlobal UdacitySimulator::GetPreviousPathGlobal(const json& msg)
 {
     const auto previous_path_x = msg["previous_path_x"];
     const auto previous_path_y = msg["previous_path_y"];
@@ -148,7 +181,7 @@ const motion_planning::PreviousPathGlobal Simulation::GetPreviousPathGlobal(cons
     return previous_path_global;
 }
 
-const motion_planning::VehicleDynamics Simulation::GetVehicleDynamics(const json& msg)
+const motion_planning::VehicleDynamics UdacitySimulator::GetVehicleDynamics(const json& msg)
 {
     motion_planning::VehicleDynamics vehicle_dynamics;
     vehicle_dynamics.global_coords.x = msg["x"].get<double>();
@@ -161,7 +194,7 @@ const motion_planning::VehicleDynamics Simulation::GetVehicleDynamics(const json
     return vehicle_dynamics;
 }
 
-const motion_planning::SensorFusion Simulation::GetSensorFusion(const json& msg)
+const motion_planning::SensorFusion UdacitySimulator::GetSensorFusion(const json& msg)
 {
     const auto sensor_fusion = msg["sensor_fusion"];
     motion_planning::SensorFusion sf;
@@ -184,21 +217,6 @@ const motion_planning::SensorFusion Simulation::GetSensorFusion(const json& msg)
     }
 
     return sf;
-}
-
-void Simulation::Run()
-{
-    std::int32_t port = 4567;
-    if (h_.listen(port))
-    {
-        LOG(INFO) << "Listening to port " << port;
-    }
-    else
-    {
-        LOG(ERROR) << "Failed to listen to port";
-        return;
-    }
-    h_.run();
 }
 
 }  // namespace sim

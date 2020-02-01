@@ -6,7 +6,8 @@
 #include <memory>
 
 #include "argument_parser/argument_parser.h"
-#include "simulation/simulation.h"
+#include "simulator/i_simulator.h"
+#include "simulator/udacity_simulator.h"
 
 int main(int argc, char* argv[])
 {
@@ -15,8 +16,10 @@ int main(int argc, char* argv[])
         std::unique_ptr<planning::IArgumentParser> argument_parser =
             std::make_unique<planning::ArgumentParser>(argc, argv);
         auto cli_options = argument_parser->GetParsedArgs();
-        sim::Simulation sim{cli_options.map_name};
-        sim.Run();
+        std::unique_ptr<sim::ISimulator> sim = std::make_unique<sim::UdacitySimulator>(cli_options.map_name);
+        sim->Init();
+
+        sim->Listen();
     }
     catch (std::exception& e)
     {

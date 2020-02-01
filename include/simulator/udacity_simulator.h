@@ -1,15 +1,15 @@
 ///
-/// @file simulation.h
+/// @file udacity_simulator.h
+/// @brief Contains Simulation Client Interface for Udacity Simulator
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
-#ifndef SIMULATION_SIMULATION_H_
-#define SIMULATION_SIMULATION_H_
+#ifndef SIMULATOR_UDACITY_SIMULATOR_H_
+#define SIMULATOR_UDACITY_SIMULATOR_H_
 
 #include <math.h>
-#include <spline.h>
-#include <uWS.h>
-#include <Eigen/Core>
-#include <Eigen/QR>
+// #include <spline.h>
+// #include <Eigen/Core>
+// #include <Eigen/QR>
 #include <fstream>
 #include <iomanip>
 #include <json.hpp>
@@ -21,18 +21,36 @@
 #include "argument_parser/i_argument_parser.h"
 #include "motion_planning/motion_planning.h"
 #include "motion_planning/roadmodel_data_source.h"
+#include "simulator/i_simulator.h"
 
 namespace sim
 {
-class Simulation
+/// @brief Simulator Client
+class UdacitySimulator : public ISimulator
 {
   public:
     using json = nlohmann::json;
 
-    explicit Simulation(const std::string& map_file);
-    ~Simulation();
+    /// @brief Constructor. Initializes Map Points from map_file
+    explicit UdacitySimulator(const std::string& map_file);
 
-    void Run();
+    /// @brief Initialize and Register Callbacks for Connect, Receive and Disconnect
+    virtual void Init() override;
+
+    /// @brief Listen to WebSocket Port
+    virtual void Listen() override;
+
+  protected:
+    /// @brief Connect callback for WebSocket
+    virtual void ConnectCallback(uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) override;
+
+    /// @brief Disconnect callback for WebSocket
+    virtual void DisconnectCallback(uWS::WebSocket<uWS::SERVER> ws, std::int32_t code, char* message,
+                                    size_t length) override;
+
+    /// @brief Receive callback for WebSocket
+    virtual void ReceiveCallback(uWS::WebSocket<uWS::SERVER> ws, char* data, size_t length,
+                                 uWS::OpCode op_code) override;
 
   private:
     void InitializeMap();
@@ -68,4 +86,4 @@ class Simulation
 };
 }  // namespace sim
 
-#endif  /// SIMULATION_SIMULATION_H_
+#endif  /// SIMULATOR_UDACITY_SIMULATOR_H_

@@ -41,7 +41,6 @@ cc_binary(
     ],
     data = [":testdata"],
     includes = ["include"],
-    linkstatic = True,
     deps = [
         ":simulation",
     ],
