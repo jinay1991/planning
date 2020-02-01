@@ -46,7 +46,7 @@ clang-format:
 buildifier:
   stage: check
   script:
-    - buildifier -v -d -r .
+    - buildifier -v -multi_diff -r .
 
 cppcheck:
   stage: check
