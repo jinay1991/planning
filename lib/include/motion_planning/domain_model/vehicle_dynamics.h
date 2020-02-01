@@ -17,7 +17,7 @@ struct GlobalCoordinates
 {
     /// @brief x axis value
     double x;
-    
+
     /// @brief y axis value
     double y;
 };
