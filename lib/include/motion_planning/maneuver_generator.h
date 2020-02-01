@@ -13,9 +13,11 @@
 
 namespace motion_planning
 {
+/// @brief Maneuver Generator
 class ManeuverGenerator : public IManeuverGenerator
 {
   public:
+    /// @brief Generate Maneuvers for given target velocity (one for each lane)
     virtual std::vector<Maneuver> Generate(const units::velocity::meters_per_second_t& target_velocity) const override;
 };
 }  // namespace motion_planning

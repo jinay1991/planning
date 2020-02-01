@@ -12,19 +12,28 @@
 
 namespace motion_planning
 {
+/// @brief Trajectory
 struct Trajectory
 {
+    /// @brief Trajectory Waypoints in Global Coordinates
     std::vector<GlobalCoordinates> waypoints;
 
+    /// @brief Ego Vehicle Position in Global Coordinates
     GlobalCoordinates position;
 
+    /// @brief Trajectory Global LaneId
     LaneInformation::GlobalLaneId global_lane_id;
+
+    /// @brief Trajectory Local LaneId
     LaneInformation::LaneId lane_id;
 
+    /// @brief Ego Vehicle yaw (in radians)
     units::angle::radian_t yaw;
 
+    /// @brief Trajectory Cost
     double cost{0.0};
 
+    /// @brief Maneuver associated with Trajectory.
     Maneuver maneuver{};
 };
 
@@ -40,6 +49,7 @@ inline bool operator>(const Trajectory& lhs, const Trajectory& rhs)
             lhs.lane_id < rhs.lane_id);
 }
 
+/// @brief String Stream for Trajectory information (used for printing verbose information)
 inline std::ostream& operator<<(std::ostream& out, const Trajectory& trajectory)
 {
     return out << "Trajectory{wp: " << trajectory.waypoints.size() << ", lane: " << trajectory.lane_id

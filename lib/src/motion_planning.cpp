@@ -11,6 +11,8 @@
 #include "motion_planning/trajectory_planner.h"
 #include "motion_planning/trajectory_prioritizer.h"
 #include "motion_planning/trajectory_selector.h"
+#include "motion_planning/velocity_planner/velocity_planner.h"
+
 namespace motion_planning
 {
 MotionPlanning::MotionPlanning(std::shared_ptr<IDataSource>& data_source)

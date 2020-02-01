@@ -25,6 +25,7 @@ namespace planning
 {
 namespace logging
 {
+/// @brief Logging Wrapper to stdout and stderr
 class LoggingWrapper
 {
   public:

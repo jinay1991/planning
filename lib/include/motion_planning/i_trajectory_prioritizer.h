@@ -12,11 +12,17 @@
 
 namespace motion_planning
 {
+/// @brief typename for prioritized queue. 
 using PrioritizedTrajectories = std::priority_queue<Trajectory, std::vector<Trajectory>, std::greater<Trajectory>>;
 
+/// @brief Interface for Trajectory Prioritizer
 class ITrajectoryPrioritizer
 {
   public:
+    /// @brief Destructor
+    virtual ~ITrajectoryPrioritizer() = default;
+
+    /// @brief Get Prioritized Trajectories for rated trajectories provided.
     virtual PrioritizedTrajectories GetPrioritizedTrajectories(const Trajectories& trajectories) const = 0;
 };
 }  // namespace motion_planning

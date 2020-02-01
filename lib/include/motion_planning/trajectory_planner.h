@@ -15,12 +15,14 @@ namespace motion_planning
 {
 using Trajectories = std::vector<Trajectory>;
 
+/// @brief Trajectory Planner
 class TrajectoryPlanner : public ITrajectoryPlanner
 {
   public:
+    /// @brief Constructor. Initializes with provided DataSource
     explicit TrajectoryPlanner(std::shared_ptr<IDataSource>& data_source);
 
-    /// @brief Provide Planned Trajectories
+    /// @brief Get Planned Trajectories for each maneuvers provided.
     virtual Trajectories GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const override;
 
   private:
@@ -39,6 +41,7 @@ class TrajectoryPlanner : public ITrajectoryPlanner
     /// @brief Converts Local Lane Id to Global Lane Id (using ego's global lane)
     virtual GlobalLaneId GetGlobalLaneId(const LaneId& lane_id) const;
 
+    /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, etc.)
     std::shared_ptr<IDataSource> data_source_;
 };
 }  // namespace motion_planning

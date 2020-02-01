@@ -13,9 +13,11 @@
 
 namespace motion_planning
 {
+/// @brief Trajectory Optimizer
 class TrajectoryOptimizer : public ITrajectoryOptimizer
 {
   public:
+    /// @brief Constructor. Initializes with provided DataSource
     explicit TrajectoryOptimizer(std::shared_ptr<IDataSource>& data_source);
 
     /// @brief Provide Optimized Trajectories set using Spline Equations
@@ -25,6 +27,7 @@ class TrajectoryOptimizer : public ITrajectoryOptimizer
     /// @brief Smoothen/Optimize Trajectory with Spline for target_velocity
     virtual Trajectory GetOptimizedTrajectory(const Trajectory& planned_trajectory) const;
 
+    /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, Map Points etc.)
     std::shared_ptr<IDataSource> data_source_;
 };
 

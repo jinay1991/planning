@@ -10,9 +10,14 @@
 
 namespace motion_planning
 {
+/// @brief Interface for Trajectory Selector
 class ITrajectorySelector
 {
   public:
+    /// @brief Destructor
+    virtual ~ITrajectorySelector() = default;
+
+    /// @brief Get Selected Trajectory from the prioritized trajectories provided.
     virtual Trajectory GetSelectedTrajectory(const PrioritizedTrajectories& prioritized_trajectories) const = 0;
 };
 }  // namespace motion_planning

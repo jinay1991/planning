@@ -11,8 +11,10 @@
 
 namespace motion_planning
 {
+/// @brief LaneInformation
 struct LaneInformation
 {
+    /// @brief LaneId
     enum class LaneId : std::uint8_t
     {
         kLeft = 0U,
@@ -20,7 +22,7 @@ struct LaneInformation
         kRight = 2U,
         kInvalid = 255U
     };
-
+    /// @brief GlobalLaneId
     enum class GlobalLaneId : std::uint8_t
     {
         kLeft = 0U,
@@ -29,11 +31,16 @@ struct LaneInformation
         kInvalid = 255U
     };
 
+    /// @brief LaneId (Local Coordinates)
     LaneId lane_id;
+
+    /// @brief LaneId (Global Coordinates)
     GlobalLaneId global_lane_id;
 
+    /// @brief Lane Drivability
     bool drivable{false};
 
+    /// @brief Lane Cost
     double cost{0.0};
 };
 

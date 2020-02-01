@@ -6,6 +6,8 @@
 
 namespace timer
 {
+ChronoTimer::ChronoTimer() : duration_{std::chrono::seconds{1}}, is_started_{false} {}
+
 void ChronoTimer::Start()
 {
     start_ = std::chrono::system_clock::now();

@@ -11,9 +11,14 @@
 
 namespace motion_planning
 {
+/// @brief Interface for Trajectory Optimizer
 class ITrajectoryOptimizer
 {
   public:
+    /// @brief Destructor
+    virtual ~ITrajectoryOptimizer() = default;
+
+    /// @brief Get Optimized Trajectories for all the trajectories provided.
     virtual Trajectories GetOptimizedTrajectories(const Trajectories& trajectories) const = 0;
 };
 }  // namespace motion_planning

@@ -15,14 +15,18 @@
 
 namespace motion_planning
 {
+/// @brief Trajectory Evaluator
 class TrajectoryEvaluator : public ITrajectoryEvaluator
 {
   public:
+    /// @brief Constructor. Initializes with provided DataSource
     explicit TrajectoryEvaluator(std::shared_ptr<IDataSource>& data_source);
 
+    /// @brief Get Rated Trajectories for provided optimized trajectories.
     virtual Trajectories GetRatedTrajectories(const Trajectories& optimized_trajectories) const override;
 
   private:
+    /// @brief Lane Evaluator
     std::unique_ptr<LaneEvaluator> lane_evaluator_;
 };
 }  // namespace motion_planning

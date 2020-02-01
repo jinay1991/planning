@@ -19,28 +19,46 @@
 #include "motion_planning/i_trajectory_planner.h"
 #include "motion_planning/i_trajectory_prioritizer.h"
 #include "motion_planning/i_trajectory_selector.h"
-#include "motion_planning/velocity_planner/velocity_planner.h"
+#include "motion_planning/velocity_planner/i_velocity_planner.h"
 
 namespace motion_planning
 {
+/// @brief Motion Planning Wrapper Class
 class MotionPlanning
 {
   public:
+    /// @brief Constructor. Initialize Motion Planner with DataSource instance
     explicit MotionPlanning(std::shared_ptr<IDataSource>& data_source);
 
+    /// @brief Generate Trajectories based on the provided DataSource (i.e. Environment)
     virtual void GenerateTrajectories();
 
+    /// @brief Get Selected Trajectory from Trajectory Selector
     virtual Trajectory GetSelectedTrajectory() const;
 
   private:
+    /// @brief DataSource (contains information on Environment, VehicleDynamics, Map Points, SensorFusion etc.)
     std::shared_ptr<IDataSource> data_source_;
 
-    std::unique_ptr<VelocityPlanner> velocity_planner_;
+    /// @brief Velocity Planner
+    std::unique_ptr<IVelocityPlanner> velocity_planner_;
+
+    /// @brief Maneuver Generator
     std::unique_ptr<IManeuverGenerator> maneuver_generator_;
+
+    /// @brief Trajectory Planner
     std::unique_ptr<ITrajectoryPlanner> trajectory_planner_;
+
+    /// @brief Trajectory Optimizer
     std::unique_ptr<ITrajectoryOptimizer> trajectory_optimizer_;
+
+    /// @brief Trajectory Evaluator
     std::unique_ptr<ITrajectoryEvaluator> trajectory_evaluator_;
+
+    /// @brief Trajectory Prioritizer
     std::unique_ptr<ITrajectoryPrioritizer> trajectory_prioritizer_;
+
+    /// @brief Trajectory Selector
     std::unique_ptr<ITrajectorySelector> trajectory_selector_;
 
     Trajectory selected_trajectory_{};

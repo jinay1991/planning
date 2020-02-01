@@ -12,39 +12,63 @@
 
 namespace motion_planning
 {
+/// @brief Global Coordinates
 struct GlobalCoordinates
 {
+    /// @brief x axis value
     double x;
+    
+    /// @brief y axis value
     double y;
 };
 
+/// @brief Frenet Coordinates
 struct FrenetCoordinates
 {
+    /// @brief Longitudinal Value
     double s;
+
+    /// @brief Latitudinal Value
     double d;
 
-    /// Frenet d unit normal vector (split up into the x component, and the y component
-    /// used to store map waypoints
+    /// @brief Latitudinal unit normal vector (x component)
+    /// @note used to store map waypoints
     double dx;
+
+    /// @brief Latitudinal unit normal vector (y component)
+    /// @note used to store map waypoints
     double dy;
 };
 
+/// @brief Map Points
 struct MapCoordinates
 {
+    /// @brief Map Point (Global Coordinates)
     GlobalCoordinates global_coords;
+
+    /// @brief Map Point (Frenet Coordinates)
     FrenetCoordinates frenet_coords;
 };
 
+/// @brief VehicleDynamics
 struct VehicleDynamics
 {
+    /// @brief LaneId (Local Coordinates)
     LaneInformation::LaneId lane_id;
+
+    /// @brief LaneId (Global Coordinates)
     LaneInformation::GlobalLaneId global_lane_id;
 
+    /// @brief Current Velocity
     units::velocity::meters_per_second_t velocity;
 
+    /// @brief Current Position (Global Coordinates)
     GlobalCoordinates global_coords;
+
+    /// @brief Current Position (Frenet Coordinates)
     FrenetCoordinates frenet_coords;
 
+    /// @brief Current Yaw for Ego Vehicle
     units::angle::radian_t yaw;
 };
 

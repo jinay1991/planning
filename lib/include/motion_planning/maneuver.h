@@ -12,18 +12,26 @@ namespace motion_planning
 class Maneuver : public IManeuver
 {
   public:
+    /// @brief Constructor. Default Constructor with default LaneId and target velocity.
     Maneuver();
+
+    /// @brief Constructor. Initialize Maneuver with LaneId and target velocity
     explicit Maneuver(const LaneId& lane_id, const units::velocity::meters_per_second_t& velocity);
 
-    virtual LaneId GetLaneId() const;
+    /// @brief Get LaneId for Maneuver
+    virtual LaneId GetLaneId() const override;
 
-    virtual units::velocity::meters_per_second_t GetVelocity() const;
+    /// @brief Get Target Velocity for Maneuver
+    virtual units::velocity::meters_per_second_t GetVelocity() const override;
 
+    /// @brief Comparator for Maneuvers
     inline bool operator==(const Maneuver& rhs) const { return lane_id_ == rhs.lane_id_ && velocity_ == rhs.velocity_; }
 
   private:
+    /// @brief Maneuver LaneId
     LaneId lane_id_;
 
+    /// @brief Maneuver Target Velocity
     units::velocity::meters_per_second_t velocity_;
 };
 }  // namespace motion_planning

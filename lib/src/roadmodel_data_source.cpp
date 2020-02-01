@@ -7,7 +7,13 @@
 namespace motion_planning
 {
 RoadModelDataSource::RoadModelDataSource()
-    : global_lane_id_{GlobalLaneId::kCenter}, speed_limit_{units::velocity::meters_per_second_t{22.12848}}
+    : global_lane_id_{GlobalLaneId::kCenter},
+      vehicle_dynamics_{},
+      map_coordinates_{},
+      previous_path_global_{},
+      previous_path_end_frenet_{},
+      sensor_fusion_{},
+      speed_limit_{units::velocity::meters_per_second_t{22.12848}}
 {
 }
 

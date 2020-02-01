@@ -9,9 +9,11 @@
 
 namespace motion_planning
 {
+/// @brief Trajectory Selector
 class TrajectorySelector : public ITrajectorySelector
 {
   public:
+    /// @brief Get Selected Trajectory from provided prioritized trajectories. (Selects top prioritized trajectory)
     virtual Trajectory GetSelectedTrajectory(const PrioritizedTrajectories& prioritized_trajectories) const override;
 };
 }  // namespace motion_planning

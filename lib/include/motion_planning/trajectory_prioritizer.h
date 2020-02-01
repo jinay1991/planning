@@ -9,9 +9,11 @@
 
 namespace motion_planning
 {
+/// @brief Trajectory Prioritizer
 class TrajectoryPrioritizer : public ITrajectoryPrioritizer
 {
   public:
+    /// @brief Get Prioritized Trajectories for provided trajectories.
     virtual PrioritizedTrajectories GetPrioritizedTrajectories(const Trajectories& trajectories) const override;
 };
 }  // namespace motion_planning
