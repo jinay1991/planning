@@ -21,8 +21,12 @@ Trajectories TrajectoryOptimizer::GetOptimizedTrajectories(const Trajectories& p
 
     std::stringstream log_stream;
     log_stream << "Optimized trajectories: " << optimized_trajectories.size() << std::endl;
-    std::for_each(optimized_trajectories.begin(), optimized_trajectories.end(),
-                  [&log_stream](const auto& trajectory) { log_stream << " (+) " << trajectory << std::endl; });
+    std::for_each(optimized_trajectories.begin(), optimized_trajectories.end(), [&log_stream](const auto& trajectory) {
+        log_stream << " (+) " << trajectory << std::endl;
+        std::for_each(trajectory.waypoints.begin(), trajectory.waypoints.begin() + 3,
+                      [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
+        log_stream << "     => ... (more " << trajectory.waypoints.size() - 3 << " waypoints)." << std::endl;
+    });
     LOG(DEBUG) << log_stream.str();
     return optimized_trajectories;
 }
@@ -54,10 +58,9 @@ Trajectory TrajectoryOptimizer::GetOptimizedTrajectory(const Trajectory& planned
     // spline waypoints at 30m intervals
     auto target_position = GlobalCoordinates{30.0, spline(30.0)};
     double target_dist = sqrt((target_position.x * target_position.x) + (target_position.y * target_position.y));
+    double x_add_on = 0.0;
 
-    double x_add_on = 0;
-
-    const auto yaw = planned_trajectory.yaw.value();
+    const auto yaw = planned_trajectory.yaw;
     const auto position = planned_trajectory.position;
     const auto target_velocity = planned_trajectory.maneuver.GetVelocity();
 
@@ -72,8 +75,8 @@ Trajectory TrajectoryOptimizer::GetOptimizedTrajectory(const Trajectory& planned
         double x_ref = x_point;
         double y_ref = y_point;
 
-        x_point = (x_ref * cos(yaw) - y_ref * sin(yaw));
-        y_point = (x_ref * sin(yaw) + y_ref * cos(yaw));
+        x_point = (x_ref * cos(yaw.value()) - y_ref * sin(yaw.value()));
+        y_point = (x_ref * sin(yaw.value()) + y_ref * cos(yaw.value()));
 
         x_point += position.x;
         y_point += position.y;

@@ -17,7 +17,7 @@ Trajectories TrajectoryPlanner::GetPlannedTrajectories(const std::vector<Maneuve
 
 Trajectory TrajectoryPlanner::GetInitialTrajectory() const
 {
-    Trajectory trajectory;
+    Trajectory trajectory{};
 
     const auto vehicle_dynamics = data_source_->GetVehicleDynamics();
     const auto previous_path_global = data_source_->GetPreviousPathInGlobalCoords();
@@ -97,9 +97,10 @@ GlobalLaneId TrajectoryPlanner::GetGlobalLaneId(const LaneId& lane_id) const
 
 Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& maneuvers) const
 {
-    Trajectories trajectories;
+    Trajectories trajectories{};
     const auto previous_path_global = data_source_->GetPreviousPathInGlobalCoords();
     const auto vehicle_dynamics = data_source_->GetVehicleDynamics();
+    std::int32_t uid = 0;
     for (const auto& maneuver : maneuvers)
     {
         Trajectory trajectory{};
@@ -111,6 +112,7 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
         trajectory.position = vehicle_dynamics.global_coords;
         trajectory.yaw = vehicle_dynamics.yaw;
         trajectory.maneuver = maneuver;
+        trajectory.uid = ++uid;
         trajectory.lane_id = lane_id;
         trajectory.global_lane_id = GetGlobalLaneId(lane_id);
 
@@ -126,24 +128,38 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
     }
 
     std::stringstream log_stream;
+    log_stream << "Previous Path: " << previous_path_global.size() << std::endl;
+    if (!previous_path_global.empty())
+    {
+        std::for_each(previous_path_global.begin(), previous_path_global.begin() + 3,
+                      [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
+        log_stream << "     => ... (more " << previous_path_global.size() - 3 << " waypoints)." << std::endl;
+    }
+    log_stream << std::endl;
+
     log_stream << "Planned trajectories: " << trajectories.size() << std::endl;
-    std::for_each(trajectories.begin(), trajectories.end(),
-                  [&log_stream](const auto& trajectory) { log_stream << " (+) " << trajectory << std::endl; });
+    std::for_each(trajectories.begin(), trajectories.end(), [&log_stream](const auto& trajectory) {
+        log_stream << " (+) " << trajectory << std::endl;
+        std::for_each(trajectory.waypoints.begin(), trajectory.waypoints.begin() + 3,
+                      [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
+        log_stream << "     => ... (more " << trajectory.waypoints.size() - 3 << " waypoints)." << std::endl;
+    });
+
     LOG(DEBUG) << log_stream.str();
     return trajectories;
 }
 
 GlobalCoordinates TrajectoryPlanner::GetGlobalCoordinates(const FrenetCoordinates& frenet_coords) const
 {
-    int prev_wp = -1;
+    std::int32_t prev_wp = -1;
     const auto map_coordinates = data_source_->GetMapCoordinates();
     while (frenet_coords.s > map_coordinates[prev_wp + 1].frenet_coords.s &&
-           (prev_wp < (int)(map_coordinates.size() - 1)))
+           (prev_wp < static_cast<std::int32_t>(map_coordinates.size() - 1)))
     {
         ++prev_wp;
     }
 
-    int wp2 = (prev_wp + 1) % map_coordinates.size();
+    std::int32_t wp2 = (prev_wp + 1) % map_coordinates.size();
 
     double heading = atan2((map_coordinates[wp2].global_coords.y - map_coordinates[prev_wp].global_coords.y),
                            (map_coordinates[wp2].global_coords.x - map_coordinates[prev_wp].global_coords.x));

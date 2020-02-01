@@ -14,7 +14,7 @@ VelocityPlanner::VelocityPlanner(std::shared_ptr<IDataSource> data_source)
 
 VelocityPlanner::VelocityPlanner(std::shared_ptr<IDataSource> data_source,
                                  const units::velocity::meters_per_second_t& target_velocity)
-    : frequency_{25.0},
+    : frequency_{30.0},
       deceleration_{-5.0},
       acceleration_{5.0},
       target_velocity_{target_velocity},
@@ -74,7 +74,12 @@ void VelocityPlanner::CalculateTargetVelocity()
     const auto min_velocity = units::velocity::meters_per_second_t{1.0};
     target_velocity_ = units::math::max(target_velocity_, min_velocity);
 
-    LOG(DEBUG) << "Calculated target velocity: " << target_velocity_;
+    std::stringstream log_stream;
+    log_stream << "Calculated target velocity: " << target_velocity_ << std::endl;
+    log_stream << " (+) delta_velocity: " << delta_velocity << std::endl;
+    log_stream << " (+) speed_limit: " << speed_limit << std::endl;
+    log_stream << " (+) " << data_source_->GetVehicleDynamics() << std::endl;
+    LOG(DEBUG) << log_stream.str();
 }
 
 units::velocity::meters_per_second_t VelocityPlanner::GetTargetVelocity() const { return target_velocity_; }

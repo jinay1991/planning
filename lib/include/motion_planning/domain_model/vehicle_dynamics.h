@@ -33,11 +33,11 @@ struct FrenetCoordinates
 
     /// @brief Latitudinal unit normal vector (x component)
     /// @note used to store map waypoints
-    double dx;
+    double dx{0.0};
 
     /// @brief Latitudinal unit normal vector (y component)
     /// @note used to store map waypoints
-    double dy;
+    double dy{0.0};
 };
 
 /// @brief Map Points
@@ -50,15 +50,9 @@ struct MapCoordinates
     FrenetCoordinates frenet_coords;
 };
 
-/// @brief VehicleDynamics
+/// @brief VehicleDynamics (Ego Vehicle localization information)
 struct VehicleDynamics
 {
-    /// @brief LaneId (Local Coordinates)
-    LaneInformation::LaneId lane_id;
-
-    /// @brief LaneId (Global Coordinates)
-    LaneInformation::GlobalLaneId global_lane_id;
-
     /// @brief Current Velocity
     units::velocity::meters_per_second_t velocity;
 
@@ -72,6 +66,25 @@ struct VehicleDynamics
     units::angle::radian_t yaw;
 };
 
+/// @brief String Stream for Global Coordinates information (used for printing verbose information)
+inline std::ostream& operator<<(std::ostream& out, const GlobalCoordinates& global_coords)
+{
+    return out << "GlobalCoordinates{x: " << global_coords.x << ", y: " << global_coords.y << "}";
+}
+
+/// @brief String Stream for Frenet Coordinates information (used for printing verbose information)
+inline std::ostream& operator<<(std::ostream& out, const FrenetCoordinates& frenet_coords)
+{
+    return out << "FrenetCoordinates{s: " << frenet_coords.s << ", d: " << frenet_coords.d
+               << ", dx: " << frenet_coords.dx << ", dy: " << frenet_coords.dy << "}";
+}
+
+/// @brief String Stream for VehicleDynamics information (used for printing verbose information)
+inline std::ostream& operator<<(std::ostream& out, const VehicleDynamics& vehicle_dynamics)
+{
+    return out << "VehicleDynamics{" << vehicle_dynamics.global_coords << ", " << vehicle_dynamics.frenet_coords
+               << ", velocity: " << vehicle_dynamics.velocity << ", yaw: " << vehicle_dynamics.yaw << "}";
+}
 }  // namespace motion_planning
 
 #endif  /// MOTION_PLANNING_DOMAIN_MODEL_LANE_H_

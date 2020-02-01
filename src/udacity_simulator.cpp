@@ -165,10 +165,9 @@ void UdacitySimulator::ReceiveCallback(uWS::WebSocket<uWS::SERVER> ws, char* dat
                 const auto elapsed_time =
                     std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - start)
                         .count();
-                LOG(DEBUG) << "Time taken by GenerateTrajectories(): " << elapsed_time << "usec";
+                LOG(DEBUG) << "Time taken by GenerateTrajectories() is " << elapsed_time << "usec." << std::endl;
 
                 const auto trajectory = motion_planning_->GetSelectedTrajectory();
-
                 for (const auto& wp : trajectory.waypoints)
                 {
                     next_x_vals.push_back(wp.x);

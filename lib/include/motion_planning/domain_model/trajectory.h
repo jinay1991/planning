@@ -15,6 +15,9 @@ namespace motion_planning
 /// @brief Trajectory
 struct Trajectory
 {
+    /// @brief Trajectory Id (unique)
+    std::int32_t uid;
+
     /// @brief Trajectory Waypoints in Global Coordinates
     std::vector<GlobalCoordinates> waypoints;
 
@@ -52,9 +55,10 @@ inline bool operator>(const Trajectory& lhs, const Trajectory& rhs)
 /// @brief String Stream for Trajectory information (used for printing verbose information)
 inline std::ostream& operator<<(std::ostream& out, const Trajectory& trajectory)
 {
-    return out << "Trajectory{wp: " << trajectory.waypoints.size() << ", lane: " << trajectory.lane_id
-               << ", global_lane: " << trajectory.global_lane_id << ", velocity: " << trajectory.maneuver.GetVelocity()
-               << ", cost: " << trajectory.cost << "}";
+    return out << "Trajectory{id: " << trajectory.uid << ", wp: " << trajectory.waypoints.size()
+               << ", lane: " << trajectory.lane_id << ", global_lane: " << trajectory.global_lane_id
+               << ", velocity: " << trajectory.maneuver.GetVelocity() << ", cost: " << trajectory.cost
+               << ", yaw: " << trajectory.yaw << "}";
 }
 
 }  // namespace motion_planning

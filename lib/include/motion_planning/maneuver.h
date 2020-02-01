@@ -34,5 +34,11 @@ class Maneuver : public IManeuver
     /// @brief Maneuver Target Velocity
     units::velocity::meters_per_second_t velocity_;
 };
+
+/// @brief String Stream for Maneuver information (used for printing verbose information)
+inline std::ostream& operator<<(std::ostream& out, const Maneuver& maneuver)
+{
+    return out << "Maneuver{lane: " << maneuver.GetLaneId() << ", velocity: " << maneuver.GetVelocity() << "}";
+}
 }  // namespace motion_planning
 #endif  /// MOTION_PLANNING_MANEUVER_H_

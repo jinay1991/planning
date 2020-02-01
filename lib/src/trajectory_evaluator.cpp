@@ -20,7 +20,10 @@ Trajectories TrajectoryEvaluator::GetRatedTrajectories(const Trajectories& optim
 
     // discard invalid lane trajectories
     std::copy_if(optimized_trajectories.begin(), optimized_trajectories.end(), std::back_inserter(rated_trajectories),
-                 [&](const auto& trajectory) { return lane_evaluator_->IsValidLane(trajectory.lane_id); });
+                 [&](const auto& trajectory) {
+                     return trajectory.global_lane_id != GlobalLaneId::kInvalid &&
+                            lane_evaluator_->IsValidLane(trajectory.lane_id);
+                 });
 
     // update costs for each trajectory
     const auto adjust_costs = [&](const auto& trajectory) {
