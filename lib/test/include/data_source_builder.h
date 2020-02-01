@@ -35,7 +35,6 @@ class DataSourceBuilder
         const auto lateral_distance = units::length::meter_t{GetCoordinates(global_lane_id).d};
         previous_path_end_frenet_.d = lateral_distance.value();
         vehicle_dynamics_.frenet_coords.d = lateral_distance.value();
-        vehicle_dynamics_.global_lane_id = global_lane_id;
         return *this;
     }
 

@@ -16,9 +16,6 @@ Trajectory TrajectorySelector::GetSelectedTrajectory(const PrioritizedTrajectori
     std::stringstream log_stream;
     log_stream << "Selected trajectory (lane_id): " << selected_trajectory.global_lane_id << std::endl;
     log_stream << " (+) " << selected_trajectory << std::endl;
-    std::for_each(selected_trajectory.waypoints.begin(), selected_trajectory.waypoints.begin() + 3,
-                  [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
-    log_stream << "     => ... (more " << selected_trajectory.waypoints.size() - 3 << ") waypoints." << std::endl;
     LOG(DEBUG) << log_stream.str();
     return selected_trajectory;
 };

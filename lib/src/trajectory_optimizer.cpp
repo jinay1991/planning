@@ -23,9 +23,9 @@ Trajectories TrajectoryOptimizer::GetOptimizedTrajectories(const Trajectories& p
     log_stream << "Optimized trajectories: " << optimized_trajectories.size() << std::endl;
     std::for_each(optimized_trajectories.begin(), optimized_trajectories.end(), [&log_stream](const auto& trajectory) {
         log_stream << " (+) " << trajectory << std::endl;
-        std::for_each(trajectory.waypoints.begin(), trajectory.waypoints.begin() + 3,
+        std::for_each(trajectory.waypoints.begin(), trajectory.waypoints.begin() + 10,
                       [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
-        log_stream << "     => ... (more " << trajectory.waypoints.size() - 3 << " waypoints)." << std::endl;
+        log_stream << "     => ... (more " << trajectory.waypoints.size() - 10 << " waypoints)" << std::endl;
     });
     LOG(DEBUG) << log_stream.str();
     return optimized_trajectories;

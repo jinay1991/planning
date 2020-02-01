@@ -131,18 +131,18 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
     log_stream << "Previous Path: " << previous_path_global.size() << std::endl;
     if (!previous_path_global.empty())
     {
-        std::for_each(previous_path_global.begin(), previous_path_global.begin() + 3,
+        std::for_each(previous_path_global.begin(), previous_path_global.begin() + 10,
                       [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
-        log_stream << "     => ... (more " << previous_path_global.size() - 3 << " waypoints)." << std::endl;
+        log_stream << "     => ... (more " << previous_path_global.size() - 10 << " waypoints)" << std::endl;
     }
     log_stream << std::endl;
 
     log_stream << "Planned trajectories: " << trajectories.size() << std::endl;
     std::for_each(trajectories.begin(), trajectories.end(), [&log_stream](const auto& trajectory) {
         log_stream << " (+) " << trajectory << std::endl;
-        std::for_each(trajectory.waypoints.begin(), trajectory.waypoints.begin() + 3,
+        std::for_each(trajectory.waypoints.begin(), trajectory.waypoints.begin() + 10,
                       [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
-        log_stream << "     => ... (more " << trajectory.waypoints.size() - 3 << " waypoints)." << std::endl;
+        log_stream << "     => ... (more " << trajectory.waypoints.size() - 10 << " waypoints)" << std::endl;
     });
 
     LOG(DEBUG) << log_stream.str();
