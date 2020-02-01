@@ -12,7 +12,7 @@
 
 namespace motion_planning
 {
-/// @brief typename for prioritized queue. 
+/// @brief typename for prioritized queue.
 using PrioritizedTrajectories = std::priority_queue<Trajectory, std::vector<Trajectory>, std::greater<Trajectory>>;
 
 /// @brief Interface for Trajectory Prioritizer

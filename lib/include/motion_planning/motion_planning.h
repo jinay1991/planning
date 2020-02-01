@@ -61,6 +61,7 @@ class MotionPlanning
     /// @brief Trajectory Selector
     std::unique_ptr<ITrajectorySelector> trajectory_selector_;
 
+    /// @brief Selected Trajectory
     Trajectory selected_trajectory_{};
 };
 }  // namespace motion_planning
