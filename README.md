@@ -1,8 +1,9 @@
 # Motion Planning 
 
 [![pipeline status](https://gitlab.com/jinay1991/motion_planning/badges/master/pipeline.svg)](https://gitlab.com/jinay1991/motion_planning/commits/master)
-[![coverage report](https://gitlab.com/jinay1991/motion_planning/badges/master/coverage.svg?job=code-coverage)](https://jinay1991.gitlab.io/motion_planning/index.html)
-[![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://jinay1991.gitlab.io/motion_planning/doc/html/)
+[![coverage report](https://gitlab.com/jinay1991/motion_planning/badges/master/coverage.svg?job=code-coverage)](https://ad_platform.gitlab.io/planning/coverage/index.html)
+[![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://ad_platform.gitlab.io/planning/doc/html/)
+[![Static Code Analyzer](https://img.shields.io/badge/static-analysis-green.svg)](https://ad_platform.gitlab.io/planning/static_code_analysis_report/)
 
 [[Issue Board](https://gitlab.com/jinay1991/motion_planning/-/boards)]
 
