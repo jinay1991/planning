@@ -65,7 +65,10 @@ class UdacitySimulator : public ISimulator
     /// @brief Map File
     std::string map_file_;
 
+    /// @brief DataSource (contains information on Vehicle Dynamics, SensorFusion, etc.)
     std::shared_ptr<motion_planning::IDataSource> data_source_;
+
+    /// @brief Motion Planning Instance to be used to generate Trajectory and Select optimal trajectory for ego motion
     std::unique_ptr<motion_planning::MotionPlanning> motion_planning_;
 };
 }  // namespace sim
