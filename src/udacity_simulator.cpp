@@ -7,6 +7,90 @@
 
 namespace sim
 {
+namespace internal
+{
+/// @brief Checks if the SocketIO event has JSON data.
+///        If there is data the JSON object in string format will be returned,
+///        else the empty string "" will be returned.
+const std::string HasData(const std::string& s)
+{
+    auto found_null = s.find("null");
+    auto b1 = s.find_first_of("[");
+    auto b2 = s.find_first_of("}");
+    if (found_null != std::string::npos)
+    {
+        return "";
+    }
+    else if (b1 != std::string::npos && b2 != std::string::npos)
+    {
+        return s.substr(b1, b2 - b1 + 2);
+    }
+    return "";
+}
+
+/// @brief Extract Previous Path End from WebSocket Msg (json)
+const motion_planning::FrenetCoordinates DecodePreviousPathEnd(const json& msg)
+{
+    const auto end_path_s = msg["end_path_s"].get<double>();
+    const auto end_path_d = msg["end_path_d"].get<double>();
+    const auto previous_path_end = motion_planning::FrenetCoordinates{end_path_s, end_path_d};
+    return previous_path_end;
+}
+
+/// @brief Extract Previous Path Points in Global Coordinates from WebSocket Msg (json)
+const motion_planning::PreviousPathGlobal DecodePreviousPathGlobal(const json& msg)
+{
+    const auto previous_path_x = msg["previous_path_x"];
+    const auto previous_path_y = msg["previous_path_y"];
+    std::vector<motion_planning::GlobalCoordinates> previous_path_global;
+    for (auto idx = 0U; idx < previous_path_x.size(); ++idx)
+    {
+        previous_path_global.push_back(motion_planning::GlobalCoordinates{previous_path_x[idx], previous_path_y[idx]});
+    }
+    return previous_path_global;
+}
+
+/// @brief Extract Vehicle Dynamics from WebSocket Msg (json)
+const motion_planning::VehicleDynamics DecodeVehicleDynamics(const json& msg)
+{
+    motion_planning::VehicleDynamics vehicle_dynamics;
+    vehicle_dynamics.global_coords.x = msg["x"].get<double>();
+    vehicle_dynamics.global_coords.y = msg["y"].get<double>();
+    vehicle_dynamics.frenet_coords.s = msg["s"].get<double>();
+    vehicle_dynamics.frenet_coords.d = msg["d"].get<double>();
+    vehicle_dynamics.yaw = units::angle::degree_t{msg["yaw"].get<double>()};
+    vehicle_dynamics.velocity = units::velocity::miles_per_hour_t{msg["speed"].get<double>()};
+
+    return vehicle_dynamics;
+}
+
+/// @brief Extract Sensor Fusion from WebSocket Msg (json)
+const motion_planning::SensorFusion DecodeSensorFusion(const json& msg)
+{
+    const auto sensor_fusion = msg["sensor_fusion"];
+    motion_planning::SensorFusion sf;
+    for (auto idx = 0U; idx < sensor_fusion.size(); ++idx)
+    {
+        const auto data = sensor_fusion[idx];
+        const auto id = data[0].get<std::int32_t>();
+        const auto x = data[1].get<double>();
+        const auto y = data[2].get<double>();
+        const auto vx = data[3].get<double>();
+        const auto vy = data[4].get<double>();
+        const auto s = data[5].get<double>();
+        const auto d = data[6].get<double>();
+
+        const auto global_coords = motion_planning::GlobalCoordinates{x, y};
+        const auto frenet_coords = motion_planning::FrenetCoordinates{s, d, 0.0, 0.0};
+        const auto velocity = units::velocity::meters_per_second_t{sqrt((vx * vx) + (vy * vy))};
+
+        sf.objs.push_back(motion_planning::ObjectFusion{id, global_coords, frenet_coords, velocity});
+    }
+
+    return sf;
+}
+}  // namespace internal
+
 UdacitySimulator::UdacitySimulator(const std::string& map_file)
     : map_file_{map_file},
       data_source_{std::make_shared<motion_planning::RoadModelDataSource>()},
@@ -59,7 +143,7 @@ void UdacitySimulator::ReceiveCallback(uWS::WebSocket<uWS::SERVER> ws, char* dat
     // The 2 signifies a websocket event
     if (length && length > 2 && data != nullptr && data[0] == '4' && data[1] == '2')
     {
-        const auto s = HasData(data);
+        const auto s = internal::HasData(data);
         if (s != "")
         {
             const auto j = json::parse(s);
@@ -135,88 +219,14 @@ void UdacitySimulator::DisconnectCallback(uWS::WebSocket<uWS::SERVER> ws, std::i
     LOG(INFO) << "Disconnected";
 }
 
-const std::string UdacitySimulator::HasData(const std::string& s)
-{
-    auto found_null = s.find("null");
-    auto b1 = s.find_first_of("[");
-    auto b2 = s.find_first_of("}");
-    if (found_null != std::string::npos)
-    {
-        return "";
-    }
-    else if (b1 != std::string::npos && b2 != std::string::npos)
-    {
-        return s.substr(b1, b2 - b1 + 2);
-    }
-    return "";
-}
-
 void UdacitySimulator::UpdateDataSource(const json& msg)
 {
     data_source_->SetMapCoordinates(map_waypoints_);
-    data_source_->SetSensorFusion(GetSensorFusion(msg));
-    data_source_->SetVehicleDynamics(GetVehicleDynamics(msg));
-    data_source_->SetPreviousPath(GetPreviousPathGlobal(msg));
-    data_source_->SetPreviousPathEnd(GetPreviousPathEnd(msg));
+    data_source_->SetSensorFusion(internal::DecodeSensorFusion(msg));
+    data_source_->SetVehicleDynamics(internal::DecodeVehicleDynamics(msg));
+    data_source_->SetPreviousPath(internal::DecodePreviousPathGlobal(msg));
+    data_source_->SetPreviousPathEnd(internal::DecodePreviousPathEnd(msg));
     data_source_->SetSpeedLimit(units::velocity::miles_per_hour_t{49.5});
-}
-
-const motion_planning::FrenetCoordinates UdacitySimulator::GetPreviousPathEnd(const json& msg)
-{
-    const auto end_path_s = msg["end_path_s"].get<double>();
-    const auto end_path_d = msg["end_path_d"].get<double>();
-    const auto previous_path_end = motion_planning::FrenetCoordinates{end_path_s, end_path_d};
-    return previous_path_end;
-}
-
-const motion_planning::PreviousPathGlobal UdacitySimulator::GetPreviousPathGlobal(const json& msg)
-{
-    const auto previous_path_x = msg["previous_path_x"];
-    const auto previous_path_y = msg["previous_path_y"];
-    std::vector<motion_planning::GlobalCoordinates> previous_path_global;
-    for (auto idx = 0U; idx < previous_path_x.size(); ++idx)
-    {
-        previous_path_global.push_back(motion_planning::GlobalCoordinates{previous_path_x[idx], previous_path_y[idx]});
-    }
-    return previous_path_global;
-}
-
-const motion_planning::VehicleDynamics UdacitySimulator::GetVehicleDynamics(const json& msg)
-{
-    motion_planning::VehicleDynamics vehicle_dynamics;
-    vehicle_dynamics.global_coords.x = msg["x"].get<double>();
-    vehicle_dynamics.global_coords.y = msg["y"].get<double>();
-    vehicle_dynamics.frenet_coords.s = msg["s"].get<double>();
-    vehicle_dynamics.frenet_coords.d = msg["d"].get<double>();
-    vehicle_dynamics.yaw = units::angle::degree_t{msg["yaw"].get<double>()};
-    vehicle_dynamics.velocity = units::velocity::miles_per_hour_t{msg["speed"].get<double>()};
-
-    return vehicle_dynamics;
-}
-
-const motion_planning::SensorFusion UdacitySimulator::GetSensorFusion(const json& msg)
-{
-    const auto sensor_fusion = msg["sensor_fusion"];
-    motion_planning::SensorFusion sf;
-    for (auto idx = 0U; idx < sensor_fusion.size(); ++idx)
-    {
-        const auto data = sensor_fusion[idx];
-        const auto id = data[0].get<std::int32_t>();
-        const auto x = data[1].get<double>();
-        const auto y = data[2].get<double>();
-        const auto vx = data[3].get<double>();
-        const auto vy = data[4].get<double>();
-        const auto s = data[5].get<double>();
-        const auto d = data[6].get<double>();
-
-        const auto global_coords = motion_planning::GlobalCoordinates{x, y};
-        const auto frenet_coords = motion_planning::FrenetCoordinates{s, d, 0.0, 0.0};
-        const auto velocity = units::velocity::meters_per_second_t{sqrt((vx * vx) + (vy * vy))};
-
-        sf.objs.push_back(motion_planning::ObjectFusion{id, global_coords, frenet_coords, velocity});
-    }
-
-    return sf;
 }
 
 }  // namespace sim

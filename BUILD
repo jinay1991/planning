@@ -8,7 +8,7 @@ filegroup(
 )
 
 cc_library(
-    name = "simulation",
+    name = "simulator_communications",
     srcs = glob(
         ["src/**/*.cpp"],
         exclude = ["src/main.cpp"],
@@ -32,7 +32,7 @@ cc_library(
 )
 
 cc_binary(
-    name = "simulation_client",
+    name = "simulator_client",
     srcs = ["src/main.cpp"],
     copts = [
         "-std=c++14",
@@ -42,6 +42,6 @@ cc_binary(
     data = [":testdata"],
     includes = ["include"],
     deps = [
-        ":simulation",
+        ":simulator_communications",
     ],
 )

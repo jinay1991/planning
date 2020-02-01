@@ -7,9 +7,6 @@
 #define SIMULATOR_UDACITY_SIMULATOR_H_
 
 #include <math.h>
-// #include <spline.h>
-// #include <Eigen/Core>
-// #include <Eigen/QR>
 #include <fstream>
 #include <iomanip>
 #include <json.hpp>
@@ -25,12 +22,12 @@
 
 namespace sim
 {
+using json = nlohmann::json;
+
 /// @brief Simulator Client
 class UdacitySimulator : public ISimulator
 {
   public:
-    using json = nlohmann::json;
-
     /// @brief Constructor. Initializes Map Points from map_file
     explicit UdacitySimulator(const std::string& map_file);
 
@@ -53,33 +50,20 @@ class UdacitySimulator : public ISimulator
                                  uWS::OpCode op_code) override;
 
   private:
+    /// @brief Extract Map Points from provided Map file
     void InitializeMap();
+
+    /// @brief Updates DataSource from the received WebSocket Msg (json)
     void UpdateDataSource(const json& msg);
-    static const motion_planning::FrenetCoordinates GetPreviousPathEnd(const json& msg);
-    static const motion_planning::PreviousPathGlobal GetPreviousPathGlobal(const json& msg);
-    static const motion_planning::VehicleDynamics GetVehicleDynamics(const json& msg);
-    static const motion_planning::SensorFusion GetSensorFusion(const json& msg);
 
-    /// @brief Checks if the SocketIO event has JSON data.
-    ///        If there is data the JSON object in string format will be returned,
-    ///        else the empty string "" will be returned.
-    static const std::string HasData(const std::string& s);
-
-    /// @brief For converting back and forth between radians and degrees.
-    static constexpr inline double PI() { return M_PI; }
-    static constexpr inline double DegToRad(double x) { return x * PI() / 180.0; }
-    static constexpr inline double RadToDeg(double x) { return x * 180.0 / PI(); }
-    static constexpr motion_planning::LaneInformation::GlobalLaneId GetGlobalLaneId(
-        const motion_planning::FrenetCoordinates& coords);
-
+    /// @brief WebSocket Handle
     uWS::Hub h_;
-    std::vector<motion_planning::MapCoordinates> map_waypoints_;
-    std::string map_file_;
 
-    std::int32_t lane{1};
-    motion_planning::LaneInformation::GlobalLaneId current_global_lane_id{
-        motion_planning::LaneInformation::GlobalLaneId::kCenter};
-    double ref_vel{0.0};
+    /// @brief Map Waypoints
+    std::vector<motion_planning::MapCoordinates> map_waypoints_;
+
+    /// @brief Map File
+    std::string map_file_;
 
     std::shared_ptr<motion_planning::IDataSource> data_source_;
     std::unique_ptr<motion_planning::MotionPlanning> motion_planning_;

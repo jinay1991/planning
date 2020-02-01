@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     }
     catch (std::exception& e)
     {
-        std::cout << "Failed to run client-app!! " << e.what() << std::endl;
+        std::cout << "Failed to run simulator_client!! " << e.what() << std::endl;
         return -1;
     }
 
