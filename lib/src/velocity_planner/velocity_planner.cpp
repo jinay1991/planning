@@ -14,7 +14,7 @@ VelocityPlanner::VelocityPlanner(std::shared_ptr<IDataSource> data_source)
 
 VelocityPlanner::VelocityPlanner(std::shared_ptr<IDataSource> data_source,
                                  const units::velocity::meters_per_second_t& target_velocity)
-    : frequency_{30.0},
+    : frequency_{25.0},
       deceleration_{-5.0},
       acceleration_{5.0},
       target_velocity_{target_velocity},

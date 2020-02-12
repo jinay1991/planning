@@ -25,8 +25,8 @@ Trajectory TrajectoryPlanner::GetInitialTrajectory() const
     // no previous waypoints, initialize current waypoints
     if (previous_path_size < 2)
     {
-        GlobalCoordinates prev_position{vehicle_dynamics.global_coords.x - cos(vehicle_dynamics.yaw.value()),
-                                        vehicle_dynamics.global_coords.y - sin(vehicle_dynamics.yaw.value())};
+        const GlobalCoordinates prev_position{vehicle_dynamics.global_coords.x - cos(vehicle_dynamics.yaw.value()),
+                                              vehicle_dynamics.global_coords.y - sin(vehicle_dynamics.yaw.value())};
 
         trajectory.waypoints.push_back(prev_position);
         trajectory.waypoints.push_back(vehicle_dynamics.global_coords);
@@ -36,8 +36,8 @@ Trajectory TrajectoryPlanner::GetInitialTrajectory() const
     }
     else  // calculate new waypoints based on previous waypoints
     {
-        GlobalCoordinates prev_position[2] = {previous_path_global[previous_path_size - 2],
-                                              previous_path_global[previous_path_size - 1]};
+        const GlobalCoordinates prev_position[2] = {previous_path_global[previous_path_size - 2],
+                                                    previous_path_global[previous_path_size - 1]};
 
         trajectory.waypoints.push_back(prev_position[0]);
         trajectory.waypoints.push_back(prev_position[1]);
@@ -59,22 +59,24 @@ Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) con
     // Set further waypoints based on going further along highway in desired lane
     const auto lane = static_cast<std::int32_t>(lane_id);
     trajectory.waypoints.push_back(
-        GetGlobalCoordinates(FrenetCoordinates{vehicle_dynamics.frenet_coords.s + 30, 2.0 + (4.0 * lane)}));
+        GetGlobalCoordinates(FrenetCoordinates{vehicle_dynamics.frenet_coords.s + 30.0, 2.0 + (4.0 * lane), 0.0, 0.0}));
     trajectory.waypoints.push_back(
-        GetGlobalCoordinates(FrenetCoordinates{vehicle_dynamics.frenet_coords.s + 60, 2.0 + (4.0 * lane)}));
+        GetGlobalCoordinates(FrenetCoordinates{vehicle_dynamics.frenet_coords.s + 60.0, 2.0 + (4.0 * lane), 0.0, 0.0}));
     trajectory.waypoints.push_back(
-        GetGlobalCoordinates(FrenetCoordinates{vehicle_dynamics.frenet_coords.s + 90, 2.0 + (4.0 * lane)}));
+        GetGlobalCoordinates(FrenetCoordinates{vehicle_dynamics.frenet_coords.s + 90.0, 2.0 + (4.0 * lane), 0.0, 0.0}));
 
     // Shift and rotate points to local coordinates
     const auto yaw = trajectory.yaw.value();
     const auto position = trajectory.position;
     const auto shift_rotate_waypoints = [&](const auto& wp) {
-        const GlobalCoordinates shift_position{wp.x - position.x, wp.y - position.y};
+        const auto shift_position = GlobalCoordinates{wp.x - position.x, wp.y - position.y};
         return GlobalCoordinates{((shift_position.x * cos(-yaw)) - (shift_position.y * sin(-yaw))),
                                  ((shift_position.x * sin(-yaw)) + (shift_position.y * cos(-yaw)))};
     };
+
     std::transform(trajectory.waypoints.begin(), trajectory.waypoints.end(), trajectory.waypoints.begin(),
                    shift_rotate_waypoints);
+
     return trajectory;
 }
 
@@ -100,7 +102,7 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
     Trajectories trajectories{};
     const auto previous_path_global = data_source_->GetPreviousPathInGlobalCoords();
     const auto vehicle_dynamics = data_source_->GetVehicleDynamics();
-    std::int32_t uid = 0;
+    std::int32_t unique_id = 0;
     for (const auto& maneuver : maneuvers)
     {
         Trajectory trajectory{};
@@ -112,7 +114,7 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
         trajectory.position = vehicle_dynamics.global_coords;
         trajectory.yaw = vehicle_dynamics.yaw;
         trajectory.maneuver = maneuver;
-        trajectory.uid = ++uid;
+        trajectory.unique_id = ++unique_id;
         trajectory.lane_id = lane_id;
         trajectory.global_lane_id = GetGlobalLaneId(lane_id);
 
@@ -131,18 +133,22 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
     log_stream << "Previous Path: " << previous_path_global.size() << std::endl;
     if (!previous_path_global.empty())
     {
-        std::for_each(previous_path_global.begin(), previous_path_global.begin() + 10,
+        const auto n_samples =
+            std::min(static_cast<std::size_t>(previous_path_global.size()), static_cast<std::size_t>(100));
+        std::for_each(previous_path_global.begin(), previous_path_global.begin() + n_samples,
                       [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
-        log_stream << "     => ... (more " << previous_path_global.size() - 10 << " waypoints)" << std::endl;
+        log_stream << "     => ... (more " << previous_path_global.size() - n_samples << " waypoints)" << std::endl;
     }
     log_stream << std::endl;
 
     log_stream << "Planned trajectories: " << trajectories.size() << std::endl;
     std::for_each(trajectories.begin(), trajectories.end(), [&log_stream](const auto& trajectory) {
         log_stream << " (+) " << trajectory << std::endl;
-        std::for_each(trajectory.waypoints.begin(), trajectory.waypoints.begin() + 10,
+        const auto n_samples =
+            std::min(static_cast<std::size_t>(trajectory.waypoints.size()), static_cast<std::size_t>(100));
+        std::for_each(trajectory.waypoints.begin(), trajectory.waypoints.begin() + n_samples,
                       [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
-        log_stream << "     => ... (more " << trajectory.waypoints.size() - 10 << " waypoints)" << std::endl;
+        log_stream << "     => ... (more " << trajectory.waypoints.size() - n_samples << " waypoints)" << std::endl;
     });
 
     LOG(DEBUG) << log_stream.str();
