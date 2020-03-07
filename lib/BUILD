@@ -1,3 +1,6 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_deb", "pkg_tar")
+
 config_setting(
     name = "debug_build",
     values = {
@@ -100,11 +103,6 @@ cc_test(
         "@googletest//:gtest_main",
     ],
 )
-
-# ---------
-# Packaging
-# ---------
-load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_deb", "pkg_tar")
 
 pkg_tar(
     name = "motion_planning_bin_pkg",
