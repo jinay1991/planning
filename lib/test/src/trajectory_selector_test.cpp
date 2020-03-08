@@ -1,5 +1,6 @@
 ///
 /// @file trajectory_selector_test.cpp
+/// @brief Contains unit tests for Trajectory Selector.
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include <gmock/gmock.h>

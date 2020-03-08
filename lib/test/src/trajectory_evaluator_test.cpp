@@ -1,5 +1,6 @@
 ///
 /// @file trajectory_evaluator_test.cpp
+/// @brief Contains unit tests for Trajectory Evaluator.
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include <gmock/gmock.h>

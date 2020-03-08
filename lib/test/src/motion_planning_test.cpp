@@ -1,5 +1,6 @@
 ///
 /// @file motion_planning_test.cpp
+/// @brief Contains component tests for Motion Planning.
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include <gmock/gmock.h>

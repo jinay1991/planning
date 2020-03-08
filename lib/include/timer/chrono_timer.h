@@ -9,6 +9,7 @@
 
 namespace timer
 {
+/// @brief Chrono based Timer
 class ChronoTimer : public ITimer
 {
   public:

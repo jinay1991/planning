@@ -1,5 +1,6 @@
 ///
 /// @file velocity_planner_test.cpp
+/// @brief Contains unit tests for Velocity Planner.
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 

@@ -9,6 +9,7 @@
 
 namespace motion_planning
 {
+/// @brief Maneuver
 class Maneuver : public IManeuver
 {
   public:
