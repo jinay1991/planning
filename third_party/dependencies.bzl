@@ -1,12 +1,12 @@
-load("@//third_party/eigen:eigen.bzl", "eigen")
-load("@//third_party/googletest:googletest.bzl", "googletest")
-load("@//third_party/nholthaus:nholthaus.bzl", "nholthaus")
-load("@//third_party/nlohmann:nlohmann.bzl", "nlohmann")
-load("@//third_party/openssl:openssl.bzl", "openssl")
-load("@//third_party/spline:spline.bzl", "spline")
-load("@//third_party/uv:uv.bzl", "uv")
-load("@//third_party/uwebsocket:uwebsocket.bzl", "uwebsocket")
-load("@//third_party/zlib:zlib.bzl", "zlib")
+load("//third_party/eigen:eigen.bzl", "eigen")
+load("//third_party/googletest:googletest.bzl", "googletest")
+load("//third_party/nholthaus:nholthaus.bzl", "nholthaus")
+load("//third_party/nlohmann:nlohmann.bzl", "nlohmann")
+load("//third_party/openssl:openssl.bzl", "openssl")
+load("//third_party/spline:spline.bzl", "spline")
+load("//third_party/uv:uv.bzl", "uv")
+load("//third_party/uwebsocket:uwebsocket.bzl", "uwebsocket")
+load("//third_party/zlib:zlib.bzl", "zlib")
 
 def third_party_dependencies():
     """ Load 3rd party dependencies """

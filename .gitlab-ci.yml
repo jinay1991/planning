@@ -51,8 +51,8 @@ buildifier:
 cppcheck:
   stage: check
   script:
-    - cppcheck --template=gcc --enable=all --inconclusive --std=c++14 -I lib/include/ -I include/ lib/src/*.cpp src/*.cpp  > static_code_analysis.log
-    - cppcheck --template=gcc --enable=all --inconclusive --std=c++14 -I lib/include/ -I include/ lib/src/*.cpp src/*.cpp --xml 2> static_code_analysis.xml
+    - cppcheck --template=gcc --enable=all --inconclusive --std=c++14 -I planning/motion_planning/ -I application/simulator/ planning/motion_planning/*.cpp application/simulator/*.cpp  > static_code_analysis.log
+    - cppcheck --template=gcc --enable=all --inconclusive --std=c++14 -I planning/motion_planning/ -I application/simulator/ planning/motion_planning/*.cpp application/simulator/*.cpp --xml 2> static_code_analysis.xml
     - cppcheck-htmlreport --file=static_code_analysis.xml --report-dir=static_code_analysis_report --source-dir=.
   artifacts:
     name: static_code_analysis
