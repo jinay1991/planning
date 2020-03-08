@@ -41,7 +41,7 @@ CLIOptions ArgumentParser::ParseArgs(int argc, char* argv[])
         std::int32_t optindex = 0;
 
         c = getopt_long(argc, argv, optstring_.c_str(), long_options_.data(), &optindex);
-        /* Detect the end of the options. */
+        // Detect the end of the options.
         if (c == -1)
         {
             break;
@@ -59,7 +59,7 @@ CLIOptions ArgumentParser::ParseArgs(int argc, char* argv[])
                 break;
             case 'h':
             case '?':
-                /* getopt_long already printed an error message. */
+                // getopt_long already printed an error message.
                 PrintUsage();
             default:
                 exit(1);

@@ -15,8 +15,8 @@ namespace motion_planning
 /// @brief Trajectory
 struct Trajectory
 {
-    /// @brief Trajectory Id (unique)
-    std::int32_t unique_id;
+    /// @brief Trajectory Id (unique). (default to Invalid Id -1)
+    std::int32_t unique_id{-1};
 
     /// @brief Trajectory Waypoints in Global Coordinates
     std::vector<GlobalCoordinates> waypoints;
@@ -35,6 +35,9 @@ struct Trajectory
 
     /// @brief Trajectory Cost
     double cost{0.0};
+
+    /// @brief Drivability of Trajectory
+    bool drivable{false};
 
     /// @brief Maneuver associated with Trajectory.
     Maneuver maneuver{};
@@ -57,6 +60,7 @@ inline std::ostream& operator<<(std::ostream& out, const Trajectory& trajectory)
 {
     return out << "Trajectory{id: " << trajectory.unique_id << ", wp: " << trajectory.waypoints.size()
                << ", lane: " << trajectory.lane_id << ", global_lane: " << trajectory.global_lane_id
+               << ", drivable: " << std::boolalpha << trajectory.drivable
                << ", velocity: " << trajectory.maneuver.GetVelocity() << ", cost: " << trajectory.cost
                << ", yaw: " << trajectory.yaw << "}";
 }

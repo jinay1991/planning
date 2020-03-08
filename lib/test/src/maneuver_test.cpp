@@ -1,5 +1,6 @@
 ///
 /// @file maneuver_test.cpp
+/// @brief Contains unit tests for Maneuver interfaces.
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 

@@ -1,5 +1,6 @@
 ///
 /// @file lane_evaluator_test.cpp
+/// @brief Contains unit tests for Lane Evaluator.
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 

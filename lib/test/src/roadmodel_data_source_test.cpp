@@ -1,5 +1,6 @@
 ///
 /// @file roadmodel_data_source_test.cpp
+/// @brief Contains unit tests for Road Model Data Source.
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include <gmock/gmock.h>

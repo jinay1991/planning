@@ -25,10 +25,12 @@ Trajectories TrajectoryEvaluator::GetRatedTrajectories(const Trajectories& optim
                             lane_evaluator_->IsValidLane(trajectory.lane_id);
                  });
 
+    /// @todo Improve Cost adjustment algorithm
     // update costs for each trajectory
     const auto adjust_costs = [&](const auto& trajectory) {
         auto rated_trajectory = trajectory;
-        if (!lane_evaluator_->IsDrivableLane(trajectory.lane_id))
+        rated_trajectory.drivable = lane_evaluator_->IsDrivableLane(trajectory.lane_id);
+        if (!rated_trajectory.drivable)
         {
             rated_trajectory.cost = std::numeric_limits<double>::infinity();
         }

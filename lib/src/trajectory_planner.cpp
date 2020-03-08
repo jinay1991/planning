@@ -134,7 +134,7 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
     if (!previous_path_global.empty())
     {
         const auto n_samples =
-            std::min(static_cast<std::size_t>(previous_path_global.size()), static_cast<std::size_t>(100));
+            std::min(static_cast<std::size_t>(previous_path_global.size()), static_cast<std::size_t>(10));
         std::for_each(previous_path_global.begin(), previous_path_global.begin() + n_samples,
                       [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
         log_stream << "     => ... (more " << previous_path_global.size() - n_samples << " waypoints)" << std::endl;
@@ -145,7 +145,7 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
     std::for_each(trajectories.begin(), trajectories.end(), [&log_stream](const auto& trajectory) {
         log_stream << " (+) " << trajectory << std::endl;
         const auto n_samples =
-            std::min(static_cast<std::size_t>(trajectory.waypoints.size()), static_cast<std::size_t>(100));
+            std::min(static_cast<std::size_t>(trajectory.waypoints.size()), static_cast<std::size_t>(10));
         std::for_each(trajectory.waypoints.begin(), trajectory.waypoints.begin() + n_samples,
                       [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
         log_stream << "     => ... (more " << trajectory.waypoints.size() - n_samples << " waypoints)" << std::endl;

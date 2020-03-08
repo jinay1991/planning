@@ -1,5 +1,6 @@
 ///
 /// @file trajectory_prioritizer_test.cpp
+/// @brief Contains unit tests for Trajectory Prioritizer.
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include <gmock/gmock.h>

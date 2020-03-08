@@ -1,5 +1,6 @@
 ///
 /// @file maneuver_generator_test.cpp
+/// @brief Contains unit tests for Maneuver Generation.
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 

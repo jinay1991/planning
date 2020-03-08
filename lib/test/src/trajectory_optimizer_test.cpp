@@ -1,5 +1,6 @@
 ///
 /// @file trajectory_optimizer_test.cpp
+/// @brief Contains unit tests for Trajectory Optimizer.
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include <gmock/gmock.h>
