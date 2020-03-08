@@ -1,11 +1,10 @@
 # Motion Planning 
 
-[![pipeline status](https://gitlab.com/jinay1991/motion_planning/badges/master/pipeline.svg)](https://gitlab.com/jinay1991/motion_planning/commits/master)
+[![pipeline status](https://gitlab.com/jinay1991/motion_planning/badges/master/pipeline.svg)](https://ad_platform.gitlab.com/jinay1991/planning/commits/master)
 [![coverage report](https://gitlab.com/jinay1991/motion_planning/badges/master/coverage.svg?job=code-coverage)](https://ad_platform.gitlab.io/planning/coverage/index.html)
 [![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://ad_platform.gitlab.io/planning/doc/html/)
 [![Static Code Analyzer](https://img.shields.io/badge/static-analysis-green.svg)](https://ad_platform.gitlab.io/planning/static_code_analysis_report/)
-
-[[Issue Board](https://gitlab.com/jinay1991/motion_planning/-/boards)]
+[![Issues](https://img.shields.io/badge/bugs-issues-green.svg)](https://ad_platform.gitlab.com/jinay1991/planning/-/boards)]
 
 This repository contains one of the subsystem for Autonomous Driving Platform.
 
