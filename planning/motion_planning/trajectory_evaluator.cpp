@@ -14,6 +14,8 @@ TrajectoryEvaluator::TrajectoryEvaluator(std::shared_ptr<IDataSource>& data_sour
 {
 }
 
+TrajectoryEvaluator::~TrajectoryEvaluator() {}
+
 Trajectories TrajectoryEvaluator::GetRatedTrajectories(const Trajectories& optimized_trajectories) const
 {
     Trajectories rated_trajectories{};

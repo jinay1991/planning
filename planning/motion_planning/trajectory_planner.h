@@ -24,6 +24,9 @@ class TrajectoryPlanner : public ITrajectoryPlanner
     /// @brief Constructor. Initializes with provided DataSource
     explicit TrajectoryPlanner(std::shared_ptr<IDataSource>& data_source);
 
+    /// @brief Destructor.
+    ~TrajectoryPlanner() override;
+
     /// @brief Get Planned Trajectories for each maneuvers provided.
     virtual Trajectories GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const override;
 

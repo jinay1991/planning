@@ -16,6 +16,9 @@ class RoadModelDataSource : public IDataSource
     /// @brief Constructor. Initialize with default values for all information.
     RoadModelDataSource();
 
+    /// @brief Destructor.
+    ~RoadModelDataSource() override;
+
     /// @brief Set current Vehicle Dynamics
     virtual void SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics) override;
 

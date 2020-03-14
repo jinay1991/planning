@@ -7,6 +7,8 @@
 
 namespace planning
 {
+namespace internal
+{
 template <typename T>
 void PrintQueue(T q)
 {
@@ -20,6 +22,9 @@ void PrintQueue(T q)
     }
     LOG(DEBUG) << log_stream.str();
 }
+}  // namespace internal
+
+TrajectoryPrioritizer::~TrajectoryPrioritizer() {}
 
 PrioritizedTrajectories TrajectoryPrioritizer::GetPrioritizedTrajectories(const Trajectories& trajectories) const
 {
@@ -28,7 +33,7 @@ PrioritizedTrajectories TrajectoryPrioritizer::GetPrioritizedTrajectories(const 
     {
         prioritized_trajectories.push(trajectory);
     }
-    PrintQueue(prioritized_trajectories);
+    internal::PrintQueue(prioritized_trajectories);
     return prioritized_trajectories;
 }
 

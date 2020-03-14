@@ -27,6 +27,9 @@ class VelocityPlanner : public IVelocityPlanner
     explicit VelocityPlanner(std::shared_ptr<IDataSource> data_source,
                              const units::velocity::meters_per_second_t& target_velocity);
 
+    /// @brief Destructor.
+    ~VelocityPlanner() override;
+
     /// @brief Calculate Target Velocity based on DataSource.
     virtual void CalculateTargetVelocity() override;
 

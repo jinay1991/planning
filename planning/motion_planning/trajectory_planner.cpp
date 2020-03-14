@@ -9,6 +9,8 @@ namespace planning
 {
 TrajectoryPlanner::TrajectoryPlanner(std::shared_ptr<IDataSource>& data_source) : data_source_{data_source} {}
 
+TrajectoryPlanner::~TrajectoryPlanner() {}
+
 Trajectories TrajectoryPlanner::GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const
 {
     const auto trajectories = GetTrajectories(maneuvers);

@@ -9,6 +9,8 @@
 
 namespace planning
 {
+TrajectorySelector::~TrajectorySelector() {}
+
 Trajectory TrajectorySelector::GetSelectedTrajectory(const PrioritizedTrajectories& prioritized_trajectories) const
 {
     const auto selected_trajectory = prioritized_trajectories.top();

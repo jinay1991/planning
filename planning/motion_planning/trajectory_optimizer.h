@@ -21,6 +21,9 @@ class TrajectoryOptimizer : public ITrajectoryOptimizer
     /// @brief Constructor. Initializes with provided DataSource
     explicit TrajectoryOptimizer(std::shared_ptr<IDataSource>& data_source);
 
+    /// @brief Destructor.
+    ~TrajectoryOptimizer() override;
+
     /// @brief Provide Optimized Trajectories set using Spline Equations
     virtual Trajectories GetOptimizedTrajectories(const Trajectories& planned_trajectories) const override;
 

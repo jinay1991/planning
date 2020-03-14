@@ -22,6 +22,8 @@ VelocityPlanner::VelocityPlanner(std::shared_ptr<IDataSource> data_source,
 {
 }
 
+VelocityPlanner::~VelocityPlanner() {}
+
 bool VelocityPlanner::IsClosestInPathVehicleInFront(const ObjectFusion& object_fusion) const
 {
     const auto ego_lane_id = data_source_->GetGlobalLaneId();

@@ -12,6 +12,8 @@ namespace planning
 {
 TrajectoryOptimizer::TrajectoryOptimizer(std::shared_ptr<IDataSource>& data_source) : data_source_{data_source} {}
 
+TrajectoryOptimizer::~TrajectoryOptimizer() {}
+
 Trajectories TrajectoryOptimizer::GetOptimizedTrajectories(const Trajectories& planned_trajectories) const
 {
     auto optimized_trajectories = Trajectories{};

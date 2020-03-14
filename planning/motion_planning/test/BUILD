@@ -32,6 +32,7 @@ cc_test(
         ":support",
         "//planning/motion_planning",
         "@googletest//:gtest_main",
+        "@nholthaus//:units",
     ],
 )
 

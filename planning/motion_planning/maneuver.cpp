@@ -13,6 +13,8 @@ Maneuver::Maneuver(const LaneId& lane_id, const units::velocity::meters_per_seco
 {
 }
 
+Maneuver::~Maneuver() {}
+
 LaneId Maneuver::GetLaneId() const { return lane_id_; }
 
 units::velocity::meters_per_second_t Maneuver::GetVelocity() const { return velocity_; }

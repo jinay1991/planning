@@ -22,6 +22,9 @@ class TrajectoryEvaluator : public ITrajectoryEvaluator
     /// @brief Constructor. Initializes with provided DataSource
     explicit TrajectoryEvaluator(std::shared_ptr<IDataSource>& data_source);
 
+    /// @brief Destructor.
+    ~TrajectoryEvaluator() override;
+
     /// @brief Get Rated Trajectories for provided optimized trajectories.
     virtual Trajectories GetRatedTrajectories(const Trajectories& optimized_trajectories) const override;
 
