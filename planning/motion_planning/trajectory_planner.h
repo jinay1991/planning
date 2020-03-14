@@ -9,6 +9,7 @@
 #include "planning/motion_planning/i_trajectory_planner.h"
 
 #include <spline.h>
+#include <units.h>
 
 #include <memory>
 
