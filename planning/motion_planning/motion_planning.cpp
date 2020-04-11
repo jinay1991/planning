@@ -22,7 +22,8 @@ MotionPlanning::MotionPlanning(std::shared_ptr<IDataSource>& data_source)
       trajectory_optimizer_{std::make_unique<TrajectoryOptimizer>(data_source)},
       trajectory_evaluator_{std::make_unique<TrajectoryEvaluator>(data_source)},
       trajectory_prioritizer_{std::make_unique<TrajectoryPrioritizer>()},
-      trajectory_selector_{std::make_unique<TrajectorySelector>()}
+      trajectory_selector_{std::make_unique<TrajectorySelector>()},
+      selected_trajectory_{}
 {
 }
 

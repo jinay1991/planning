@@ -30,6 +30,8 @@ class MotionPlanning
     /// @brief Constructor. Initialize Motion Planner with DataSource instance
     explicit MotionPlanning(std::shared_ptr<IDataSource>& data_source);
 
+    virtual ~MotionPlanning() = default;
+
     /// @brief Generate Trajectories based on the provided DataSource (i.e. Environment)
     virtual void GenerateTrajectories();
 
@@ -62,7 +64,7 @@ class MotionPlanning
     std::unique_ptr<ITrajectorySelector> trajectory_selector_;
 
     /// @brief Selected Trajectory
-    Trajectory selected_trajectory_{};
+    Trajectory selected_trajectory_;
 };
 }  // namespace planning
 
