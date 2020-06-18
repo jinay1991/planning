@@ -1,14 +1,13 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
 
 # Installation of general dependencies
-RUN apt-get install -y build-essential gcc g++ lcov make cmake
-RUN apt-get install -y openjdk-11-jdk openjdk-11-jre
+RUN apt-get install -y build-essential gcc g++ gdb lcov make
 RUN apt-get install -y libssl-dev libuv1-dev
-RUN apt-get install -y libtool clang-format-6.0
-RUN apt-get install -y git curl
-RUN apt-get install -y wget
+RUN apt-get install -y libtool clang-format clang-tidy
+RUN apt-get install -y git git-lfs 
+RUN apt-get install -y wget curl
 
 # Installation of python
 RUN apt-get install -y python python-pip python-pygments
@@ -26,13 +25,17 @@ RUN apt-get install -y doxygen graphviz plantuml
 # Installation of static code analysis
 RUN apt-get install -y cppcheck
 
+# Installatin of dependencies to Bazel
+RUN apt-get install -y openjdk-11-jdk openjdk-11-jre
+
 # Installation of Bazel Package
-RUN echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
 RUN curl https://bazel.build/bazel-release.pub.gpg | apt-key add -
+RUN echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
 RUN apt-get update && apt-get install -y bazel
+RUN echo "source /etc/bash_completion.d/bazel" >> ~/.bashrc
 
 # Installation of Bazel Tools
-RUN wget https://github.com/bazelbuild/buildtools/releases/download/0.29.0/buildifier
+RUN wget https://github.com/bazelbuild/buildtools/releases/download/3.2.0/buildifier
 RUN chmod +x buildifier
 RUN mv buildifier /usr/bin
 
