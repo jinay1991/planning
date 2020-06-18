@@ -1,5 +1,7 @@
 FROM ubuntu:20.04
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
 
 # Installation of general dependencies
@@ -8,11 +10,6 @@ RUN apt-get install -y libssl-dev libuv1-dev
 RUN apt-get install -y libtool clang-format clang-tidy
 RUN apt-get install -y git git-lfs 
 RUN apt-get install -y wget curl
-
-# Installation of python
-RUN apt-get install -y python python-pip python-pygments
-RUN python -m pip install -U pip
-RUN python -m pip install -U future
 
 # Installation of python3
 RUN apt-get install -y python3 python3-pip python3-pygments
