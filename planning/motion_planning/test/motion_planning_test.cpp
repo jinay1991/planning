@@ -34,7 +34,7 @@ class MotionPlanningSpecFixture : public ::testing::Test
     std::shared_ptr<IDataSource> data_source_;
 };
 
-TEST_F(MotionPlanningSpecFixture, GivenTypicalInputs_WhenGenerateTrajectories_ThenReturnSelectedTrajectory)
+TEST_F(MotionPlanningSpecFixture, DISABLED_ComponentTest_GivenTypicalInputs_WhenGenerateTrajectories_ThenReturnSelectedTrajectory)
 {
     motion_planning_->GenerateTrajectories();
 
