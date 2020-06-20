@@ -1,8 +1,21 @@
 # ------------
 # Docker Image
 # ------------
-image: registry.gitlab.com/ad_platform/planning
+default:
+  image:
+    name: registry.gitlab.com/ad_platform/planning
+    entrypoint: [""]
+  before_script:
+    - echo "build --disk_cache=$CI_PROJECT_DIR/.cache" >> .bazelrc
 
+cache:
+  key: bazel_cache
+  paths:
+    - .cache/
+
+include:
+  - template: Code-Quality.gitlab-ci.yml
+  
 # ------------
 # Various Jobs
 # ------------
@@ -33,7 +46,6 @@ docker_build:
   only:
     changes:
       - Dockerfile
-      - schedules
 
 # ------------
 # Stage: check
@@ -41,7 +53,7 @@ docker_build:
 clang-format:
   stage: check
   script:
-    - find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec cat {} \; | diff -u <(find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec clang-format-6.0 -style=file {} -verbose \;) -
+    - find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec cat {} \; | diff -u <(find . -regex '.*\.\(ino\|cpp\|hpp\|cc\|cxx\|h\)' -exec clang-format -style=file {} -verbose \;) -
 
 buildifier:
   stage: check
@@ -62,25 +74,6 @@ cppcheck:
       - static_code_analysis.log
     expire_in: 7 days
 
-
-code_quality:
-  image: docker:stable
-  stage: test
-  variables:
-    DOCKER_DRIVER: overlay2
-  allow_failure: true
-  services:
-    - docker:stable-dind
-  script:
-    - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
-    - docker run
-      --env SOURCE_CODE="$PWD"
-      --volume "$PWD":/code
-      --volume /var/run/docker.sock:/var/run/docker.sock
-      "registry.gitlab.com/gitlab-org/security-products/codequality:$SP_VERSION" /code
-  artifacts:
-    reports:
-      codequality: gl-code-quality-report.json
 
 # ------------
 # Stage: Build
