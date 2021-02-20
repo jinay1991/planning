@@ -1,5 +1,5 @@
 workspace(name = "planning")
 
-load("//third_party:dependencies.bzl", "third_party_dependencies")
+load("@planning//third_party:dependencies.bzl", "planning_dependencies")
 
-third_party_dependencies()
+planning_dependencies()

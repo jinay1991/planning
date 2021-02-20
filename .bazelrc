@@ -1,0 +1,6 @@
+build --color=yes
+build --test_env="GTEST_COLOR=TRUE" --test_env="DISPLAY" --test_output=errors
+build --cxxopt="-std=c++14" --cxxopt="-Wall"
+
+build:clang_tidy --aspects /bazel/clang-tidy/clang-tidy.bzl%clang_tidy_aspect --output_groups=ctidy
+build:clang_tidy_fix --spawn_strategy=local --config=clang_tidy

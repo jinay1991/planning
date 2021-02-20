@@ -5,7 +5,6 @@ def eigen():
         http_archive(
             name = "eigen",
             build_file = "//third_party/eigen:eigen.BUILD",
-            strip_prefix = "eigen-eigen-323c052e1731",
-            sha256 = "65d3aebb5094280869955bcfb41aada2f5194e2d608f930951e810ce4c945c0b",
-            url = "https://bitbucket.org/eigen/eigen/get/3.3.7.zip",
+            url = "https://gitlab.com/libeigen/eigen/-/archive/3.3.8/eigen-3.3.8.tar.gz",
+            sha256 = "146a480b8ed1fb6ac7cd33fec9eb5e8f8f62c3683b3f850094d9d5c35a92419a",
         )
