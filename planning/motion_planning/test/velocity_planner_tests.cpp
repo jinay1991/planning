@@ -33,6 +33,31 @@ class VelocityPlannerFixtureT : public VelocityPlannerFixture, public ::testing:
 {
 };
 
+TEST(VelocityPlannerTest, Constructor_GivenTypicalDataSource_ExpectInitialValues)
+{
+    // Given
+    const auto data_source = DataSourceBuilder().Build();
+
+    // When
+    const VelocityPlanner velocity_planner{data_source};
+
+    // Then
+    EXPECT_EQ(velocity_planner.GetTargetVelocity(), 0.0_mps);
+}
+
+TEST(VelocityPlannerTest, Constructor_GivenTypicalDataSourceWithTargetVelocity_ExpectSameTargetVelocity)
+{
+    // Given
+    const auto data_source = DataSourceBuilder().Build();
+    const auto target_velocity = 10.0_mps;
+
+    // When
+    const VelocityPlanner velocity_planner{data_source, target_velocity};
+
+    // Then
+    EXPECT_EQ(velocity_planner.GetTargetVelocity(), target_velocity);
+}
+
 using VelocityPlannerFixture_WithAcceleration =
     VelocityPlannerFixtureT<std::tuple<units::velocity::meters_per_second_t, GlobalLaneId>>;
 
