@@ -11,7 +11,6 @@
 #include "planning/motion_planning/lane_evaluator.h"
 
 #include <algorithm>
-#include <memory>
 
 namespace planning
 {
@@ -27,7 +26,7 @@ class TrajectoryEvaluator : public ITrajectoryEvaluator
 
   private:
     /// @brief Lane Evaluator
-    std::unique_ptr<LaneEvaluator> lane_evaluator_;
+    LaneEvaluator lane_evaluator_;
 };
 }  // namespace planning
 

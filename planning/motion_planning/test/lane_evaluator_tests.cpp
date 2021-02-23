@@ -38,7 +38,8 @@ TEST_P(IsValidLaneIdSpec, GivenTypicalLandId_WhenEvaluatedIsValidLaneId_ThenRetu
     const auto expected = std::get<2>(GetParam());
     EXPECT_EQ(actual, expected);
 }
-INSTANTIATE_TEST_SUITE_P(LaneEvaluator, IsValidLaneIdSpec,
+INSTANTIATE_TEST_SUITE_P(LaneEvaluator,
+                         IsValidLaneIdSpec,
                          ::testing::Values(std::make_tuple(GlobalLaneId::kCenter, LaneId::kEgo, true),
                                            std::make_tuple(GlobalLaneId::kCenter, LaneId::kLeft, true),
                                            std::make_tuple(GlobalLaneId::kCenter, LaneId::kRight, true),
@@ -69,7 +70,8 @@ TEST_P(GetLocalLaneSpec, GivenTypicalGlobalLaneId_WhenConverted_ThenReturnLocalL
     const auto expected = std::get<2>(GetParam());
     EXPECT_EQ(actual, expected);
 }
-INSTANTIATE_TEST_SUITE_P(LaneEvaluator, GetLocalLaneSpec,
+INSTANTIATE_TEST_SUITE_P(LaneEvaluator,
+                         GetLocalLaneSpec,
                          ::testing::Values(std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kCenter, LaneId::kEgo),
                                            std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kLeft, LaneId::kLeft),
                                            std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kRight, LaneId::kRight),
@@ -95,7 +97,8 @@ TEST_P(IsObjectNearSpec, GivenTypicalVehiclePositions_WhenEvaluatedIsObjectNear_
     EXPECT_EQ(actual, expected);
 }
 INSTANTIATE_TEST_SUITE_P(
-    LaneEvaluator, IsObjectNearSpec,
+    LaneEvaluator,
+    IsObjectNearSpec,
     ::testing::Values(
         std::make_tuple(FrenetCoordinates{0, 0}, FrenetCoordinates{0, 0}, true),
         std::make_tuple(FrenetCoordinates{gkFarDistanceThreshold.value() - 15, 0}, FrenetCoordinates{0, 0}, true),
@@ -128,7 +131,8 @@ TEST_P(IsDrivableSpec, GivenTypicalSensorFusion_WhenCheckedIsDrivableLane_ThenRe
     EXPECT_EQ(actual, expected);
 }
 INSTANTIATE_TEST_SUITE_P(
-    LaneEvaluator, IsDrivableSpec,
+    LaneEvaluator,
+    IsDrivableSpec,
     ::testing::Values(std::make_tuple(GlobalLaneId::kCenter, GlobalLaneId::kCenter, LaneId::kEgo, false),
                       std::make_tuple(GlobalLaneId::kRight, GlobalLaneId::kCenter, LaneId::kEgo, true),
                       std::make_tuple(GlobalLaneId::kLeft, GlobalLaneId::kCenter, LaneId::kEgo, true),

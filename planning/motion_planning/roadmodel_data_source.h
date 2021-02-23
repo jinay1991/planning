@@ -60,13 +60,13 @@ class RoadModelDataSource : public IDataSource
 
   private:
     /// @brief Check if given Frenet Coordinate is on Left Lane (Global)
-    bool IsLeftLane(const FrenetCoordinates& coords) const;
+    static bool IsLeftLane(const FrenetCoordinates& coords);
 
     /// @brief Check if given Frenet Coordinate is on Center Lane (Global)
-    bool IsCenterLane(const FrenetCoordinates& coords) const;
+    static bool IsCenterLane(const FrenetCoordinates& coords);
 
     /// @brief Check if given Frenet Coordinate is on Right Lane (Global)
-    bool IsRightLane(const FrenetCoordinates& coords) const;
+    static bool IsRightLane(const FrenetCoordinates& coords);
 
     /// @brief Global Lane Id for Ego Vehicle
     GlobalLaneId global_lane_id_;

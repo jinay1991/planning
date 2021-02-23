@@ -13,6 +13,7 @@
 #include "planning/motion_planning/test/support/sensor_fusion_builder.h"
 
 #include <units.h>
+
 #include <memory>
 
 namespace planning
@@ -129,7 +130,7 @@ class DataSourceBuilder
     }
 
     /// @brief Build Data Source Object
-    const IDataSource& Build()
+    const RoadModelDataSource& Build()
     {
         data_source_.SetPreviousPath(previous_path_global_);
         data_source_.SetPreviousPathEnd(previous_path_end_frenet_);
@@ -141,24 +142,32 @@ class DataSourceBuilder
     }
 
     /// @brief Convert Global Coordinates to Frenet Coordinates (uses Global Lane Information)
-    static const FrenetCoordinates GetCoordinates(const GlobalLaneId& global_lane_id)
+    static FrenetCoordinates GetCoordinates(const GlobalLaneId& global_lane_id)
     {
         auto coords = FrenetCoordinates{24.0, 0.0};
         switch (global_lane_id)
         {
             case GlobalLaneId::kLeft:
-                coords.d = 2;
+            {
+                coords.d = 2.0;
                 break;
+            }
             case GlobalLaneId::kCenter:
-                coords.d = 6;
+            {
+                coords.d = 6.0;
                 break;
+            }
             case GlobalLaneId::kRight:
-                coords.d = 10;
+            {
+                coords.d = 10.0;
                 break;
+            }
             case GlobalLaneId::kInvalid:
             default:
-                coords.d = 14;
+            {
+                coords.d = 14.0;
                 break;
+            }
         }
         return coords;
     }

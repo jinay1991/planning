@@ -3,6 +3,7 @@
 /// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/motion_planning.h"
+
 #include "planning/common/logging.h"
 #include "planning/motion_planning/maneuver.h"
 #include "planning/motion_planning/maneuver_generator.h"
@@ -46,6 +47,9 @@ void MotionPlanning::GenerateTrajectories()
     selected_trajectory_ = trajectory_selector_->GetSelectedTrajectory(prioritized_trajectories);
 }
 
-Trajectory MotionPlanning::GetSelectedTrajectory() const { return selected_trajectory_; }
+Trajectory MotionPlanning::GetSelectedTrajectory() const
+{
+    return selected_trajectory_;
+}
 
 }  // namespace planning
