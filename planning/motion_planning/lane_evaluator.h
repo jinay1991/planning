@@ -1,9 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_LANE_EVALUATOR_H_
-#define PLANNING_MOTION_PLANNING_LANE_EVALUATOR_H_
+#ifndef PLANNING_MOTION_PLANNING_LANE_EVALUATOR_H
+#define PLANNING_MOTION_PLANNING_LANE_EVALUATOR_H
 
 #include "planning/datatypes/lane.h"
 #include "planning/datatypes/sensor_fusion.h"
@@ -38,4 +38,4 @@ class LaneEvaluator
     const IDataSource& data_source_;
 };
 }  // namespace planning
-#endif  /// PLANNING_MOTION_PLANNING_LANE_EVALUATOR_H_
+#endif  /// PLANNING_MOTION_PLANNING_LANE_EVALUATOR_H

@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/common/chrono_timer.h"
 
@@ -22,10 +22,19 @@ void ChronoTimer::Stop()
     }
 }
 
-bool ChronoTimer::IsRunning() const { return is_started_ && !IsTimeout(); }
+bool ChronoTimer::IsRunning() const
+{
+    return is_started_ && !IsTimeout();
+}
 
-bool ChronoTimer::IsTimeout() const { return is_started_ && ((std::chrono::system_clock::now() - start_) > duration_); }
+bool ChronoTimer::IsTimeout() const
+{
+    return is_started_ && ((std::chrono::system_clock::now() - start_) > duration_);
+}
 
-void ChronoTimer::SetTimer(const std::chrono::system_clock::duration& duration) { duration_ = duration; }
+void ChronoTimer::SetTimer(const std::chrono::system_clock::duration& duration)
+{
+    duration_ = duration;
+}
 
 }  // namespace timer

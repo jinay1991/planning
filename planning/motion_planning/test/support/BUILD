@@ -5,6 +5,7 @@ cc_library(
     testonly = True,
     hdrs = [
         "data_source_builder.h",
+        "object_fusion_builder.h",
         "sensor_fusion_builder.h",
         "trajectory_builder.h",
     ],

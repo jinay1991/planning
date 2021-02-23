@@ -1,10 +1,10 @@
 ///
 /// @file
 /// @brief Contains builder utility for Data Source object built-up.
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_TEST_DATA_SOURCE_BUILDER_H_
-#define PLANNING_MOTION_PLANNING_TEST_DATA_SOURCE_BUILDER_H_
+#ifndef PLANNING_MOTION_PLANNING_TEST_DATA_SOURCE_BUILDER_H
+#define PLANNING_MOTION_PLANNING_TEST_DATA_SOURCE_BUILDER_H
 
 #include "planning/datatypes/lane.h"
 #include "planning/datatypes/sensor_fusion.h"
@@ -197,4 +197,4 @@ class DataSourceBuilder
 }  // namespace
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_TEST_DATA_SOURCE_BUILDER_H_
+#endif  /// PLANNING_MOTION_PLANNING_TEST_DATA_SOURCE_BUILDER_H

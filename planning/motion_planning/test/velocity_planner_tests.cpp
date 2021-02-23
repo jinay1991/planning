@@ -1,7 +1,7 @@
 ///
 /// @file
 /// @brief Contains unit tests for Velocity Planner.
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/datatypes/lane.h"
 #include "planning/motion_planning/test/support/data_source_builder.h"
@@ -56,7 +56,8 @@ TEST_P(AccelerationSpecFixture, GivenNoClosestInPathVehicle_WhenCalculateTargetV
     EXPECT_LT(actual, data_source_.GetSpeedLimit());
 }
 
-INSTANTIATE_TEST_SUITE_P(VelocityPlanner, AccelerationSpecFixture,
+INSTANTIATE_TEST_SUITE_P(VelocityPlanner,
+                         AccelerationSpecFixture,
                          ::testing::Combine(::testing::Values(units::velocity::meters_per_second_t{0.0},
                                                               units::velocity::meters_per_second_t{10.0},
                                                               units::velocity::meters_per_second_t{17.0},
@@ -79,7 +80,8 @@ TEST_P(DecelerationSpecFixture, GivenClosestInPathVehicle_WhenCalculateTargetVel
     EXPECT_LT(actual, data_source_.GetSpeedLimit());
 }
 
-INSTANTIATE_TEST_SUITE_P(VelocityPlanner, DecelerationSpecFixture,
+INSTANTIATE_TEST_SUITE_P(VelocityPlanner,
+                         DecelerationSpecFixture,
                          ::testing::Combine(::testing::Values(units::velocity::meters_per_second_t{0.0},
                                                               units::velocity::meters_per_second_t{15.0},
                                                               units::velocity::meters_per_second_t{17.0}),

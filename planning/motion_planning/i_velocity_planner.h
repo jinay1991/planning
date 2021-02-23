@@ -1,9 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_I_VELOCITY_PLANNER_H_
-#define PLANNING_MOTION_PLANNING_I_VELOCITY_PLANNER_H_
+#ifndef PLANNING_MOTION_PLANNING_I_VELOCITY_PLANNER_H
+#define PLANNING_MOTION_PLANNING_I_VELOCITY_PLANNER_H
 
 #include <units.h>
 
@@ -24,4 +24,4 @@ class IVelocityPlanner
 };
 }  // namespace planning
 
-#endif  // PLANNING_MOTION_PLANNING_I_VELOCITY_PLANNER_H_
+#endif  // PLANNING_MOTION_PLANNING_I_VELOCITY_PLANNER_H

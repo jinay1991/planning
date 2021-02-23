@@ -1,8 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "application/simulator/udacity_simulator.h"
+
 #include "planning/common/logging.h"
 
 namespace sim
@@ -209,7 +210,9 @@ void UdacitySimulator::Listen()
     h_.run();
 }
 
-void UdacitySimulator::DisconnectCallback(uWS::WebSocket<uWS::SERVER> ws, std::int32_t code, char* message,
+void UdacitySimulator::DisconnectCallback(uWS::WebSocket<uWS::SERVER> ws,
+                                          std::int32_t code,
+                                          char* message,
                                           size_t length)
 {
     ws.close();

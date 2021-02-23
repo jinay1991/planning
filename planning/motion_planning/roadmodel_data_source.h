@@ -1,9 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_ROADMODEL_DATA_SOURCE_H_
-#define PLANNING_MOTION_PLANNING_ROADMODEL_DATA_SOURCE_H_
+#ifndef PLANNING_MOTION_PLANNING_ROADMODEL_DATA_SOURCE_H
+#define PLANNING_MOTION_PLANNING_ROADMODEL_DATA_SOURCE_H
 
 #include "planning/motion_planning/i_data_source.h"
 
@@ -91,4 +91,4 @@ class RoadModelDataSource : public IDataSource
 };
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_ROADMODEL_DATA_SOURCE_H_
+#endif  /// PLANNING_MOTION_PLANNING_ROADMODEL_DATA_SOURCE_H

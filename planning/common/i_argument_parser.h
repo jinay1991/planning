@@ -1,10 +1,10 @@
 ///
 /// @file
 /// @brief Contains Argument Parser Interface class
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_COMMON_ARGUMENT_PARSER_I_ARGUMENT_PARSER_H_
-#define PLANNING_COMMON_ARGUMENT_PARSER_I_ARGUMENT_PARSER_H_
+#ifndef PLANNING_COMMON_ARGUMENT_PARSER_I_ARGUMENT_PARSER_H
+#define PLANNING_COMMON_ARGUMENT_PARSER_I_ARGUMENT_PARSER_H
 
 #include "planning/common/cli_options.h"
 
@@ -26,4 +26,4 @@ class IArgumentParser
 };
 }  // namespace planning
 
-#endif  /// PLANNING_COMMON_ARGUMENT_PARSER_I_ARGUMENT_PARSER_H_
+#endif  /// PLANNING_COMMON_ARGUMENT_PARSER_I_ARGUMENT_PARSER_H

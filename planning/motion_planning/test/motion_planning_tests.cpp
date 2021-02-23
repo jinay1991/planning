@@ -1,7 +1,7 @@
 ///
 /// @file
 /// @brief Contains component tests for Motion Planning.
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/motion_planning.h"
 #include "planning/motion_planning/roadmodel_data_source.h"

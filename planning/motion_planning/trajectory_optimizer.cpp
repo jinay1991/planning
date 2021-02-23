@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/trajectory_optimizer.h"
 
@@ -20,7 +20,7 @@ Trajectories TrajectoryOptimizer::GetOptimizedTrajectories(const Trajectories& p
     std::transform(planned_trajectories.begin(),
                    planned_trajectories.end(),
                    std::back_inserter(optimized_trajectories),
-                   [&](const auto& trajectory) { return GetOptimizedTrajectory(trajectory); });
+                   [this](const auto& trajectory) { return GetOptimizedTrajectory(trajectory); });
 
     std::stringstream log_stream;
     log_stream << "Optimized trajectories: " << optimized_trajectories.size() << std::endl;
@@ -40,7 +40,6 @@ Trajectories TrajectoryOptimizer::GetOptimizedTrajectories(const Trajectories& p
 Trajectory TrajectoryOptimizer::GetOptimizedTrajectory(const Trajectory& planned_trajectory) const
 {
     auto optimized_trajectory = planned_trajectory;
-    std::cout << "---------->\n";
     const auto previous_path_global = data_source_.GetPreviousPathInGlobalCoords();
 
     // keep only calculated waypoints from copied version of planned trajectory

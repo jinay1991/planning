@@ -1,7 +1,7 @@
 ///
 /// @file
 /// @brief Contains unit tests for Trajectory Prioritizer.
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 
 #include "planning/motion_planning/test/support/trajectory_builder.h"

@@ -1,9 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_DATATYPES_VEHICLE_DYNAMICS_H_
-#define PLANNING_DATATYPES_VEHICLE_DYNAMICS_H_
+#ifndef PLANNING_DATATYPES_VEHICLE_DYNAMICS_H
+#define PLANNING_DATATYPES_VEHICLE_DYNAMICS_H
 
 #include "planning/datatypes/lane.h"
 
@@ -88,4 +88,4 @@ inline std::ostream& operator<<(std::ostream& out, const VehicleDynamics& vehicl
 }
 }  // namespace planning
 
-#endif  /// PLANNING_DATATYPES_LANE_H_
+#endif  /// PLANNING_DATATYPES_LANE_H

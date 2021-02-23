@@ -1,8 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/velocity_planner.h"
+
 #include "planning/common/logging.h"
 
 namespace planning
@@ -45,7 +46,8 @@ units::velocity::meters_per_second_t VelocityPlanner::GetDeltaVelocity() const
     auto delta_velocity = units::velocity::meters_per_second_t{0.0};
     const auto sensor_fusion = data_source_.GetSensorFusion();
 
-    const auto is_cipv_in_front = std::any_of(sensor_fusion.objs.begin(), sensor_fusion.objs.end(),
+    const auto is_cipv_in_front = std::any_of(sensor_fusion.objs.begin(),
+                                              sensor_fusion.objs.end(),
                                               [&](const auto& obj) { return IsClosestInPathVehicleInFront(obj); });
     if (is_cipv_in_front)
     {
@@ -82,6 +84,9 @@ void VelocityPlanner::CalculateTargetVelocity()
     LOG(INFO) << log_stream.str();
 }
 
-units::velocity::meters_per_second_t VelocityPlanner::GetTargetVelocity() const { return target_velocity_; }
+units::velocity::meters_per_second_t VelocityPlanner::GetTargetVelocity() const
+{
+    return target_velocity_;
+}
 
 }  // namespace planning

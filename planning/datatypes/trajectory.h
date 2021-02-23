@@ -1,9 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_DATATYPES_TRAJECTORY_H_
-#define PLANNING_DATATYPES_TRAJECTORY_H_
+#ifndef PLANNING_DATATYPES_TRAJECTORY_H
+#define PLANNING_DATATYPES_TRAJECTORY_H
 
 #include "planning/datatypes/vehicle_dynamics.h"
 
@@ -68,4 +68,4 @@ inline std::ostream& operator<<(std::ostream& out, const Trajectory& trajectory)
 
 }  // namespace planning
 
-#endif  /// PLANNING_DATATYPES_TRAJECTORY_H_
+#endif  /// PLANNING_DATATYPES_TRAJECTORY_H

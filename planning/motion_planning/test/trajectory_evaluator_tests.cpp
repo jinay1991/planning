@@ -1,7 +1,7 @@
 ///
 /// @file
 /// @brief Contains unit tests for Trajectory Evaluator.
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/roadmodel_data_source.h"
 #include "planning/motion_planning/test/support/data_source_builder.h"
@@ -125,7 +125,8 @@ TEST_P(TrajectoryEvaluatorSpecFixture,
     std::for_each(actual.begin(), actual.end(), expected_cost);
 }
 INSTANTIATE_TEST_SUITE_P(
-    TrajectoryEvaluator, TrajectoryEvaluatorSpecFixture,
+    TrajectoryEvaluator,
+    TrajectoryEvaluatorSpecFixture,
     ::testing::Combine(::testing::Values(GlobalLaneId::kLeft, GlobalLaneId::kCenter, GlobalLaneId::kRight),
                        ::testing::Values(GlobalLaneId::kLeft, GlobalLaneId::kCenter, GlobalLaneId::kRight)));
 

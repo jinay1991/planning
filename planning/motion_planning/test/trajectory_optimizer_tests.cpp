@@ -1,7 +1,7 @@
 ///
 /// @file
 /// @brief Contains unit tests for Trajectory Optimizer.
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/test/support/data_source_builder.h"
 #include "planning/motion_planning/test/support/trajectory_builder.h"

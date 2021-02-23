@@ -1,16 +1,17 @@
 ///
 /// @file
 /// @brief Contains Argument Parser definitions
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_COMMON_ARGUMENT_PARSER_ARGUMENT_PARSER_H_
-#define PLANNING_COMMON_ARGUMENT_PARSER_ARGUMENT_PARSER_H_
+#ifndef PLANNING_COMMON_ARGUMENT_PARSER_ARGUMENT_PARSER_H
+#define PLANNING_COMMON_ARGUMENT_PARSER_ARGUMENT_PARSER_H
 
 #include "planning/common/cli_options.h"
 #include "planning/common/i_argument_parser.h"
 
 #include <getopt.h>
 #include <unistd.h>
+
 #include <string>
 #include <vector>
 
@@ -51,4 +52,4 @@ class ArgumentParser : public IArgumentParser
 
 }  // namespace planning
 
-#endif  /// PLANNING_COMMON_ARGUMENT_PARSER_ARGUMENT_PARSER_H_
+#endif  /// PLANNING_COMMON_ARGUMENT_PARSER_ARGUMENT_PARSER_H

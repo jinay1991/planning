@@ -1,8 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/lane_evaluator.h"
+
 #include "planning/common/logging.h"
 
 namespace planning

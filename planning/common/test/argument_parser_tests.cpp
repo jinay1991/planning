@@ -1,7 +1,7 @@
 ///
 /// @file
 /// @brief Contains unit tests for Argument Parser APIs.
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/common/argument_parser.h"
 

@@ -1,9 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_I_TRAJECTORY_PLANNER_H_
-#define PLANNING_MOTION_PLANNING_I_TRAJECTORY_PLANNER_H_
+#ifndef PLANNING_MOTION_PLANNING_I_TRAJECTORY_PLANNER_H
+#define PLANNING_MOTION_PLANNING_I_TRAJECTORY_PLANNER_H
 
 #include "planning/datatypes/trajectory.h"
 #include "planning/datatypes/vehicle_dynamics.h"
@@ -24,4 +24,4 @@ class ITrajectoryPlanner
     virtual Trajectories GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const = 0;
 };
 }  // namespace planning
-#endif  /// PLANNING_MOTION_PLANNING_I_TRAJECTORY_PLANNER_H_
+#endif  /// PLANNING_MOTION_PLANNING_I_TRAJECTORY_PLANNER_H

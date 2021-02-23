@@ -1,36 +1,186 @@
 ///
 /// @file
 /// @brief Contains unit tests for Road Model Data Source.
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/i_data_source.h"
 #include "planning/motion_planning/roadmodel_data_source.h"
+#include "planning/motion_planning/test/support/sensor_fusion_builder.h"
+#include "support/object_fusion_builder.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 namespace planning
 {
-class GetGlobalLaneSpec : public ::testing::TestWithParam<std::tuple<FrenetCoordinates, GlobalLaneId>>
+namespace
+{
+using namespace units::literals;
+
+using ::testing::AllOf;
+using ::testing::Contains;
+using ::testing::Field;
+
+class RoadModelDataSourceFixture : public ::testing::Test
 {
   protected:
-    void SetUp() override { data_source_ = std::make_unique<RoadModelDataSource>(); }
-
-    std::unique_ptr<IDataSource> data_source_;
+    RoadModelDataSource data_source_;
 };
 
-TEST_P(GetGlobalLaneSpec, GivenTypicalFrenetCoordinates_WhenGetGlobalLaneId_ThenReturnGlobalLaneId)
+template <typename T>
+class RoadModelDataSourceFixtureT : public RoadModelDataSourceFixture, public ::testing::WithParamInterface<T>
 {
-    const auto actual = data_source_->GetGlobalLaneId(std::get<0>(GetParam()));
+};
 
-    EXPECT_EQ(actual, std::get<1>(GetParam()));
+TEST_F(RoadModelDataSourceFixture, SetVehicleDynamics_GivenTypicalVehicleDynamics_ExpectSame)
+{
+    // Given
+    VehicleDynamics vehicle_dynamics{};
+    vehicle_dynamics.velocity = 10.0_mps;
+    vehicle_dynamics.yaw = 10.0_rad;
+
+    // When
+    data_source_.SetVehicleDynamics(vehicle_dynamics);
+
+    // Then
+    EXPECT_THAT(data_source_.GetVehicleDynamics(),
+                AllOf(Field(&VehicleDynamics::velocity, vehicle_dynamics.velocity),
+                      Field(&VehicleDynamics::yaw, vehicle_dynamics.yaw)));
 }
-INSTANTIATE_TEST_SUITE_P(DataSourceSpec, GetGlobalLaneSpec,
-                         ::testing::Values(std::make_tuple(FrenetCoordinates{0, 0}, GlobalLaneId::kInvalid),
-                                           std::make_tuple(FrenetCoordinates{0, 2}, GlobalLaneId::kLeft),
-                                           std::make_tuple(FrenetCoordinates{0, 4}, GlobalLaneId::kInvalid),
-                                           std::make_tuple(FrenetCoordinates{0, 6}, GlobalLaneId::kCenter),
-                                           std::make_tuple(FrenetCoordinates{0, 8}, GlobalLaneId::kInvalid),
-                                           std::make_tuple(FrenetCoordinates{0, 10}, GlobalLaneId::kRight),
-                                           std::make_tuple(FrenetCoordinates{0, 12}, GlobalLaneId::kInvalid)));
+
+TEST_F(RoadModelDataSourceFixture, SetMapCoordinates_GivenTypicalMapCoordinates_ExpectSame)
+{
+    // Given
+    const MapCoordinates map_coordinates{GlobalCoordinates{784.6001, 1135.571},
+                                         FrenetCoordinates{0, 0, -0.02359831, -0.9997216}};
+    MapCoordinatesList map_coordinates_list_{};
+    map_coordinates_list_.push_back(map_coordinates);
+
+    // When
+    data_source_.SetMapCoordinates(map_coordinates_list_);
+
+    // Then
+    EXPECT_THAT(data_source_.GetMapCoordinates(),
+                Contains(AllOf(Field(&MapCoordinates::global_coords,
+                                     AllOf(Field(&GlobalCoordinates::x, map_coordinates.global_coords.x),
+                                           Field(&GlobalCoordinates::y, map_coordinates.global_coords.y))),
+                               Field(&MapCoordinates::frenet_coords,
+                                     AllOf(Field(&FrenetCoordinates::s, map_coordinates.frenet_coords.s),
+                                           Field(&FrenetCoordinates::d, map_coordinates.frenet_coords.d),
+                                           Field(&FrenetCoordinates::dx, map_coordinates.frenet_coords.dx),
+                                           Field(&FrenetCoordinates::dy, map_coordinates.frenet_coords.dy))))));
+}
+
+TEST_F(RoadModelDataSourceFixture, SetPreviousPath_GivenTypicalPreviousPath_ExpectSame)
+{
+    // Given
+    const GlobalCoordinates global_coordinate{10.0, 12.0};
+    PreviousPathGlobal previous_path_global{};
+    previous_path_global.push_back(global_coordinate);
+
+    // When
+    data_source_.SetPreviousPath(previous_path_global);
+
+    // Then
+    EXPECT_THAT(data_source_.GetPreviousPathInGlobalCoords(),
+                Contains(AllOf(Field(&GlobalCoordinates::x, global_coordinate.x),
+                               Field(&GlobalCoordinates::y, global_coordinate.y))));
+}
+
+TEST_F(RoadModelDataSourceFixture, SetPreviousPathEnd_GivenTypicalPreviousPathEnd_ExpectSame)
+{
+    // Given
+    const FrenetCoordinates frenet_coordinate{10.0, 12.0, 0.0, 0.0};
+
+    // When
+    data_source_.SetPreviousPathEnd(frenet_coordinate);
+
+    // Then
+    EXPECT_THAT(
+        data_source_.GetPreviousPathEnd(),
+        AllOf(Field(&FrenetCoordinates::s, frenet_coordinate.s), Field(&FrenetCoordinates::d, frenet_coordinate.d)));
+}
+
+TEST_F(RoadModelDataSourceFixture, SetSensorFusion_GivenTypicalSensorFusion_ExpectSame)
+{
+    // Given
+    const units::velocity::meters_per_second_t velocity{10.0};
+    const ObjectFusion object_fusion = ObjectFusionBuilder().WithVelocity(velocity).Build();
+    const SensorFusion sensor_fusion = SensorFusionBuilder().WithObjectFusion(object_fusion).Build();
+
+    // When
+    data_source_.SetSensorFusion(sensor_fusion);
+
+    // Then
+    EXPECT_THAT(data_source_.GetSensorFusion(),
+                AllOf(Field(&SensorFusion::objs, Contains(Field(&ObjectFusion::velocity, velocity)))));
+}
+
+TEST_F(RoadModelDataSourceFixture, SetSpeedLimit_GivenTypicalSpeedLimit_ExpectSame)
+{
+    // Given
+    const units::velocity::kilometers_per_hour_t speed_limit{100.0};
+
+    // When
+    data_source_.SetSpeedLimit(speed_limit);
+
+    // Then
+    EXPECT_EQ(data_source_.GetSpeedLimit(), speed_limit);
+}
+
+struct TestFrenetCoordinateParam
+{
+    // Given
+    FrenetCoordinates frenet_coordinates;
+
+    // Then
+    GlobalLaneId global_lane_id;
+};
+
+using RoadModelDataSourceFixture_WithFrenetCoordinates = RoadModelDataSourceFixtureT<TestFrenetCoordinateParam>;
+
+// clang-format off
+INSTANTIATE_TEST_SUITE_P(
+    RoadModelDataSource,
+    RoadModelDataSourceFixture_WithFrenetCoordinates,
+    ::testing::Values(
+      //                        frenet_coordinates          , (expected) global_lane_id
+      TestFrenetCoordinateParam{FrenetCoordinates{0.0, 2.0} , GlobalLaneId::kLeft      },
+      TestFrenetCoordinateParam{FrenetCoordinates{0.0, 0.0} , GlobalLaneId::kInvalid   },
+      TestFrenetCoordinateParam{FrenetCoordinates{0.0, 4.0} , GlobalLaneId::kInvalid   },
+      TestFrenetCoordinateParam{FrenetCoordinates{0.0, 6.0} , GlobalLaneId::kCenter    },
+      TestFrenetCoordinateParam{FrenetCoordinates{0.0, 8.0} , GlobalLaneId::kInvalid   },
+      TestFrenetCoordinateParam{FrenetCoordinates{0.0, 10.0}, GlobalLaneId::kRight     },
+      TestFrenetCoordinateParam{FrenetCoordinates{0.0, 12.0}, GlobalLaneId::kInvalid   }
+));
+// clang-format on
+
+TEST_P(RoadModelDataSourceFixture_WithFrenetCoordinates,
+       GetGlobalLaneId_GivenTypicalFrenetCoordinates_ExpectGlobalLaneId)
+{
+    // Given
+    const auto param = GetParam();
+
+    // When
+    const auto actual = data_source_.GetGlobalLaneId(param.frenet_coordinates);
+
+    // Then
+    EXPECT_EQ(actual, param.global_lane_id);
+}
+
+TEST_P(RoadModelDataSourceFixture_WithFrenetCoordinates, GetGlobalLaneId_GivenTypicalVehicleDynamics_ExpectGlobalLaneId)
+{
+    // Given
+    const auto param = GetParam();
+    VehicleDynamics vehicle_dynamics{};
+    vehicle_dynamics.frenet_coords = param.frenet_coordinates;
+
+    // When
+    data_source_.SetVehicleDynamics(vehicle_dynamics);
+
+    // Then
+    EXPECT_EQ(data_source_.GetGlobalLaneId(), param.global_lane_id);
+}
+
+}  // namespace
 }  // namespace planning

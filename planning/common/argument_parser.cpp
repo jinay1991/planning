@@ -1,8 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/common/argument_parser.h"
+
 #include "planning/common/logging.h"
 
 namespace planning
@@ -31,7 +32,10 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
 
 ArgumentParser::~ArgumentParser() {}
 
-CLIOptions ArgumentParser::GetParsedArgs() const { return cli_options_; }
+CLIOptions ArgumentParser::GetParsedArgs() const
+{
+    return cli_options_;
+}
 
 CLIOptions ArgumentParser::ParseArgs(int argc, char* argv[])
 {

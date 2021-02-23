@@ -1,9 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_MANEUVER_H_
-#define PLANNING_MOTION_PLANNING_MANEUVER_H_
+#ifndef PLANNING_MOTION_PLANNING_MANEUVER_H
+#define PLANNING_MOTION_PLANNING_MANEUVER_H
 
 #include "planning/motion_planning/i_maneuver.h"
 
@@ -45,4 +45,4 @@ inline std::ostream& operator<<(std::ostream& out, const Maneuver& maneuver)
     return out << "Maneuver{lane: " << maneuver.GetLaneId() << ", velocity: " << maneuver.GetVelocity() << "}";
 }
 }  // namespace planning
-#endif  /// PLANNING_MOTION_PLANNING_MANEUVER_H_
+#endif  /// PLANNING_MOTION_PLANNING_MANEUVER_H

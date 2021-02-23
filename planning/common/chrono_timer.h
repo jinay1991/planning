@@ -1,9 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_COMMON_TIMER_CHRONO_TIMER_H_
-#define PLANNING_COMMON_TIMER_CHRONO_TIMER_H_
+#ifndef PLANNING_COMMON_TIMER_CHRONO_TIMER_H
+#define PLANNING_COMMON_TIMER_CHRONO_TIMER_H
 
 #include "planning/common/i_timer.h"
 
@@ -43,4 +43,4 @@ class ChronoTimer : public ITimer
 };
 }  // namespace timer
 
-#endif  // PLANNING_COMMON_TIMER_CHRONO_TIMER_H_
+#endif  // PLANNING_COMMON_TIMER_CHRONO_TIMER_H

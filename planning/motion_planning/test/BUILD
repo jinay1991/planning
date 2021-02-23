@@ -3,16 +3,16 @@ load("@rules_cc//cc:defs.bzl", "cc_test")
 cc_test(
     name = "unit_tests",
     srcs = [
-        "lane_evaluator_tests.cpp",
+        # "lane_evaluator_tests.cpp",
         "maneuver_generator_tests.cpp",
         "maneuver_tests.cpp",
         "roadmodel_data_source_tests.cpp",
-        "trajectory_evaluator_tests.cpp",
-        "trajectory_optimizer_tests.cpp",
-        "trajectory_planner_tests.cpp",
+        # "trajectory_evaluator_tests.cpp",
+        # "trajectory_optimizer_tests.cpp",
+        # "trajectory_planner_tests.cpp",
         "trajectory_prioritizer_tests.cpp",
         "trajectory_selector_tests.cpp",
-        "velocity_planner_tests.cpp",
+        # "velocity_planner_tests.cpp",
     ],
     tags = ["unit"],
     deps = [

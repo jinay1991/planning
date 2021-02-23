@@ -1,9 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_TRAJECTORY_EVALUATOR_H_
-#define PLANNING_MOTION_PLANNING_TRAJECTORY_EVALUATOR_H_
+#ifndef PLANNING_MOTION_PLANNING_TRAJECTORY_EVALUATOR_H
+#define PLANNING_MOTION_PLANNING_TRAJECTORY_EVALUATOR_H
 
 #include "planning/datatypes/sensor_fusion.h"
 #include "planning/motion_planning/i_data_source.h"
@@ -30,4 +30,4 @@ class TrajectoryEvaluator : public ITrajectoryEvaluator
 };
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_TRAJECTORY_EVALUATOR_H_
+#endif  /// PLANNING_MOTION_PLANNING_TRAJECTORY_EVALUATOR_H

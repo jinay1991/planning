@@ -1,10 +1,10 @@
 ///
 /// @file
 /// @brief Contains builder utility for Trajectory Object built-up.
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_TEST_TRAJECTORY_BUILDER_H_
-#define PLANNING_MOTION_PLANNING_TEST_TRAJECTORY_BUILDER_H_
+#ifndef PLANNING_MOTION_PLANNING_TEST_TRAJECTORY_BUILDER_H
+#define PLANNING_MOTION_PLANNING_TEST_TRAJECTORY_BUILDER_H
 
 #include "planning/datatypes/trajectory.h"
 
@@ -76,8 +76,10 @@ class TrajectoryBuilder
     }
 
     /// @brief Build Trajectory with Trajectory Waypoints (Global Coordinates)
-    TrajectoryBuilder& WithWaypoints(const GlobalCoordinates& start_position, const units::angle::radian_t start_yaw,
-                                     const std::size_t count, const units::length::meter_t displacement)
+    TrajectoryBuilder& WithWaypoints(const GlobalCoordinates& start_position,
+                                     const units::angle::radian_t start_yaw,
+                                     const std::size_t count,
+                                     const units::length::meter_t displacement)
     {
         trajectory_.waypoints.clear();
         for (auto idx = 0U; idx < count; ++idx)
@@ -102,4 +104,4 @@ class TrajectoryBuilder
 }  // namespace
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_TEST_TRAJECTORY_BUILDER_H_
+#endif  /// PLANNING_MOTION_PLANNING_TEST_TRAJECTORY_BUILDER_H

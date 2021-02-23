@@ -1,8 +1,9 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/trajectory_planner.h"
+
 #include "planning/common/logging.h"
 
 namespace planning
@@ -74,8 +75,8 @@ Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) con
                                  ((shift_position.x * sin(-yaw)) + (shift_position.y * cos(-yaw)))};
     };
 
-    std::transform(trajectory.waypoints.begin(), trajectory.waypoints.end(), trajectory.waypoints.begin(),
-                   shift_rotate_waypoints);
+    std::transform(
+        trajectory.waypoints.begin(), trajectory.waypoints.end(), trajectory.waypoints.begin(), shift_rotate_waypoints);
 
     return trajectory;
 }
@@ -109,8 +110,8 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
         const auto lane_id = maneuver.GetLaneId();
 
         /// update waypoints with old path inputs
-        trajectory.waypoints.insert(trajectory.waypoints.end(), previous_path_global.begin(),
-                                    previous_path_global.end());
+        trajectory.waypoints.insert(
+            trajectory.waypoints.end(), previous_path_global.begin(), previous_path_global.end());
         trajectory.position = vehicle_dynamics.global_coords;
         trajectory.yaw = vehicle_dynamics.yaw;
         trajectory.velocity = maneuver.GetVelocity();
@@ -122,8 +123,8 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
         const auto calculated_trajectory = GetCalculatedTrajectory(lane_id);
 
         /// update waypoints
-        trajectory.waypoints.insert(trajectory.waypoints.end(), calculated_trajectory.waypoints.begin(),
-                                    calculated_trajectory.waypoints.end());
+        trajectory.waypoints.insert(
+            trajectory.waypoints.end(), calculated_trajectory.waypoints.begin(), calculated_trajectory.waypoints.end());
 
         /// append to trajectories
         trajectories.push_back(trajectory);
@@ -135,7 +136,8 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
     {
         const auto n_samples =
             std::min(static_cast<std::size_t>(previous_path_global.size()), static_cast<std::size_t>(10));
-        std::for_each(previous_path_global.begin(), previous_path_global.begin() + n_samples,
+        std::for_each(previous_path_global.begin(),
+                      previous_path_global.begin() + n_samples,
                       [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
         log_stream << "     => ... (more " << previous_path_global.size() - n_samples << " waypoints)" << std::endl;
     }
@@ -146,7 +148,8 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
         log_stream << " (+) " << trajectory << std::endl;
         const auto n_samples =
             std::min(static_cast<std::size_t>(trajectory.waypoints.size()), static_cast<std::size_t>(10));
-        std::for_each(trajectory.waypoints.begin(), trajectory.waypoints.begin() + n_samples,
+        std::for_each(trajectory.waypoints.begin(),
+                      trajectory.waypoints.begin() + n_samples,
                       [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
         log_stream << "     => ... (more " << trajectory.waypoints.size() - n_samples << " waypoints)" << std::endl;
     });

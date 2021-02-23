@@ -1,7 +1,7 @@
 ///
 /// @file
 /// @brief Contains unit tests for Trajectory Planner.
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/test/support/data_source_builder.h"
 #include "planning/motion_planning/trajectory_planner.h"
@@ -49,8 +49,10 @@ TEST_P(TrajectoryPlannerSpec, GivenTypicalManeuvers_WhenEvaluated_ThenReturnPlan
     EXPECT_EQ(actual[0].global_lane_id, GlobalLaneId::kCenter);
 }
 INSTANTIATE_TEST_SUITE_P(
-    TrajectoryPlanner, TrajectoryPlannerSpec,
-    ::testing::Values(PreviousPathGlobal{}, PreviousPathGlobal{GlobalCoordinates{1, 2}, GlobalCoordinates{2, 2}},
+    TrajectoryPlanner,
+    TrajectoryPlannerSpec,
+    ::testing::Values(PreviousPathGlobal{},
+                      PreviousPathGlobal{GlobalCoordinates{1, 2}, GlobalCoordinates{2, 2}},
                       PreviousPathGlobal{GlobalCoordinates{1, 2}, GlobalCoordinates{2, 2}, GlobalCoordinates{3, 2}}));
 
 }  // namespace

@@ -1,10 +1,10 @@
 ///
 /// @file
 /// @brief Contains Simulation Client Interface for Udacity Simulator
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef SIMULATOR_UDACITY_SIMULATOR_H_
-#define SIMULATOR_UDACITY_SIMULATOR_H_
+#ifndef SIMULATOR_UDACITY_SIMULATOR_H
+#define SIMULATOR_UDACITY_SIMULATOR_H
 
 #include "application/simulator/i_simulator.h"
 #include "planning/common/argument_parser.h"
@@ -13,13 +13,14 @@
 
 #include <json.hpp>
 
-#include <math.h>
 #include <fstream>
 #include <iomanip>
 #include <memory>
 #include <sstream>
 #include <string>
 #include <vector>
+
+#include <math.h>
 
 namespace sim
 {
@@ -72,4 +73,4 @@ class UdacitySimulator : public ISimulator
 };
 }  // namespace sim
 
-#endif  /// SIMULATOR_UDACITY_SIMULATOR_H_
+#endif  /// SIMULATOR_UDACITY_SIMULATOR_H

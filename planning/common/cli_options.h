@@ -1,10 +1,10 @@
 ///
 /// @file
 /// @brief Contains command line interface options definitions
-/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_COMMON_ARGUMENT_PARSER_CLI_OPTIONS_H_
-#define PLANNING_COMMON_ARGUMENT_PARSER_CLI_OPTIONS_H_
+#ifndef PLANNING_COMMON_ARGUMENT_PARSER_CLI_OPTIONS_H
+#define PLANNING_COMMON_ARGUMENT_PARSER_CLI_OPTIONS_H
 
 #include <cstdint>
 #include <string>
@@ -22,4 +22,4 @@ struct CLIOptions
 };
 
 }  // namespace planning
-#endif  /// PLANNING_COMMON_ARGUMENT_PARSER_CLI_OPTIONS_H_
+#endif  /// PLANNING_COMMON_ARGUMENT_PARSER_CLI_OPTIONS_H
