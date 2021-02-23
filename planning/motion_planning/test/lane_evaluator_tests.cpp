@@ -23,7 +23,7 @@ using LaneId = LaneInformation::LaneId;
 class IsValidLaneIdSpec : public ::testing::TestWithParam<std::tuple<GlobalLaneId, LaneId, bool>>
 {
   protected:
-    virtual void SetUp() override
+    void SetUp() override
     {
         lane_evaluator_ =
             std::make_unique<LaneEvaluator>(DataSourceBuilder().WithGlobalLaneId(std::get<0>(GetParam())).Build());
@@ -51,7 +51,7 @@ INSTANTIATE_TEST_SUITE_P(LaneEvaluator, IsValidLaneIdSpec,
 class GetLocalLaneSpec : public ::testing::TestWithParam<std::tuple<GlobalLaneId, GlobalLaneId, LaneId>>
 {
   protected:
-    virtual void SetUp() override
+    void SetUp() override
     {
         lane_evaluator_ = std::make_unique<LaneEvaluator>(
             DataSourceBuilder()
@@ -83,7 +83,7 @@ INSTANTIATE_TEST_SUITE_P(LaneEvaluator, GetLocalLaneSpec,
 class IsObjectNearSpec : public ::testing::TestWithParam<std::tuple<FrenetCoordinates, FrenetCoordinates, bool>>
 {
   protected:
-    virtual void SetUp() override { lane_evaluator_ = std::make_unique<LaneEvaluator>(DataSourceBuilder().Build()); }
+    void SetUp() override { lane_evaluator_ = std::make_unique<LaneEvaluator>(DataSourceBuilder().Build()); }
 
     std::unique_ptr<LaneEvaluator> lane_evaluator_;
 };
@@ -108,7 +108,7 @@ INSTANTIATE_TEST_SUITE_P(
 class IsDrivableSpec : public ::testing::TestWithParam<std::tuple<GlobalLaneId, GlobalLaneId, LaneId, bool>>
 {
   protected:
-    virtual void SetUp() override
+    void SetUp() override
     {
         lane_evaluator_ = std::make_unique<LaneEvaluator>(
             DataSourceBuilder()

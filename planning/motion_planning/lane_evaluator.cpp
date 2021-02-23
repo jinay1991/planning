@@ -7,7 +7,7 @@
 
 namespace planning
 {
-LaneEvaluator::LaneEvaluator(std::shared_ptr<IDataSource>& data_source) : data_source_(data_source) {}
+LaneEvaluator::LaneEvaluator(const IDataSource& data_source) : data_source_{data_source} {}
 
 bool LaneEvaluator::IsObjectNear(const FrenetCoordinates& ego_position, const FrenetCoordinates& obj_position) const
 {
@@ -17,21 +17,22 @@ bool LaneEvaluator::IsObjectNear(const FrenetCoordinates& ego_position, const Fr
 
 LaneId LaneEvaluator::GetLocalLaneId(const GlobalLaneId& global_lane_id) const
 {
-    const auto ego_global_lane_id = data_source_->GetGlobalLaneId();
+    const auto ego_global_lane_id = data_source_.GetGlobalLaneId();
+    LaneId lane_id{LaneId::kInvalid};
 
     if (ego_global_lane_id == global_lane_id)
     {
-        return LaneId::kEgo;
+        lane_id = LaneId::kEgo;
     }
     else if (ego_global_lane_id - 1 == global_lane_id)
     {
-        return LaneId::kLeft;
+        lane_id = LaneId::kLeft;
     }
     else if (ego_global_lane_id + 1 == global_lane_id)
     {
-        return LaneId::kRight;
+        lane_id = LaneId::kRight;
     }
-    return LaneId::kInvalid;
+    return lane_id;
 }
 
 bool LaneEvaluator::IsDrivableLane(const LaneId& lane_id) const
@@ -39,13 +40,13 @@ bool LaneEvaluator::IsDrivableLane(const LaneId& lane_id) const
     bool car_in_front = false;
     bool car_to_left = false;
     bool car_to_right = false;
-    const auto sensor_fusion = data_source_->GetSensorFusion();
-    const auto previous_path_size = data_source_->GetPreviousPathInGlobalCoords().size();
+    const auto sensor_fusion = data_source_.GetSensorFusion();
+    const auto previous_path_size = data_source_.GetPreviousPathInGlobalCoords().size();
 
     // Ego Properties
-    const auto ego_velocity = data_source_->GetVehicleDynamics().velocity;
-    const auto ego_position = data_source_->GetPreviousPathEnd();
-    const auto ego_global_lane_id = data_source_->GetGlobalLaneId();
+    const auto ego_velocity = data_source_.GetVehicleDynamics().velocity;
+    const auto ego_position = data_source_.GetPreviousPathEnd();
+    const auto ego_global_lane_id = data_source_.GetGlobalLaneId();
     const auto ego_position_predicted =
         FrenetCoordinates{ego_position.s + (previous_path_size * 0.02 * ego_velocity.value()), ego_position.d};
 
@@ -54,7 +55,7 @@ bool LaneEvaluator::IsDrivableLane(const LaneId& lane_id) const
         // Object Properties
         const auto obj_velocity = obj.velocity;
         const auto obj_position = obj.frenet_coords;
-        const auto obj_global_lane_id = data_source_->GetGlobalLaneId(obj_position);
+        const auto obj_global_lane_id = data_source_.GetGlobalLaneId(obj_position);
         const auto obj_lane_id = GetLocalLaneId(obj_global_lane_id);
         const auto obj_position_predicted =
             FrenetCoordinates{obj_position.s + (previous_path_size * 0.02 * obj_velocity.value()), obj_position.d};
@@ -105,20 +106,33 @@ bool LaneEvaluator::IsDrivableLane(const LaneId& lane_id) const
 
 bool LaneEvaluator::IsValidLane(const LaneId& lane_id) const
 {
-    const auto ego_global_lane_id = data_source_->GetGlobalLaneId();
-
+    const auto ego_global_lane_id = data_source_.GetGlobalLaneId();
+    bool result{false};
     switch (lane_id)
     {
         case LaneId::kEgo:
-            return true;
+        {
+            result = true;
+            break;
+        }
         case LaneId::kLeft:
-            return (ego_global_lane_id - 1) != GlobalLaneId::kInvalid;
+        {
+            result = (ego_global_lane_id - 1) != GlobalLaneId::kInvalid;
+            break;
+        }
         case LaneId::kRight:
-            return (ego_global_lane_id + 1) != GlobalLaneId::kInvalid;
+        {
+            result = (ego_global_lane_id + 1) != GlobalLaneId::kInvalid;
+            break;
+        }
         case LaneId::kInvalid:
         default:
-            return false;
+        {
+            result = false;
+            break;
+        }
     }
+    return result;
 }
 
 }  // namespace planning

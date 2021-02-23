@@ -13,11 +13,8 @@ namespace planning
 class TrajectorySelector : public ITrajectorySelector
 {
   public:
-    /// @brief Destructor.
-    ~TrajectorySelector() override;
-
     /// @brief Get Selected Trajectory from provided prioritized trajectories. (Selects top prioritized trajectory)
-    virtual Trajectory GetSelectedTrajectory(const PrioritizedTrajectories& prioritized_trajectories) const override;
+    Trajectory GetSelectedTrajectory(const PrioritizedTrajectories& prioritized_trajectories) const override;
 };
 }  // namespace planning
 

@@ -20,22 +20,23 @@ using GlobalLaneId = LaneInformation::GlobalLaneId;
 class VelocityPlannerSpec
 {
   public:
-    virtual void Init(const units::velocity::meters_per_second_t& obj_velocity, const GlobalLaneId& obj_lane_id)
-    {
-        data_source_ = DataSourceBuilder()
+    explicit VelocityPlannerSpec(const units::velocity::meters_per_second_t& obj_velocity,
+                                 const GlobalLaneId& obj_lane_id)
+        : velocity_{17.0},
+          data_source_{DataSourceBuilder()
                            .WithVelocity(velocity_)
                            .WithGlobalLaneId(GlobalLaneId::kCenter)
                            .WithDistance(units::length::meter_t{0.0})
                            .WithObjectInLane(obj_lane_id, obj_velocity)
-                           .Build();
-        unit_ = std::make_unique<VelocityPlanner>(data_source_, velocity_);
-
+                           .Build()},
+          unit_{std::make_unique<VelocityPlanner>(data_source_, velocity_)}
+    {
         unit_->CalculateTargetVelocity();
     }
 
   protected:
-    const units::velocity::meters_per_second_t velocity_{17.0};
-    std::shared_ptr<IDataSource> data_source_;
+    const units::velocity::meters_per_second_t velocity_;
+    const IDataSource& data_source_;
     std::unique_ptr<VelocityPlanner> unit_;
 };
 
@@ -43,8 +44,8 @@ class AccelerationSpecFixture
     : public VelocityPlannerSpec,
       public ::testing::TestWithParam<std::tuple<units::velocity::meters_per_second_t, GlobalLaneId>>
 {
-  protected:
-    virtual void SetUp() override { VelocityPlannerSpec::Init(std::get<0>(GetParam()), std::get<1>(GetParam())); }
+  public:
+    AccelerationSpecFixture() : VelocityPlannerSpec(std::get<0>(GetParam()), std::get<1>(GetParam())) {}
 };
 
 TEST_P(AccelerationSpecFixture, GivenNoClosestInPathVehicle_WhenCalculateTargetVelocity_ThenAcceleratedTargetVelocity)
@@ -52,7 +53,7 @@ TEST_P(AccelerationSpecFixture, GivenNoClosestInPathVehicle_WhenCalculateTargetV
     const auto actual = unit_->GetTargetVelocity();
 
     EXPECT_GT(actual, velocity_);
-    EXPECT_LT(actual, data_source_->GetSpeedLimit());
+    EXPECT_LT(actual, data_source_.GetSpeedLimit());
 }
 
 INSTANTIATE_TEST_SUITE_P(VelocityPlanner, AccelerationSpecFixture,
@@ -66,8 +67,8 @@ class DecelerationSpecFixture
     : public VelocityPlannerSpec,
       public ::testing::TestWithParam<std::tuple<units::velocity::meters_per_second_t, GlobalLaneId>>
 {
-  protected:
-    virtual void SetUp() override { VelocityPlannerSpec::Init(std::get<0>(GetParam()), std::get<1>(GetParam())); }
+  public:
+    DecelerationSpecFixture() : VelocityPlannerSpec(std::get<0>(GetParam()), std::get<1>(GetParam())) {}
 };
 
 TEST_P(DecelerationSpecFixture, GivenClosestInPathVehicle_WhenCalculateTargetVelocity_ThenDeceleratedTargetVelocity)
@@ -75,7 +76,7 @@ TEST_P(DecelerationSpecFixture, GivenClosestInPathVehicle_WhenCalculateTargetVel
     const auto actual = unit_->GetTargetVelocity();
 
     EXPECT_LT(actual, velocity_);
-    EXPECT_LT(actual, data_source_->GetSpeedLimit());
+    EXPECT_LT(actual, data_source_.GetSpeedLimit());
 }
 
 INSTANTIATE_TEST_SUITE_P(VelocityPlanner, DecelerationSpecFixture,

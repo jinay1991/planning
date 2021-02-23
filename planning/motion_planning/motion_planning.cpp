@@ -15,7 +15,7 @@
 
 namespace planning
 {
-MotionPlanning::MotionPlanning(std::shared_ptr<IDataSource>& data_source)
+MotionPlanning::MotionPlanning(const IDataSource& data_source)
     : velocity_planner_{std::make_unique<VelocityPlanner>(data_source)},
       maneuver_generator_{std::make_unique<ManeuverGenerator>()},
       trajectory_planner_{std::make_unique<TrajectoryPlanner>(data_source)},

@@ -33,7 +33,7 @@ TEST_F(TrajectoryOptimizerSpec, GivenPlannedTrajectories_WhenEvaluated_ThenRetur
     const std::int32_t count = 30;
     const auto trajectories =
         Trajectories{TrajectoryBuilder().WithWaypoints(start_position, start_yaw, count, displacement).Build()};
-    auto data_source =
+    const auto& data_source =
         DataSourceBuilder().WithPreviousPath(PreviousPathGlobal{}).WithMapCoordinates(map_waypoints_).Build();
 
     const auto actual = TrajectoryOptimizer(data_source).GetOptimizedTrajectories(trajectories);

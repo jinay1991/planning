@@ -7,9 +7,7 @@
 
 namespace planning
 {
-TrajectoryPlanner::TrajectoryPlanner(std::shared_ptr<IDataSource>& data_source) : data_source_{data_source} {}
-
-TrajectoryPlanner::~TrajectoryPlanner() {}
+TrajectoryPlanner::TrajectoryPlanner(const IDataSource& data_source) : data_source_{data_source} {}
 
 Trajectories TrajectoryPlanner::GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const
 {
@@ -21,9 +19,9 @@ Trajectory TrajectoryPlanner::GetInitialTrajectory() const
 {
     Trajectory trajectory{};
 
-    const auto vehicle_dynamics = data_source_->GetVehicleDynamics();
-    const auto previous_path_global = data_source_->GetPreviousPathInGlobalCoords();
-    const auto previous_path_size = data_source_->GetPreviousPathInGlobalCoords().size();
+    const auto vehicle_dynamics = data_source_.GetVehicleDynamics();
+    const auto previous_path_global = data_source_.GetPreviousPathInGlobalCoords();
+    const auto previous_path_size = data_source_.GetPreviousPathInGlobalCoords().size();
     // no previous waypoints, initialize current waypoints
     if (previous_path_size < 2)
     {
@@ -56,7 +54,7 @@ Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) con
 {
     // Waypoints based on previous path
     auto trajectory = GetInitialTrajectory();
-    const auto vehicle_dynamics = data_source_->GetVehicleDynamics();
+    const auto vehicle_dynamics = data_source_.GetVehicleDynamics();
 
     // Set further waypoints based on going further along highway in desired lane
     const auto lane = static_cast<std::int32_t>(lane_id);
@@ -84,7 +82,7 @@ Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) con
 
 GlobalLaneId TrajectoryPlanner::GetGlobalLaneId(const LaneId& lane_id) const
 {
-    const auto ego_global_lane_id = data_source_->GetGlobalLaneId();
+    const auto ego_global_lane_id = data_source_.GetGlobalLaneId();
     switch (lane_id)
     {
         case LaneId::kEgo:
@@ -102,8 +100,8 @@ GlobalLaneId TrajectoryPlanner::GetGlobalLaneId(const LaneId& lane_id) const
 Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& maneuvers) const
 {
     Trajectories trajectories{};
-    const auto previous_path_global = data_source_->GetPreviousPathInGlobalCoords();
-    const auto vehicle_dynamics = data_source_->GetVehicleDynamics();
+    const auto previous_path_global = data_source_.GetPreviousPathInGlobalCoords();
+    const auto vehicle_dynamics = data_source_.GetVehicleDynamics();
     std::int32_t unique_id = 0;
     for (const auto& maneuver : maneuvers)
     {
@@ -160,7 +158,7 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
 GlobalCoordinates TrajectoryPlanner::GetGlobalCoordinates(const FrenetCoordinates& frenet_coords) const
 {
     std::int32_t prev_wp = -1;
-    const auto map_coordinates = data_source_->GetMapCoordinates();
+    const auto map_coordinates = data_source_.GetMapCoordinates();
     while (frenet_coords.s > map_coordinates[prev_wp + 1].frenet_coords.s &&
            (prev_wp < static_cast<std::int32_t>(map_coordinates.size() - 1)))
     {

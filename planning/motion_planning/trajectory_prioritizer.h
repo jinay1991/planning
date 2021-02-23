@@ -13,11 +13,8 @@ namespace planning
 class TrajectoryPrioritizer : public ITrajectoryPrioritizer
 {
   public:
-    /// @brief Destructor.
-    ~TrajectoryPrioritizer() override;
-
     /// @brief Get Prioritized Trajectories for provided trajectories.
-    virtual PrioritizedTrajectories GetPrioritizedTrajectories(const Trajectories& trajectories) const override;
+    PrioritizedTrajectories GetPrioritizedTrajectories(const Trajectories& trajectories) const override;
 };
 }  // namespace planning
 

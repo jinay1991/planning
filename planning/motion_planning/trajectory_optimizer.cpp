@@ -10,9 +10,7 @@
 
 namespace planning
 {
-TrajectoryOptimizer::TrajectoryOptimizer(std::shared_ptr<IDataSource>& data_source) : data_source_{data_source} {}
-
-TrajectoryOptimizer::~TrajectoryOptimizer() {}
+TrajectoryOptimizer::TrajectoryOptimizer(const IDataSource& data_source) : data_source_{data_source} {}
 
 Trajectories TrajectoryOptimizer::GetOptimizedTrajectories(const Trajectories& planned_trajectories) const
 {
@@ -38,7 +36,7 @@ Trajectories TrajectoryOptimizer::GetOptimizedTrajectories(const Trajectories& p
 Trajectory TrajectoryOptimizer::GetOptimizedTrajectory(const Trajectory& planned_trajectory) const
 {
     auto optimized_trajectory = planned_trajectory;
-    const auto previous_path_global = data_source_->GetPreviousPathInGlobalCoords();
+    const auto previous_path_global = data_source_.GetPreviousPathInGlobalCoords();
 
     // keep only calculated waypoints from copied version of planned trajectory
     // erase preserve previous path waypoints

@@ -92,9 +92,7 @@ const planning::SensorFusion DecodeSensorFusion(const json& msg)
 }  // namespace internal
 
 UdacitySimulator::UdacitySimulator(const std::string& map_file)
-    : map_file_{map_file},
-      data_source_{std::make_shared<planning::RoadModelDataSource>()},
-      motion_planning_{std::make_unique<planning::MotionPlanning>(data_source_)}
+    : map_file_{map_file}, data_source_{}, motion_planning_{std::make_unique<planning::MotionPlanning>(data_source_)}
 {
 }
 
@@ -220,18 +218,18 @@ void UdacitySimulator::DisconnectCallback(uWS::WebSocket<uWS::SERVER> ws, std::i
 
 void UdacitySimulator::UpdateDataSource(const json& msg)
 {
-    data_source_->SetMapCoordinates(map_waypoints_);
-    data_source_->SetSensorFusion(internal::DecodeSensorFusion(msg));
-    data_source_->SetPreviousPath(internal::DecodePreviousPathGlobal(msg));
-    data_source_->SetPreviousPathEnd(internal::DecodePreviousPathEnd(msg));
+    data_source_.SetMapCoordinates(map_waypoints_);
+    data_source_.SetSensorFusion(internal::DecodeSensorFusion(msg));
+    data_source_.SetPreviousPath(internal::DecodePreviousPathGlobal(msg));
+    data_source_.SetPreviousPathEnd(internal::DecodePreviousPathEnd(msg));
     auto vehicle_dynamics = internal::DecodeVehicleDynamics(msg);
-    const auto previous_path_global = data_source_->GetPreviousPathInGlobalCoords();
+    const auto previous_path_global = data_source_.GetPreviousPathInGlobalCoords();
     if (!previous_path_global.empty())
     {
-        vehicle_dynamics.frenet_coords.s = data_source_->GetPreviousPathEnd().s;
+        vehicle_dynamics.frenet_coords.s = data_source_.GetPreviousPathEnd().s;
     }
-    data_source_->SetVehicleDynamics(vehicle_dynamics);
-    data_source_->SetSpeedLimit(units::velocity::miles_per_hour_t{49.5});
+    data_source_.SetVehicleDynamics(vehicle_dynamics);
+    data_source_.SetSpeedLimit(units::velocity::miles_per_hour_t{49.5});
 }
 
 }  // namespace sim

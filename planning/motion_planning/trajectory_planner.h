@@ -22,32 +22,29 @@ class TrajectoryPlanner : public ITrajectoryPlanner
 {
   public:
     /// @brief Constructor. Initializes with provided DataSource
-    explicit TrajectoryPlanner(std::shared_ptr<IDataSource>& data_source);
-
-    /// @brief Destructor.
-    ~TrajectoryPlanner() override;
+    explicit TrajectoryPlanner(const IDataSource& data_source);
 
     /// @brief Get Planned Trajectories for each maneuvers provided.
-    virtual Trajectories GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const override;
+    Trajectories GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const override;
 
   private:
     /// @brief Calculates initial waypoints for trajectory based on previous path/waypoints
-    virtual Trajectory GetInitialTrajectory() const;
+    Trajectory GetInitialTrajectory() const;
 
     /// @brief Calculate Trajectory for given lane_id, target velocity
-    virtual Trajectory GetCalculatedTrajectory(const LaneId& lane_id) const;
+    Trajectory GetCalculatedTrajectory(const LaneId& lane_id) const;
 
     /// @brief Produces trajectories and optimizes for each maneuver
-    virtual Trajectories GetTrajectories(const std::vector<Maneuver>& maneuvers) const;
+    Trajectories GetTrajectories(const std::vector<Maneuver>& maneuvers) const;
 
     /// @brief Converts Frenet Coordinates to Global Coordinates (using map)
-    virtual GlobalCoordinates GetGlobalCoordinates(const FrenetCoordinates& frenet_coords) const;
+    GlobalCoordinates GetGlobalCoordinates(const FrenetCoordinates& frenet_coords) const;
 
     /// @brief Converts Local Lane Id to Global Lane Id (using ego's global lane)
-    virtual GlobalLaneId GetGlobalLaneId(const LaneId& lane_id) const;
+    GlobalLaneId GetGlobalLaneId(const LaneId& lane_id) const;
 
     /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, etc.)
-    std::shared_ptr<IDataSource> data_source_;
+    const IDataSource& data_source_;
 };
 }  // namespace planning
 

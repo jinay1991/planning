@@ -19,20 +19,17 @@ class TrajectoryOptimizer : public ITrajectoryOptimizer
 {
   public:
     /// @brief Constructor. Initializes with provided DataSource
-    explicit TrajectoryOptimizer(std::shared_ptr<IDataSource>& data_source);
-
-    /// @brief Destructor.
-    ~TrajectoryOptimizer() override;
+    explicit TrajectoryOptimizer(const IDataSource& data_source);
 
     /// @brief Provide Optimized Trajectories set using Spline Equations
-    virtual Trajectories GetOptimizedTrajectories(const Trajectories& planned_trajectories) const override;
+    Trajectories GetOptimizedTrajectories(const Trajectories& planned_trajectories) const override;
 
   private:
     /// @brief Smoothen/Optimize Trajectory with Spline for target_velocity
-    virtual Trajectory GetOptimizedTrajectory(const Trajectory& planned_trajectory) const;
+    Trajectory GetOptimizedTrajectory(const Trajectory& planned_trajectory) const;
 
     /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, Map Points etc.)
-    std::shared_ptr<IDataSource> data_source_;
+    const IDataSource& data_source_;
 };
 
 }  // namespace planning

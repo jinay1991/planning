@@ -14,7 +14,7 @@ class ITimer
 {
   public:
     /// @brief Destructor.
-    virtual ~ITimer() = default;
+    ~ITimer() = default;
 
     /// @brief Start of the Timer
     virtual void Start() = 0;

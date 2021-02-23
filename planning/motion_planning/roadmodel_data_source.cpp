@@ -17,8 +17,6 @@ RoadModelDataSource::RoadModelDataSource()
 {
 }
 
-RoadModelDataSource::~RoadModelDataSource() {}
-
 void RoadModelDataSource::SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics)
 {
     vehicle_dynamics_ = vehicle_dynamics;

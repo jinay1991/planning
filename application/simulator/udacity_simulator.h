@@ -33,22 +33,20 @@ class UdacitySimulator : public ISimulator
     explicit UdacitySimulator(const std::string& map_file);
 
     /// @brief Initialize and Register Callbacks for Connect, Receive and Disconnect
-    virtual void Init() override;
+    void Init() override;
 
     /// @brief Listen to WebSocket Port
-    virtual void Listen() override;
+    void Listen() override;
 
   protected:
     /// @brief Connect callback for WebSocket
-    virtual void ConnectCallback(uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) override;
+    void ConnectCallback(uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) override;
 
     /// @brief Disconnect callback for WebSocket
-    virtual void DisconnectCallback(uWS::WebSocket<uWS::SERVER> ws, std::int32_t code, char* message,
-                                    size_t length) override;
+    void DisconnectCallback(uWS::WebSocket<uWS::SERVER> ws, std::int32_t code, char* message, size_t length) override;
 
     /// @brief Receive callback for WebSocket
-    virtual void ReceiveCallback(uWS::WebSocket<uWS::SERVER> ws, char* data, size_t length,
-                                 uWS::OpCode op_code) override;
+    void ReceiveCallback(uWS::WebSocket<uWS::SERVER> ws, char* data, size_t length, uWS::OpCode op_code) override;
 
   private:
     /// @brief Extract Map Points from provided Map file
@@ -67,7 +65,7 @@ class UdacitySimulator : public ISimulator
     std::string map_file_;
 
     /// @brief DataSource (contains information on Vehicle Dynamics, SensorFusion, etc.)
-    std::shared_ptr<planning::IDataSource> data_source_;
+    planning::RoadModelDataSource data_source_;
 
     /// @brief Motion Planning Instance to be used to generate Trajectory and Select optimal trajectory for ego motion
     std::unique_ptr<planning::MotionPlanning> motion_planning_;

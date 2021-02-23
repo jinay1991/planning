@@ -14,7 +14,7 @@ namespace planning
 class GetGlobalLaneSpec : public ::testing::TestWithParam<std::tuple<FrenetCoordinates, GlobalLaneId>>
 {
   protected:
-    virtual void SetUp() override { data_source_ = std::make_unique<RoadModelDataSource>(); }
+    void SetUp() override { data_source_ = std::make_unique<RoadModelDataSource>(); }
 
     std::unique_ptr<IDataSource> data_source_;
 };

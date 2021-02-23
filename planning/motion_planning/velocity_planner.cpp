@@ -7,12 +7,12 @@
 
 namespace planning
 {
-VelocityPlanner::VelocityPlanner(std::shared_ptr<IDataSource> data_source)
+VelocityPlanner::VelocityPlanner(const IDataSource& data_source)
     : VelocityPlanner{data_source, units::velocity::meters_per_second_t{0.0}}
 {
 }
 
-VelocityPlanner::VelocityPlanner(std::shared_ptr<IDataSource> data_source,
+VelocityPlanner::VelocityPlanner(const IDataSource& data_source,
                                  const units::velocity::meters_per_second_t& target_velocity)
     : frequency_{25.0},
       deceleration_{-5.0},
@@ -22,16 +22,14 @@ VelocityPlanner::VelocityPlanner(std::shared_ptr<IDataSource> data_source,
 {
 }
 
-VelocityPlanner::~VelocityPlanner() {}
-
 bool VelocityPlanner::IsClosestInPathVehicleInFront(const ObjectFusion& object_fusion) const
 {
-    const auto ego_lane_id = data_source_->GetGlobalLaneId();
-    const auto ego_position = data_source_->GetPreviousPathEnd();
-    const auto ego_velocity = data_source_->GetVehicleDynamics().velocity;
+    const auto ego_lane_id = data_source_.GetGlobalLaneId();
+    const auto ego_position = data_source_.GetPreviousPathEnd();
+    const auto ego_velocity = data_source_.GetVehicleDynamics().velocity;
 
     const auto obj_position = object_fusion.frenet_coords;
-    const auto obj_lane_id = data_source_->GetGlobalLaneId(object_fusion.frenet_coords);
+    const auto obj_lane_id = data_source_.GetGlobalLaneId(object_fusion.frenet_coords);
     const auto obj_velocity = object_fusion.velocity;
 
     const auto distance = units::length::meter_t{obj_position.s - ego_position.s};
@@ -45,7 +43,7 @@ bool VelocityPlanner::IsClosestInPathVehicleInFront(const ObjectFusion& object_f
 units::velocity::meters_per_second_t VelocityPlanner::GetDeltaVelocity() const
 {
     auto delta_velocity = units::velocity::meters_per_second_t{0.0};
-    const auto sensor_fusion = data_source_->GetSensorFusion();
+    const auto sensor_fusion = data_source_.GetSensorFusion();
 
     const auto is_cipv_in_front = std::any_of(sensor_fusion.objs.begin(), sensor_fusion.objs.end(),
                                               [&](const auto& obj) { return IsClosestInPathVehicleInFront(obj); });
@@ -62,8 +60,8 @@ units::velocity::meters_per_second_t VelocityPlanner::GetDeltaVelocity() const
 
 void VelocityPlanner::CalculateTargetVelocity()
 {
-    const auto sensor_fusion = data_source_->GetSensorFusion();
-    const auto speed_limit = data_source_->GetSpeedLimit();
+    const auto sensor_fusion = data_source_.GetSensorFusion();
+    const auto speed_limit = data_source_.GetSpeedLimit();
 
     const auto delta_velocity = GetDeltaVelocity();
     target_velocity_ += delta_velocity;
@@ -80,7 +78,7 @@ void VelocityPlanner::CalculateTargetVelocity()
     log_stream << "Calculated target velocity: " << target_velocity_ << std::endl;
     log_stream << " (+) delta_velocity: " << delta_velocity << std::endl;
     log_stream << " (+) speed_limit: " << speed_limit << std::endl;
-    log_stream << " (+) " << data_source_->GetVehicleDynamics() << std::endl;
+    log_stream << " (+) " << data_source_.GetVehicleDynamics() << std::endl;
     LOG(INFO) << log_stream.str();
 }
 

@@ -28,20 +28,15 @@ class MotionPlanning
 {
   public:
     /// @brief Constructor. Initialize Motion Planner with DataSource instance
-    explicit MotionPlanning(std::shared_ptr<IDataSource>& data_source);
-
-    virtual ~MotionPlanning() = default;
+    explicit MotionPlanning(const IDataSource& data_source);
 
     /// @brief Generate Trajectories based on the provided DataSource (i.e. Environment)
-    virtual void GenerateTrajectories();
+    void GenerateTrajectories();
 
     /// @brief Get Selected Trajectory from Trajectory Selector
-    virtual Trajectory GetSelectedTrajectory() const;
+    Trajectory GetSelectedTrajectory() const;
 
   private:
-    /// @brief DataSource (contains information on Environment, VehicleDynamics, Map Points, SensorFusion etc.)
-    std::shared_ptr<IDataSource> data_source_;
-
     /// @brief Velocity Planner
     std::unique_ptr<IVelocityPlanner> velocity_planner_;
 

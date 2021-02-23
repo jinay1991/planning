@@ -28,7 +28,7 @@ class TrajectoryPlannerSpec : public ::testing::TestWithParam<PreviousPathGlobal
 TEST_F(TrajectoryPlannerSpec, GivenInvalidManeuver_WhenEvaluated_ThenReturnInvalidPlannedTrajectory)
 {
     const auto maneuvers = std::vector<Maneuver>{Maneuver{LaneId::kInvalid, target_velocity_}};
-    auto data_source =
+    const auto& data_source =
         DataSourceBuilder().WithPreviousPath(PreviousPathGlobal{}).WithMapCoordinates(map_waypoints_).Build();
 
     const auto actual = TrajectoryPlanner(data_source).GetPlannedTrajectories(maneuvers);
@@ -40,7 +40,8 @@ TEST_F(TrajectoryPlannerSpec, GivenInvalidManeuver_WhenEvaluated_ThenReturnInval
 TEST_P(TrajectoryPlannerSpec, GivenTypicalManeuvers_WhenEvaluated_ThenReturnPlannedTrajectories)
 {
     const auto maneuvers = std::vector<Maneuver>{Maneuver{LaneId::kEgo, target_velocity_}};
-    auto data_source = DataSourceBuilder().WithPreviousPath(GetParam()).WithMapCoordinates(map_waypoints_).Build();
+    const auto& data_source =
+        DataSourceBuilder().WithPreviousPath(GetParam()).WithMapCoordinates(map_waypoints_).Build();
 
     const auto actual = TrajectoryPlanner(data_source).GetPlannedTrajectories(maneuvers);
 

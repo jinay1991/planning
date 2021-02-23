@@ -21,27 +21,24 @@ class VelocityPlanner : public IVelocityPlanner
 {
   public:
     /// @brief Constructor. Initialize with DataSource.
-    explicit VelocityPlanner(std::shared_ptr<IDataSource> data_source);
+    explicit VelocityPlanner(const IDataSource& data_source);
 
     /// @brief Constructor. Initialize with DataSource for given target velocity.
-    explicit VelocityPlanner(std::shared_ptr<IDataSource> data_source,
+    explicit VelocityPlanner(const IDataSource& data_source,
                              const units::velocity::meters_per_second_t& target_velocity);
 
-    /// @brief Destructor.
-    ~VelocityPlanner() override;
-
     /// @brief Calculate Target Velocity based on DataSource.
-    virtual void CalculateTargetVelocity() override;
+    void CalculateTargetVelocity() override;
 
     /// @brief Get calculated target velocity.
-    virtual units::velocity::meters_per_second_t GetTargetVelocity() const override;
+    units::velocity::meters_per_second_t GetTargetVelocity() const override;
 
   private:
     /// @brief Validate if vehicle/object in front (in same lane) within safe distance?
-    virtual bool IsClosestInPathVehicleInFront(const ObjectFusion& object_fusion) const;
+    bool IsClosestInPathVehicleInFront(const ObjectFusion& object_fusion) const;
 
     /// @brief Get Delta Velocity between Ego and Object Velocity.
-    virtual units::velocity::meters_per_second_t GetDeltaVelocity() const;
+    units::velocity::meters_per_second_t GetDeltaVelocity() const;
 
     /// @brief Vehicle Dynamics Refresh rate
     const units::frequency::hertz_t frequency_;
@@ -56,7 +53,7 @@ class VelocityPlanner : public IVelocityPlanner
     units::velocity::meters_per_second_t target_velocity_;
 
     /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, Map Points etc.)
-    std::shared_ptr<IDataSource> data_source_;
+    const IDataSource& data_source_;
 };
 }  // namespace planning
 

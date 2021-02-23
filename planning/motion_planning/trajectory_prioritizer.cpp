@@ -24,8 +24,6 @@ void PrintQueue(T q)
 }
 }  // namespace internal
 
-TrajectoryPrioritizer::~TrajectoryPrioritizer() {}
-
 PrioritizedTrajectories TrajectoryPrioritizer::GetPrioritizedTrajectories(const Trajectories& trajectories) const
 {
     PrioritizedTrajectories prioritized_trajectories;

@@ -23,10 +23,10 @@ class Maneuver : public IManeuver
     ~Maneuver() override;
 
     /// @brief Get LaneId for Maneuver
-    virtual LaneId GetLaneId() const override;
+    LaneId GetLaneId() const override;
 
     /// @brief Get Target Velocity for Maneuver
-    virtual units::velocity::meters_per_second_t GetVelocity() const override;
+    units::velocity::meters_per_second_t GetVelocity() const override;
 
     /// @brief Comparator for Maneuvers
     inline bool operator==(const Maneuver& rhs) const { return lane_id_ == rhs.lane_id_ && velocity_ == rhs.velocity_; }

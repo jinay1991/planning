@@ -73,7 +73,7 @@ TEST_F(TrajectoryEvaluatorSpec, GivenTypicalPlannedTrajectories_WhenNoObject_The
 class TrajectoryEvaluatorSpecFixture : public ::testing::TestWithParam<std::tuple<GlobalLaneId, GlobalLaneId>>
 {
   protected:
-    virtual void SetUp() override
+    void SetUp() override
     {
         const auto ego_global_lane_id = std::get<0>(GetParam());
 

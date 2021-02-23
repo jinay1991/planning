@@ -9,12 +9,10 @@
 
 namespace planning
 {
-TrajectoryEvaluator::TrajectoryEvaluator(std::shared_ptr<IDataSource>& data_source)
+TrajectoryEvaluator::TrajectoryEvaluator(const IDataSource& data_source)
     : lane_evaluator_{std::make_unique<LaneEvaluator>(data_source)}
 {
 }
-
-TrajectoryEvaluator::~TrajectoryEvaluator() {}
 
 Trajectories TrajectoryEvaluator::GetRatedTrajectories(const Trajectories& optimized_trajectories) const
 {

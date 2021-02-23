@@ -24,7 +24,7 @@ class DataSourceBuilder
 {
   public:
     /// @brief Constructor.
-    DataSourceBuilder() : data_source_{std::make_shared<RoadModelDataSource>()}
+    DataSourceBuilder() : data_source_{}
     {
         this->WithFakePreviousPath(50)
             .WithDistance(units::length::meter_t{24.0})
@@ -129,14 +129,14 @@ class DataSourceBuilder
     }
 
     /// @brief Build Data Source Object
-    std::shared_ptr<IDataSource>& Build()
+    const IDataSource& Build()
     {
-        data_source_->SetPreviousPath(previous_path_global_);
-        data_source_->SetPreviousPathEnd(previous_path_end_frenet_);
-        data_source_->SetVehicleDynamics(vehicle_dynamics_);
-        data_source_->SetSensorFusion(sensor_fusion_);
-        data_source_->SetMapCoordinates(map_coords_);
-        data_source_->SetSpeedLimit(speed_limit_);
+        data_source_.SetPreviousPath(previous_path_global_);
+        data_source_.SetPreviousPathEnd(previous_path_end_frenet_);
+        data_source_.SetVehicleDynamics(vehicle_dynamics_);
+        data_source_.SetSensorFusion(sensor_fusion_);
+        data_source_.SetMapCoordinates(map_coords_);
+        data_source_.SetSpeedLimit(speed_limit_);
         return data_source_;
     }
 
@@ -183,7 +183,7 @@ class DataSourceBuilder
     units::velocity::meters_per_second_t speed_limit_;
 
     /// @brief Data Source Object
-    std::shared_ptr<IDataSource> data_source_;
+    RoadModelDataSource data_source_;
 };
 }  // namespace
 }  // namespace planning
