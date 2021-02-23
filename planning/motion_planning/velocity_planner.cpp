@@ -81,7 +81,7 @@ void VelocityPlanner::CalculateTargetVelocity()
     log_stream << " (+) delta_velocity: " << delta_velocity << std::endl;
     log_stream << " (+) speed_limit: " << speed_limit << std::endl;
     log_stream << " (+) " << data_source_->GetVehicleDynamics() << std::endl;
-    LOG(DEBUG) << log_stream.str();
+    LOG(INFO) << log_stream.str();
 }
 
 units::velocity::meters_per_second_t VelocityPlanner::GetTargetVelocity() const { return target_velocity_; }

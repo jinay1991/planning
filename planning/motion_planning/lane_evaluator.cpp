@@ -99,7 +99,7 @@ bool LaneEvaluator::IsDrivableLane(const LaneId& lane_id) const
             break;
     }
 
-    // LOG(DEBUG) << "Is {" << lane_id << "} drivable? " << std::boolalpha << is_drivable;
+    // LOG(INFO) << "Is {" << lane_id << "} drivable? " << std::boolalpha << is_drivable;
     return is_drivable;
 }
 

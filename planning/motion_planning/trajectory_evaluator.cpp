@@ -53,7 +53,7 @@ Trajectories TrajectoryEvaluator::GetRatedTrajectories(const Trajectories& optim
     log_stream << "Evaluated trajectories: " << rated_trajectories.size() << std::endl;
     std::for_each(rated_trajectories.begin(), rated_trajectories.end(),
                   [&log_stream](const auto& trajectory) { log_stream << " (+) " << trajectory << std::endl; });
-    LOG(DEBUG) << log_stream.str();
+    LOG(INFO) << log_stream.str();
     return rated_trajectories;
 }
 

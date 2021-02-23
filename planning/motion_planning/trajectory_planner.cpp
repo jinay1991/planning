@@ -153,7 +153,7 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
         log_stream << "     => ... (more " << trajectory.waypoints.size() - n_samples << " waypoints)" << std::endl;
     });
 
-    LOG(DEBUG) << log_stream.str();
+    LOG(INFO) << log_stream.str();
     return trajectories;
 }
 
