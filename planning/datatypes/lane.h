@@ -1,9 +1,9 @@
 ///
-/// @file lane.h
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @file
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_DATATYPES_LANE_H_
-#define PLANNING_DATATYPES_LANE_H_
+#ifndef PLANNING_DATATYPES_LANE_H
+#define PLANNING_DATATYPES_LANE_H
 
 #include <cstdint>
 #include <ostream>
@@ -124,4 +124,4 @@ inline std::ostream& operator<<(std::ostream& out, const LaneInformation::Global
 }
 }  // namespace planning
 
-#endif  /// PLANNING_DATATYPES_LANE_H_
+#endif  /// PLANNING_DATATYPES_LANE_H

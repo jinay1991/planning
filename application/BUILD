@@ -11,6 +11,6 @@ cc_binary(
     includes = ["include"],
     deps = [
         "//application/simulator",
-        "//planning/common/argument_parser",
+        "//planning/common",
     ],
 )

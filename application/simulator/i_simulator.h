@@ -1,10 +1,10 @@
 ///
-/// @file i_simulator.h
+/// @file
 /// @brief Contains Interface for communicating to Simulator
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef SIMULATOR_I_SIMULATOR_H_
-#define SIMULATOR_I_SIMULATOR_H_
+#ifndef SIMULATOR_I_SIMULATOR_H
+#define SIMULATOR_I_SIMULATOR_H
 
 #include <uWS.h>
 
@@ -28,7 +28,9 @@ class ISimulator
     virtual void ConnectCallback(uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) = 0;
 
     /// @brief Disconnect callback for WebSocket
-    virtual void DisconnectCallback(uWS::WebSocket<uWS::SERVER> ws, std::int32_t code, char* message,
+    virtual void DisconnectCallback(uWS::WebSocket<uWS::SERVER> ws,
+                                    std::int32_t code,
+                                    char* message,
                                     size_t length) = 0;
 
     /// @brief Receive callback for WebSocket
@@ -36,4 +38,4 @@ class ISimulator
 };
 
 }  // namespace sim
-#endif  /// SIMULATOR_I_SIMULATOR_H_
+#endif  /// SIMULATOR_I_SIMULATOR_H

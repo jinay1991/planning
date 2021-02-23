@@ -1,9 +1,10 @@
 ///
-/// @file trajectory_prioritizer.cpp
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @file
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/trajectory_prioritizer.h"
-#include "planning/common/logging/logging.h"
+
+#include "planning/common/logging.h"
 
 namespace planning
 {
@@ -23,8 +24,6 @@ void PrintQueue(T q)
     LOG(INFO) << log_stream.str();
 }
 }  // namespace internal
-
-TrajectoryPrioritizer::~TrajectoryPrioritizer() {}
 
 PrioritizedTrajectories TrajectoryPrioritizer::GetPrioritizedTrajectories(const Trajectories& trajectories) const
 {

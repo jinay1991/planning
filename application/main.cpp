@@ -1,10 +1,10 @@
 ///
-/// @file main.cpp
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @file
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "application/simulator/i_simulator.h"
 #include "application/simulator/udacity_simulator.h"
-#include "planning/common/argument_parser/argument_parser.h"
+#include "planning/common/argument_parser.h"
 
 #include <iostream>
 #include <memory>

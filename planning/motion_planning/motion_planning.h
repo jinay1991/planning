@@ -1,15 +1,15 @@
 ///
-/// @file motion_planning.h
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @file
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_PLANNING_MOTION_PLANNING_H_
-#define PLANNING_MOTION_PLANNING_PLANNING_MOTION_PLANNING_H_
+#ifndef PLANNING_MOTION_PLANNING_PLANNING_MOTION_PLANNING_H
+#define PLANNING_MOTION_PLANNING_PLANNING_MOTION_PLANNING_H
 
 #include "planning/datatypes/lane.h"
 #include "planning/datatypes/sensor_fusion.h"
 #include "planning/datatypes/trajectory.h"
 #include "planning/datatypes/vehicle_dynamics.h"
-#include "planning/motion_planning/i_data_source.h"
+#include "planning/motion_planning/data_source.h"
 #include "planning/motion_planning/i_maneuver.h"
 #include "planning/motion_planning/i_maneuver_generator.h"
 #include "planning/motion_planning/i_trajectory_evaluator.h"
@@ -28,20 +28,15 @@ class MotionPlanning
 {
   public:
     /// @brief Constructor. Initialize Motion Planner with DataSource instance
-    explicit MotionPlanning(std::shared_ptr<IDataSource>& data_source);
-
-    virtual ~MotionPlanning() = default;
+    explicit MotionPlanning(const DataSource& data_source);
 
     /// @brief Generate Trajectories based on the provided DataSource (i.e. Environment)
-    virtual void GenerateTrajectories();
+    void GenerateTrajectories();
 
     /// @brief Get Selected Trajectory from Trajectory Selector
-    virtual Trajectory GetSelectedTrajectory() const;
+    Trajectory GetSelectedTrajectory() const;
 
   private:
-    /// @brief DataSource (contains information on Environment, VehicleDynamics, Map Points, SensorFusion etc.)
-    std::shared_ptr<IDataSource> data_source_;
-
     /// @brief Velocity Planner
     std::unique_ptr<IVelocityPlanner> velocity_planner_;
 
@@ -68,4 +63,4 @@ class MotionPlanning
 };
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_PLANNING_MOTION_PLANNING_H_
+#endif  /// PLANNING_MOTION_PLANNING_PLANNING_MOTION_PLANNING_H

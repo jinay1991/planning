@@ -4,13 +4,9 @@ cc_library(
     name = "motion_planning",
     srcs = glob(["*.cpp"]),
     hdrs = glob(["*.h"]),
-    copts = [
-        "-Wall",
-        "-std=c++14",
-    ],
     visibility = ["//visibility:public"],
     deps = [
-        "//planning/common/logging",
+        "//planning/common",
         "//planning/datatypes",
         "@nholthaus//:units",
         "@spline",

@@ -1,9 +1,9 @@
 ///
-/// @file maneuver.h
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @file
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_MANEUVER_H_
-#define PLANNING_MOTION_PLANNING_MANEUVER_H_
+#ifndef PLANNING_MOTION_PLANNING_MANEUVER_H
+#define PLANNING_MOTION_PLANNING_MANEUVER_H
 
 #include "planning/motion_planning/i_maneuver.h"
 
@@ -23,10 +23,10 @@ class Maneuver : public IManeuver
     ~Maneuver() override;
 
     /// @brief Get LaneId for Maneuver
-    virtual LaneId GetLaneId() const override;
+    LaneId GetLaneId() const override;
 
     /// @brief Get Target Velocity for Maneuver
-    virtual units::velocity::meters_per_second_t GetVelocity() const override;
+    units::velocity::meters_per_second_t GetVelocity() const override;
 
     /// @brief Comparator for Maneuvers
     inline bool operator==(const Maneuver& rhs) const { return lane_id_ == rhs.lane_id_ && velocity_ == rhs.velocity_; }
@@ -45,4 +45,4 @@ inline std::ostream& operator<<(std::ostream& out, const Maneuver& maneuver)
     return out << "Maneuver{lane: " << maneuver.GetLaneId() << ", velocity: " << maneuver.GetVelocity() << "}";
 }
 }  // namespace planning
-#endif  /// PLANNING_MOTION_PLANNING_MANEUVER_H_
+#endif  /// PLANNING_MOTION_PLANNING_MANEUVER_H

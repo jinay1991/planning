@@ -1,16 +1,15 @@
 ///
-/// @file trajectory_selector.cpp
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @file
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/trajectory_selector.h"
-#include "planning/common/logging/logging.h"
+
+#include "planning/common/logging.h"
 
 #include <algorithm>
 
 namespace planning
 {
-TrajectorySelector::~TrajectorySelector() {}
-
 Trajectory TrajectorySelector::GetSelectedTrajectory(const PrioritizedTrajectories& prioritized_trajectories) const
 {
     const auto selected_trajectory = prioritized_trajectories.top();

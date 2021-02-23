@@ -1,52 +1,34 @@
-load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-
-cc_library(
-    name = "support",
-    srcs = [],
-    hdrs = [
-        "data_source_builder.h",
-        "sensor_fusion_builder.h",
-        "trajectory_builder.h",
-    ],
-    copts = [
-        "-Wall",
-        "-std=c++14",
-    ],
-    deps = [
-        "//planning/motion_planning",
-    ],
-)
+load("@rules_cc//cc:defs.bzl", "cc_test")
 
 cc_test(
-    name = "motion_planning_tests",
-    srcs = glob(
-        ["*.cpp"],
-        exclude = ["motion_planning_test.cpp"],
-    ),
-    copts = [
-        "-Wall",
-        "-std=c++14",
+    name = "unit_tests",
+    srcs = [
+        "data_source_tests.cpp",
+        "lane_evaluator_tests.cpp",
+        "maneuver_generator_tests.cpp",
+        "maneuver_tests.cpp",
+        "trajectory_evaluator_tests.cpp",
+        "trajectory_optimizer_tests.cpp",
+        "trajectory_planner_tests.cpp",
+        "trajectory_prioritizer_tests.cpp",
+        "trajectory_selector_tests.cpp",
+        "velocity_planner_tests.cpp",
     ],
     tags = ["unit"],
     deps = [
-        ":support",
         "//planning/motion_planning",
+        "//planning/motion_planning/test/support",
         "@googletest//:gtest_main",
-        "@nholthaus//:units",
     ],
 )
 
 cc_test(
-    name = "motion_planning_component_tests",
-    srcs = ["motion_planning_test.cpp"],
-    copts = [
-        "-Wall",
-        "-std=c++14",
-    ],
+    name = "component_tests",
+    srcs = ["motion_planning_tests.cpp"],
     tags = ["component"],
     deps = [
-        ":support",
         "//planning/motion_planning",
+        "//planning/motion_planning/test/support",
         "@googletest//:gtest_main",
     ],
 )

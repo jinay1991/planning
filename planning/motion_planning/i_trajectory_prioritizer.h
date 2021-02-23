@@ -1,9 +1,9 @@
 ///
-/// @file i_trajectory_prioritizer.h
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @file
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H_
-#define PLANNING_MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H_
+#ifndef PLANNING_MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H
+#define PLANNING_MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H
 
 #include "planning/datatypes/trajectory.h"
 #include "planning/motion_planning/i_trajectory_planner.h"
@@ -26,4 +26,4 @@ class ITrajectoryPrioritizer
     virtual PrioritizedTrajectories GetPrioritizedTrajectories(const Trajectories& trajectories) const = 0;
 };
 }  // namespace planning
-#endif  /// PLANNING_MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H_
+#endif  /// PLANNING_MOTION_PLANNING_I_TRAJECTORY_PRIORITIZER_H

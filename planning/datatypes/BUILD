@@ -2,11 +2,11 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
     name = "datatypes",
-    srcs = glob(["*.cpp"]),
-    hdrs = glob(["*.h"]),
-    copts = [
-        "-Wall",
-        "-std=c++14",
+    hdrs = [
+        "lane.h",
+        "sensor_fusion.h",
+        "trajectory.h",
+        "vehicle_dynamics.h",
     ],
     visibility = ["//visibility:public"],
 )

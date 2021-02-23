@@ -1,9 +1,9 @@
 ///
-/// @file i_trajectory_optimizer.h
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @file
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_I_TRAJECTORY_OPTIMIZER_H_
-#define PLANNING_MOTION_PLANNING_I_TRAJECTORY_OPTIMIZER_H_
+#ifndef PLANNING_MOTION_PLANNING_I_TRAJECTORY_OPTIMIZER_H
+#define PLANNING_MOTION_PLANNING_I_TRAJECTORY_OPTIMIZER_H
 
 #include "planning/datatypes/trajectory.h"
 
@@ -23,4 +23,4 @@ class ITrajectoryOptimizer
 };
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_I_TRAJECTORY_OPTIMIZER_H_
+#endif  /// PLANNING_MOTION_PLANNING_I_TRAJECTORY_OPTIMIZER_H

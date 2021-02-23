@@ -1,9 +1,10 @@
 ///
-/// @file motion_planning.cpp
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @file
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/motion_planning.h"
-#include "planning/common/logging/logging.h"
+
+#include "planning/common/logging.h"
 #include "planning/motion_planning/maneuver.h"
 #include "planning/motion_planning/maneuver_generator.h"
 #include "planning/motion_planning/trajectory_evaluator.h"
@@ -15,7 +16,7 @@
 
 namespace planning
 {
-MotionPlanning::MotionPlanning(std::shared_ptr<IDataSource>& data_source)
+MotionPlanning::MotionPlanning(const DataSource& data_source)
     : velocity_planner_{std::make_unique<VelocityPlanner>(data_source)},
       maneuver_generator_{std::make_unique<ManeuverGenerator>()},
       trajectory_planner_{std::make_unique<TrajectoryPlanner>(data_source)},
@@ -46,6 +47,9 @@ void MotionPlanning::GenerateTrajectories()
     selected_trajectory_ = trajectory_selector_->GetSelectedTrajectory(prioritized_trajectories);
 }
 
-Trajectory MotionPlanning::GetSelectedTrajectory() const { return selected_trajectory_; }
+Trajectory MotionPlanning::GetSelectedTrajectory() const
+{
+    return selected_trajectory_;
+}
 
 }  // namespace planning

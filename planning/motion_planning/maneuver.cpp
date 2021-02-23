@@ -1,6 +1,6 @@
 ///
-/// @file maneuver.cpp
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @file
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/maneuver.h"
 
@@ -15,8 +15,14 @@ Maneuver::Maneuver(const LaneId& lane_id, const units::velocity::meters_per_seco
 
 Maneuver::~Maneuver() {}
 
-LaneId Maneuver::GetLaneId() const { return lane_id_; }
+LaneId Maneuver::GetLaneId() const
+{
+    return lane_id_;
+}
 
-units::velocity::meters_per_second_t Maneuver::GetVelocity() const { return velocity_; }
+units::velocity::meters_per_second_t Maneuver::GetVelocity() const
+{
+    return velocity_;
+}
 
 }  // namespace planning

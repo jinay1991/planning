@@ -1,9 +1,9 @@
 ///
-/// @file trajectory_selector.h
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @file
+/// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_TRAJECTORY_SELECTOR_H_
-#define PLANNING_MOTION_PLANNING_TRAJECTORY_SELECTOR_H_
+#ifndef PLANNING_MOTION_PLANNING_TRAJECTORY_SELECTOR_H
+#define PLANNING_MOTION_PLANNING_TRAJECTORY_SELECTOR_H
 
 #include "planning/motion_planning/i_trajectory_selector.h"
 
@@ -13,12 +13,9 @@ namespace planning
 class TrajectorySelector : public ITrajectorySelector
 {
   public:
-    /// @brief Destructor.
-    ~TrajectorySelector() override;
-
     /// @brief Get Selected Trajectory from provided prioritized trajectories. (Selects top prioritized trajectory)
-    virtual Trajectory GetSelectedTrajectory(const PrioritizedTrajectories& prioritized_trajectories) const override;
+    Trajectory GetSelectedTrajectory(const PrioritizedTrajectories& prioritized_trajectories) const override;
 };
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_TRAJECTORY_SELECTOR_H_
+#endif  /// PLANNING_MOTION_PLANNING_TRAJECTORY_SELECTOR_H
