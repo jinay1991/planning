@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020-2021. MIT License.
+/// @copyright Copyright (c) 2020-2021-2021. MIT License.
 ///
 #include "planning/common/logging/logging.h"
 

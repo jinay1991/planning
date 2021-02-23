@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
 #include "application/simulator/i_simulator.h"
 #include "application/simulator/udacity_simulator.h"

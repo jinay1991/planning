@@ -1,7 +1,7 @@
 ///
 /// @file
 /// @brief Contains command line interface options definitions
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
 #ifndef PLANNING_COMMON_ARGUMENT_PARSER_CLI_OPTIONS_H_
 #define PLANNING_COMMON_ARGUMENT_PARSER_CLI_OPTIONS_H_

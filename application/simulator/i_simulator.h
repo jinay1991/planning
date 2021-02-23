@@ -1,7 +1,7 @@
 ///
 /// @file
 /// @brief Contains Interface for communicating to Simulator
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
 #ifndef SIMULATOR_I_SIMULATOR_H_
 #define SIMULATOR_I_SIMULATOR_H_

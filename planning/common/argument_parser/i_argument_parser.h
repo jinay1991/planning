@@ -1,7 +1,7 @@
 ///
 /// @file
 /// @brief Contains Argument Parser Interface class
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
 #ifndef PLANNING_COMMON_ARGUMENT_PARSER_I_ARGUMENT_PARSER_H_
 #define PLANNING_COMMON_ARGUMENT_PARSER_I_ARGUMENT_PARSER_H_

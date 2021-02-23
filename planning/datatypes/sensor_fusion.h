@@ -1,6 +1,6 @@
 ///
 /// @file
-/// @copyright Copyright (c) 2020. All Rights Reserved.
+/// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
 #ifndef PLANNING_DATATYPES_SENSOR_FUSION_H_
 #define PLANNING_DATATYPES_SENSOR_FUSION_H_
