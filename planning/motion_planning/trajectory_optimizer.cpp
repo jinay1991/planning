@@ -1,5 +1,5 @@
 ///
-/// @file trajectory_optimizer.cpp
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include "planning/motion_planning/trajectory_optimizer.h"

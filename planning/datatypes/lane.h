@@ -1,5 +1,5 @@
 ///
-/// @file lane.h
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #ifndef PLANNING_DATATYPES_LANE_H_

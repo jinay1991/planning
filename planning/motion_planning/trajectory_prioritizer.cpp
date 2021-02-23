@@ -1,5 +1,5 @@
 ///
-/// @file trajectory_prioritizer.cpp
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include "planning/motion_planning/trajectory_prioritizer.h"

@@ -1,5 +1,5 @@
 ///
-/// @file chrono_timer.h
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #ifndef PLANNING_COMMON_TIMER_CHRONO_TIMER_H_

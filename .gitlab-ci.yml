@@ -6,7 +6,6 @@ include:
 # Various Jobs
 # ------------
 stages:
-  - check-image
   - check
   - build
   - test
@@ -28,6 +27,7 @@ clang-format:
 buildifier:
   stage: check
   image: ubuntu:20.04
+  needs: []
   before_script:
     - apt-get update
     - apt-get install -y wget curl
@@ -90,19 +90,13 @@ doxygen:
     paths:
       - doc
     expire_in: 1 day
-  only:
-    refs:
-      - master
 
 # ------------
 # Stage: Test
 # ------------
 code-coverage:
   stage: test
-  image: registry.gitlab.com/ad_platform/perception
-  needs:
-    - job: bazel-build-and-test
-      artifacts: true
+  image: registry.gitlab.com/ad_platform/planning
   script:
     - bazel coverage -s --combined_report=lcov --instrumentation_filter=//... --coverage_report_generator=@bazel_tools//tools/test:coverage_report_generator  //...
     - export OUTPUT_DIR=$(bazel info execution_root)

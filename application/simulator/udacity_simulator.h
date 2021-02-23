@@ -1,5 +1,5 @@
 ///
-/// @file udacity_simulator.h
+/// @file
 /// @brief Contains Simulation Client Interface for Udacity Simulator
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///

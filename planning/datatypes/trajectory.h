@@ -1,5 +1,5 @@
 ///
-/// @file trajectory.h
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #ifndef PLANNING_DATATYPES_TRAJECTORY_H_

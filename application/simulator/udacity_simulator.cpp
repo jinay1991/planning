@@ -1,5 +1,5 @@
 ///
-/// @file udacity_simulator.cpp
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include "application/simulator/udacity_simulator.h"

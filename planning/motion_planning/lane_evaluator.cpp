@@ -1,5 +1,5 @@
 ///
-/// @file lane_evaluator.h
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include "planning/motion_planning/lane_evaluator.h"

@@ -1,5 +1,5 @@
 ///
-/// @file argument_parser.h
+/// @file
 /// @brief Contains Argument Parser definitions
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///

@@ -1,5 +1,5 @@
 ///
-/// @file chrono_timer.cpp
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include "planning/common/timer/chrono_timer.h"

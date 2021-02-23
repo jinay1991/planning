@@ -1,5 +1,5 @@
 ///
-/// @file i_trajectory_selector.h
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #ifndef PLANNING_MOTION_PLANNING_I_TRAJECTORY_SELECTOR_H_

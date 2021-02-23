@@ -1,5 +1,5 @@
 ///
-/// @file i_simulator.h
+/// @file
 /// @brief Contains Interface for communicating to Simulator
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///

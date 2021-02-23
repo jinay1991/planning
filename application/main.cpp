@@ -1,5 +1,5 @@
 ///
-/// @file main.cpp
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include "application/simulator/i_simulator.h"

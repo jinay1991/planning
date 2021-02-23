@@ -1,5 +1,5 @@
 ///
-/// @file argument_parser.cpp
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include "planning/common/argument_parser/argument_parser.h"

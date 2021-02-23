@@ -1,5 +1,5 @@
 ///
-/// @file sensor_fusion.h
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #ifndef PLANNING_DATATYPES_SENSOR_FUSION_H_

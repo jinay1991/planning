@@ -1,5 +1,5 @@
 ///
-/// @file motion_planning.cpp
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include "planning/motion_planning/motion_planning.h"

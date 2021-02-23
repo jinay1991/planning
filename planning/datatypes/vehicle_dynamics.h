@@ -1,5 +1,5 @@
 ///
-/// @file vehicle_dynamics.h
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #ifndef PLANNING_DATATYPES_VEHICLE_DYNAMICS_H_

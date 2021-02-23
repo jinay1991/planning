@@ -1,5 +1,5 @@
 ///
-/// @file maneuver_generator.cpp
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include "planning/motion_planning/maneuver_generator.h"

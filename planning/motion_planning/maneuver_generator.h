@@ -1,5 +1,5 @@
 ///
-/// @file maneuver_generator.h
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #ifndef PLANNING_MOTION_PLANNING_MANEUVER_GENERATOR_H_

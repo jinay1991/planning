@@ -1,5 +1,5 @@
 ///
-/// @file roadmodel_data_source.cpp
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include "planning/motion_planning/roadmodel_data_source.h"

@@ -1,5 +1,5 @@
 ///
-/// @file trajectory_planner.h
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #ifndef PLANNING_MOTION_PLANNING_TRAJECTORY_PLANNER_H_

@@ -1,5 +1,5 @@
 ///
-/// @file cli_options.h
+/// @file
 /// @brief Contains command line interface options definitions
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///

@@ -1,5 +1,5 @@
 ///
-/// @file i_velocity_planner.h
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #ifndef PLANNING_MOTION_PLANNING_I_VELOCITY_PLANNER_H_

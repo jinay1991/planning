@@ -1,5 +1,5 @@
 ///
-/// @file velocity_planner.cpp
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #include "planning/motion_planning/velocity_planner.h"

@@ -1,5 +1,5 @@
 ///
-/// @file roadmodel_data_source.h
+/// @file
 /// @copyright Copyright (c) 2020. All Rights Reserved.
 ///
 #ifndef PLANNING_MOTION_PLANNING_ROADMODEL_DATA_SOURCE_H_
