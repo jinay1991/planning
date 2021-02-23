@@ -3,7 +3,7 @@
 /// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/trajectory_optimizer.h"
-#include "planning/common/logging/logging.h"
+#include "planning/common/logging.h"
 
 #include <algorithm>
 #include <sstream>

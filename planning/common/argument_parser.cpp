@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
-#include "planning/common/argument_parser/argument_parser.h"
-#include "planning/common/logging/logging.h"
+#include "planning/common/argument_parser.h"
+#include "planning/common/logging.h"
 
 namespace planning
 {

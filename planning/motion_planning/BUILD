@@ -6,7 +6,7 @@ cc_library(
     hdrs = glob(["*.h"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//planning/common/logging",
+        "//planning/common",
         "//planning/datatypes",
         "@nholthaus//:units",
         "@spline",

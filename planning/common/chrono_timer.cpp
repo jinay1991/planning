@@ -2,7 +2,7 @@
 /// @file
 /// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
-#include "planning/common/timer/chrono_timer.h"
+#include "planning/common/chrono_timer.h"
 
 namespace timer
 {

@@ -6,7 +6,7 @@
 #ifndef PLANNING_COMMON_ARGUMENT_PARSER_I_ARGUMENT_PARSER_H_
 #define PLANNING_COMMON_ARGUMENT_PARSER_I_ARGUMENT_PARSER_H_
 
-#include "planning/common/argument_parser/cli_options.h"
+#include "planning/common/cli_options.h"
 
 namespace planning
 {

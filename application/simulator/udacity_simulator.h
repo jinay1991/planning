@@ -7,7 +7,7 @@
 #define SIMULATOR_UDACITY_SIMULATOR_H_
 
 #include "application/simulator/i_simulator.h"
-#include "planning/common/argument_parser/argument_parser.h"
+#include "planning/common/argument_parser.h"
 #include "planning/motion_planning/motion_planning.h"
 #include "planning/motion_planning/roadmodel_data_source.h"
 

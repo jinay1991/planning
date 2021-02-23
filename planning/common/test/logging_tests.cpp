@@ -2,7 +2,7 @@
 /// @file
 /// @copyright Copyright (c) 2020-2021-2021. MIT License.
 ///
-#include "planning/common/logging/logging.h"
+#include "planning/common/logging.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

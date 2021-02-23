@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-02-23 12:18:52</td>
+            <td class="headerValue">2021-02-23 13:59:10</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -77,11 +77,11 @@
 <pre class="sourceHeading">           Branch data     Line data    Source code</pre>
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : ///</a>
-<a name="2"><span class="lineNum">       2 </span>                :            : /// @file trajectory_planner.cpp</a>
-<a name="3"><span class="lineNum">       3 </span>                :            : /// @copyright Copyright (c) 2020. All Rights Reserved.</a>
+<a name="2"><span class="lineNum">       2 </span>                :            : /// @file</a>
+<a name="3"><span class="lineNum">       3 </span>                :            : /// @copyright Copyright (c) 2020-2021. All Rights Reserved.</a>
 <a name="4"><span class="lineNum">       4 </span>                :            : ///</a>
 <a name="5"><span class="lineNum">       5 </span>                :            : #include &quot;planning/motion_planning/trajectory_planner.h&quot;</a>
-<a name="6"><span class="lineNum">       6 </span>                :            : #include &quot;planning/common/logging/logging.h&quot;</a>
+<a name="6"><span class="lineNum">       6 </span>                :            : #include &quot;planning/common/logging.h&quot;</a>
 <a name="7"><span class="lineNum">       7 </span>                :            : </a>
 <a name="8"><span class="lineNum">       8 </span>                :            : namespace planning</a>
 <a name="9"><span class="lineNum">       9 </span>                :            : {</a>
@@ -231,7 +231,7 @@
 <a name="153"><span class="lineNum">     153 </span>                :<span class="lineCov">          4 :         log_stream &lt;&lt; &quot;     =&gt; ... (more &quot; &lt;&lt; trajectory.waypoints.size() - n_samples &lt;&lt; &quot; waypoints)&quot; &lt;&lt; std::endl;</span></a>
 <a name="154"><span class="lineNum">     154 </span>                :<span class="lineCov">          8 :     });</span></a>
 <a name="155"><span class="lineNum">     155 </span>                :            : </a>
-<a name="156"><span class="lineNum">     156 </span>                :<span class="lineCov">          4 :     LOG(DEBUG) &lt;&lt; log_stream.str();</span></a>
+<a name="156"><span class="lineNum">     156 </span>                :<span class="lineCov">          4 :     LOG(INFO) &lt;&lt; log_stream.str();</span></a>
 <a name="157"><span class="lineNum">     157 </span>                :<span class="lineCov">          8 :     return trajectories;</span></a>
 <a name="158"><span class="lineNum">     158 </span>                :            : }</a>
 <a name="159"><span class="lineNum">     159 </span>                :            : </a>
@@ -239,8 +239,8 @@
 <a name="161"><span class="lineNum">     161 </span>                :            : {</a>
 <a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">         12 :     std::int32_t prev_wp = -1;</span></a>
 <a name="163"><span class="lineNum">     163 </span>                :<span class="lineCov">         12 :     const auto map_coordinates = data_source_-&gt;GetMapCoordinates();</span></a>
-<a name="164"><span class="lineNum">     164 </span>                :<span class="lineCov">         48 :     while (frenet_coords.s &gt; map_coordinates[prev_wp + 1].frenet_coords.s &amp;&amp;</span></a>
-<a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">         24 :            (prev_wp &lt; static_cast&lt;std::int32_t&gt;(map_coordinates.size() - 1)))</span></a>
+<a name="164"><span class="lineNum">     164 </span>                :<span class="lineCov">         42 :     while (frenet_coords.s &gt; map_coordinates[prev_wp + 1].frenet_coords.s &amp;&amp;</span></a>
+<a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">         18 :            (prev_wp &lt; static_cast&lt;std::int32_t&gt;(map_coordinates.size() - 1)))</span></a>
 <a name="166"><span class="lineNum">     166 </span>                :            :     {</a>
 <a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">         12 :         ++prev_wp;</span></a>
 <a name="168"><span class="lineNum">     168 </span>                :            :     }</a>

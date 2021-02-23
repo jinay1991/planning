@@ -4,7 +4,7 @@
 ///
 #include "application/simulator/i_simulator.h"
 #include "application/simulator/udacity_simulator.h"
-#include "planning/common/argument_parser/argument_parser.h"
+#include "planning/common/argument_parser.h"
 
 #include <iostream>
 #include <memory>

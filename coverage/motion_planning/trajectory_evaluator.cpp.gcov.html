@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-02-23 12:18:52</td>
+            <td class="headerValue">2021-02-23 13:59:10</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">6</td>
@@ -77,11 +77,11 @@
 <pre class="sourceHeading">           Branch data     Line data    Source code</pre>
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : ///</a>
-<a name="2"><span class="lineNum">       2 </span>                :            : /// @file trajectory_evaluator.cpp</a>
-<a name="3"><span class="lineNum">       3 </span>                :            : /// @copyright Copyright (c) 2020. All Rights Reserved.</a>
+<a name="2"><span class="lineNum">       2 </span>                :            : /// @file</a>
+<a name="3"><span class="lineNum">       3 </span>                :            : /// @copyright Copyright (c) 2020-2021. All Rights Reserved.</a>
 <a name="4"><span class="lineNum">       4 </span>                :            : ///</a>
 <a name="5"><span class="lineNum">       5 </span>                :            : #include &quot;planning/motion_planning/trajectory_evaluator.h&quot;</a>
-<a name="6"><span class="lineNum">       6 </span>                :            : #include &quot;planning/common/logging/logging.h&quot;</a>
+<a name="6"><span class="lineNum">       6 </span>                :            : #include &quot;planning/common/logging.h&quot;</a>
 <a name="7"><span class="lineNum">       7 </span>                :            : </a>
 <a name="8"><span class="lineNum">       8 </span>                :            : #include &lt;sstream&gt;</a>
 <a name="9"><span class="lineNum">       9 </span>                :            : </a>
@@ -131,7 +131,7 @@
 <a name="53"><span class="lineNum">      53 </span>                :<span class="lineCov">         11 :     log_stream &lt;&lt; &quot;Evaluated trajectories: &quot; &lt;&lt; rated_trajectories.size() &lt;&lt; std::endl;</span></a>
 <a name="54"><span class="lineNum">      54 </span>                :            :     std::for_each(rated_trajectories.begin(), rated_trajectories.end(),</a>
 <a name="55"><span class="lineNum">      55 </span>                :<span class="lineCov">         38 :                   [&amp;log_stream](const auto&amp; trajectory) { log_stream &lt;&lt; &quot; (+) &quot; &lt;&lt; trajectory &lt;&lt; std::endl; });</span></a>
-<a name="56"><span class="lineNum">      56 </span>                :<span class="lineCov">         11 :     LOG(DEBUG) &lt;&lt; log_stream.str();</span></a>
+<a name="56"><span class="lineNum">      56 </span>                :<span class="lineCov">         11 :     LOG(INFO) &lt;&lt; log_stream.str();</span></a>
 <a name="57"><span class="lineNum">      57 </span>                :<span class="lineCov">         22 :     return rated_trajectories;</span></a>
 <a name="58"><span class="lineNum">      58 </span>                :            : }</a>
 <a name="59"><span class="lineNum">      59 </span>                :            : </a>

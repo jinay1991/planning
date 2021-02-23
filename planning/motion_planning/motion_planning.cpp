@@ -3,7 +3,7 @@
 /// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/motion_planning.h"
-#include "planning/common/logging/logging.h"
+#include "planning/common/logging.h"
 #include "planning/motion_planning/maneuver.h"
 #include "planning/motion_planning/maneuver_generator.h"
 #include "planning/motion_planning/trajectory_evaluator.h"

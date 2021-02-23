@@ -3,7 +3,7 @@
 /// @brief Contains unit tests for Chrono Timer.
 /// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
-#include "planning/common/timer/chrono_timer.h"
+#include "planning/common/chrono_timer.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

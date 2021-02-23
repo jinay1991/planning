@@ -10,8 +10,7 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//planning/common/argument_parser",
-        "//planning/common/logging",
+        "//planning/common",
         "//planning/motion_planning",
         "@eigen",
         "@nlohmann//:json",

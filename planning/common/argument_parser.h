@@ -6,8 +6,8 @@
 #ifndef PLANNING_COMMON_ARGUMENT_PARSER_ARGUMENT_PARSER_H_
 #define PLANNING_COMMON_ARGUMENT_PARSER_ARGUMENT_PARSER_H_
 
-#include "planning/common/argument_parser/cli_options.h"
-#include "planning/common/argument_parser/i_argument_parser.h"
+#include "planning/common/cli_options.h"
+#include "planning/common/i_argument_parser.h"
 
 #include <getopt.h>
 #include <unistd.h>

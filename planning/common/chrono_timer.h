@@ -5,7 +5,7 @@
 #ifndef PLANNING_COMMON_TIMER_CHRONO_TIMER_H_
 #define PLANNING_COMMON_TIMER_CHRONO_TIMER_H_
 
-#include "planning/common/timer/i_timer.h"
+#include "planning/common/i_timer.h"
 
 namespace timer
 {

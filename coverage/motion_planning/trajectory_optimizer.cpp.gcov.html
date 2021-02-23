@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-02-23 12:18:52</td>
+            <td class="headerValue">2021-02-23 13:59:10</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">9</td>
@@ -77,11 +77,11 @@
 <pre class="sourceHeading">           Branch data     Line data    Source code</pre>
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : ///</a>
-<a name="2"><span class="lineNum">       2 </span>                :            : /// @file trajectory_optimizer.cpp</a>
-<a name="3"><span class="lineNum">       3 </span>                :            : /// @copyright Copyright (c) 2020. All Rights Reserved.</a>
+<a name="2"><span class="lineNum">       2 </span>                :            : /// @file</a>
+<a name="3"><span class="lineNum">       3 </span>                :            : /// @copyright Copyright (c) 2020-2021. All Rights Reserved.</a>
 <a name="4"><span class="lineNum">       4 </span>                :            : ///</a>
 <a name="5"><span class="lineNum">       5 </span>                :            : #include &quot;planning/motion_planning/trajectory_optimizer.h&quot;</a>
-<a name="6"><span class="lineNum">       6 </span>                :            : #include &quot;planning/common/logging/logging.h&quot;</a>
+<a name="6"><span class="lineNum">       6 </span>                :            : #include &quot;planning/common/logging.h&quot;</a>
 <a name="7"><span class="lineNum">       7 </span>                :            : </a>
 <a name="8"><span class="lineNum">       8 </span>                :            : #include &lt;algorithm&gt;</a>
 <a name="9"><span class="lineNum">       9 </span>                :            : #include &lt;sstream&gt;</a>
@@ -109,7 +109,7 @@
 <a name="31"><span class="lineNum">      31 </span>                :<span class="lineCov">         10 :                       [&amp;log_stream](const auto&amp; wp) { log_stream &lt;&lt; &quot;     =&gt; &quot; &lt;&lt; wp &lt;&lt; std::endl; });</span></a>
 <a name="32"><span class="lineNum">      32 </span>                :<span class="lineCov">          1 :         log_stream &lt;&lt; &quot;     =&gt; ... (more &quot; &lt;&lt; trajectory.waypoints.size() - n_samples &lt;&lt; &quot; waypoints)&quot; &lt;&lt; std::endl;</span></a>
 <a name="33"><span class="lineNum">      33 </span>                :<span class="lineCov">          2 :     });</span></a>
-<a name="34"><span class="lineNum">      34 </span>                :<span class="lineCov">          1 :     LOG(DEBUG) &lt;&lt; log_stream.str();</span></a>
+<a name="34"><span class="lineNum">      34 </span>                :<span class="lineCov">          1 :     LOG(INFO) &lt;&lt; log_stream.str();</span></a>
 <a name="35"><span class="lineNum">      35 </span>                :<span class="lineCov">          2 :     return optimized_trajectories;</span></a>
 <a name="36"><span class="lineNum">      36 </span>                :            : }</a>
 <a name="37"><span class="lineNum">      37 </span>                :            : </a>

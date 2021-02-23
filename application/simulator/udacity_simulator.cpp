@@ -3,7 +3,7 @@
 /// @copyright Copyright (c) 2020-2021. All Rights Reserved.
 ///
 #include "application/simulator/udacity_simulator.h"
-#include "planning/common/logging/logging.h"
+#include "planning/common/logging.h"
 
 namespace sim
 {
