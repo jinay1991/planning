@@ -20,7 +20,7 @@ std::vector<Maneuver> ManeuverGenerator::Generate(const units::velocity::meters_
     log_stream << "Generated Maneuvers:" << std::endl;
     std::for_each(maneuvers.begin(), maneuvers.end(),
                   [&](const auto& maneuver) { log_stream << " (+) " << maneuver << std::endl; });
-    LOG(DEBUG) << log_stream.str();
+    LOG(INFO) << log_stream.str();
     return maneuvers;
 }
 }  // namespace planning

@@ -20,7 +20,7 @@ void PrintQueue(T q)
         log_stream << "  " << (idx++) << ". " << q.top() << std::endl;
         q.pop();
     }
-    LOG(DEBUG) << log_stream.str();
+    LOG(INFO) << log_stream.str();
 }
 }  // namespace internal
 

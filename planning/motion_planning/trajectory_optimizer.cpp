@@ -31,7 +31,7 @@ Trajectories TrajectoryOptimizer::GetOptimizedTrajectories(const Trajectories& p
                       [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
         log_stream << "     => ... (more " << trajectory.waypoints.size() - n_samples << " waypoints)" << std::endl;
     });
-    LOG(DEBUG) << log_stream.str();
+    LOG(INFO) << log_stream.str();
     return optimized_trajectories;
 }
 
