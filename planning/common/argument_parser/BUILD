@@ -2,11 +2,11 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
     name = "argument_parser",
-    srcs = glob(["*.cpp"]),
-    hdrs = glob(["*.h"]),
-    copts = [
-        "-Wall",
-        "-std=c++14",
+    srcs = ["argument_parser.cpp"],
+    hdrs = [
+        "argument_parser.h",
+        "cli_options.h",
+        "i_argument_parser.h",
     ],
     visibility = ["//visibility:public"],
     deps = ["//planning/common/logging"],
