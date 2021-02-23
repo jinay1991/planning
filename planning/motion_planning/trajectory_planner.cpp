@@ -8,7 +8,7 @@
 
 namespace planning
 {
-TrajectoryPlanner::TrajectoryPlanner(const IDataSource& data_source) : data_source_{data_source} {}
+TrajectoryPlanner::TrajectoryPlanner(const DataSource& data_source) : data_source_{data_source} {}
 
 Trajectories TrajectoryPlanner::GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const
 {

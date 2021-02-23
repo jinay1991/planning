@@ -5,7 +5,7 @@
 #ifndef PLANNING_MOTION_PLANNING_VELOCITY_PLANNER_H
 #define PLANNING_MOTION_PLANNING_VELOCITY_PLANNER_H
 
-#include "planning/motion_planning/i_data_source.h"
+#include "planning/motion_planning/data_source.h"
 #include "planning/motion_planning/i_velocity_planner.h"
 
 #include <units.h>
@@ -21,10 +21,10 @@ class VelocityPlanner : public IVelocityPlanner
 {
   public:
     /// @brief Constructor. Initialize with DataSource.
-    explicit VelocityPlanner(const IDataSource& data_source);
+    explicit VelocityPlanner(const DataSource& data_source);
 
     /// @brief Constructor. Initialize with DataSource for given target velocity.
-    explicit VelocityPlanner(const IDataSource& data_source,
+    explicit VelocityPlanner(const DataSource& data_source,
                              const units::velocity::meters_per_second_t& target_velocity);
 
     /// @brief Calculate Target Velocity based on DataSource.
@@ -53,7 +53,7 @@ class VelocityPlanner : public IVelocityPlanner
     units::velocity::meters_per_second_t target_velocity_;
 
     /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, Map Points etc.)
-    const IDataSource& data_source_;
+    const DataSource& data_source_;
 };
 }  // namespace planning
 

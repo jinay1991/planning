@@ -3,8 +3,7 @@
 /// @brief Contains unit tests for Road Model Data Source.
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#include "planning/motion_planning/i_data_source.h"
-#include "planning/motion_planning/roadmodel_data_source.h"
+#include "planning/motion_planning/data_source.h"
 #include "planning/motion_planning/test/support/sensor_fusion_builder.h"
 #include "support/object_fusion_builder.h"
 
@@ -21,18 +20,18 @@ using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::Field;
 
-class RoadModelDataSourceFixture : public ::testing::Test
+class DataSourceFixture : public ::testing::Test
 {
   protected:
-    RoadModelDataSource data_source_;
+    DataSource data_source_;
 };
 
 template <typename T>
-class RoadModelDataSourceFixtureT : public RoadModelDataSourceFixture, public ::testing::WithParamInterface<T>
+class DataSourceFixtureT : public DataSourceFixture, public ::testing::WithParamInterface<T>
 {
 };
 
-TEST_F(RoadModelDataSourceFixture, SetVehicleDynamics_GivenTypicalVehicleDynamics_ExpectSame)
+TEST_F(DataSourceFixture, SetVehicleDynamics_GivenTypicalVehicleDynamics_ExpectSame)
 {
     // Given
     VehicleDynamics vehicle_dynamics{};
@@ -48,7 +47,7 @@ TEST_F(RoadModelDataSourceFixture, SetVehicleDynamics_GivenTypicalVehicleDynamic
                       Field(&VehicleDynamics::yaw, vehicle_dynamics.yaw)));
 }
 
-TEST_F(RoadModelDataSourceFixture, SetMapCoordinates_GivenTypicalMapCoordinates_ExpectSame)
+TEST_F(DataSourceFixture, SetMapCoordinates_GivenTypicalMapCoordinates_ExpectSame)
 {
     // Given
     const MapCoordinates map_coordinates{GlobalCoordinates{784.6001, 1135.571},
@@ -71,7 +70,7 @@ TEST_F(RoadModelDataSourceFixture, SetMapCoordinates_GivenTypicalMapCoordinates_
                                            Field(&FrenetCoordinates::dy, map_coordinates.frenet_coords.dy))))));
 }
 
-TEST_F(RoadModelDataSourceFixture, SetPreviousPath_GivenTypicalPreviousPath_ExpectSame)
+TEST_F(DataSourceFixture, SetPreviousPath_GivenTypicalPreviousPath_ExpectSame)
 {
     // Given
     const GlobalCoordinates global_coordinate{10.0, 12.0};
@@ -87,7 +86,7 @@ TEST_F(RoadModelDataSourceFixture, SetPreviousPath_GivenTypicalPreviousPath_Expe
                                Field(&GlobalCoordinates::y, global_coordinate.y))));
 }
 
-TEST_F(RoadModelDataSourceFixture, SetPreviousPathEnd_GivenTypicalPreviousPathEnd_ExpectSame)
+TEST_F(DataSourceFixture, SetPreviousPathEnd_GivenTypicalPreviousPathEnd_ExpectSame)
 {
     // Given
     const FrenetCoordinates frenet_coordinate{10.0, 12.0, 0.0, 0.0};
@@ -101,7 +100,7 @@ TEST_F(RoadModelDataSourceFixture, SetPreviousPathEnd_GivenTypicalPreviousPathEn
         AllOf(Field(&FrenetCoordinates::s, frenet_coordinate.s), Field(&FrenetCoordinates::d, frenet_coordinate.d)));
 }
 
-TEST_F(RoadModelDataSourceFixture, SetSensorFusion_GivenTypicalSensorFusion_ExpectSame)
+TEST_F(DataSourceFixture, SetSensorFusion_GivenTypicalSensorFusion_ExpectSame)
 {
     // Given
     const units::velocity::meters_per_second_t velocity{10.0};
@@ -116,7 +115,7 @@ TEST_F(RoadModelDataSourceFixture, SetSensorFusion_GivenTypicalSensorFusion_Expe
                 AllOf(Field(&SensorFusion::objs, Contains(Field(&ObjectFusion::velocity, velocity)))));
 }
 
-TEST_F(RoadModelDataSourceFixture, SetSpeedLimit_GivenTypicalSpeedLimit_ExpectSame)
+TEST_F(DataSourceFixture, SetSpeedLimit_GivenTypicalSpeedLimit_ExpectSame)
 {
     // Given
     const units::velocity::kilometers_per_hour_t speed_limit{100.0};
@@ -137,12 +136,12 @@ struct TestFrenetCoordinateParam
     GlobalLaneId global_lane_id;
 };
 
-using RoadModelDataSourceFixture_WithFrenetCoordinates = RoadModelDataSourceFixtureT<TestFrenetCoordinateParam>;
+using DataSourceFixture_WithFrenetCoordinates = DataSourceFixtureT<TestFrenetCoordinateParam>;
 
 // clang-format off
 INSTANTIATE_TEST_SUITE_P(
-    RoadModelDataSource,
-    RoadModelDataSourceFixture_WithFrenetCoordinates,
+    DataSource,
+    DataSourceFixture_WithFrenetCoordinates,
     ::testing::Values(
       //                        frenet_coordinates          , (expected) global_lane_id
       TestFrenetCoordinateParam{FrenetCoordinates{0.0, 2.0} , GlobalLaneId::kLeft      },
@@ -155,8 +154,7 @@ INSTANTIATE_TEST_SUITE_P(
 ));
 // clang-format on
 
-TEST_P(RoadModelDataSourceFixture_WithFrenetCoordinates,
-       GetGlobalLaneId_GivenTypicalFrenetCoordinates_ExpectGlobalLaneId)
+TEST_P(DataSourceFixture_WithFrenetCoordinates, GetGlobalLaneId_GivenTypicalFrenetCoordinates_ExpectGlobalLaneId)
 {
     // Given
     const auto param = GetParam();
@@ -168,7 +166,7 @@ TEST_P(RoadModelDataSourceFixture_WithFrenetCoordinates,
     EXPECT_EQ(actual, param.global_lane_id);
 }
 
-TEST_P(RoadModelDataSourceFixture_WithFrenetCoordinates, GetGlobalLaneId_GivenTypicalVehicleDynamics_ExpectGlobalLaneId)
+TEST_P(DataSourceFixture_WithFrenetCoordinates, GetGlobalLaneId_GivenTypicalVehicleDynamics_ExpectGlobalLaneId)
 {
     // Given
     const auto param = GetParam();

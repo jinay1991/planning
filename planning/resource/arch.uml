@@ -7,8 +7,8 @@ class IDataSource {
     + SensorFusion GetSensorFusion() const
 }
 
-class RoadModelDataSource {
-    + RoadModelDataSource(const LaneInformation::GlobalLaneId& lane_id, const VehicleDynamics& vehicle_dynamics, const MapCoordinates& map_coords, const PreviousPath& previous_path, const SensorFusion& sensor_fusion)
+class DataSource {
+    + DataSource(const LaneInformation::GlobalLaneId& lane_id, const VehicleDynamics& vehicle_dynamics, const MapCoordinates& map_coords, const PreviousPath& previous_path, const SensorFusion& sensor_fusion)
 
     + VehicleDynamics GetVehicleDynamics() const override
     + MapCoordinates GetMapCoordinates() const override
@@ -21,7 +21,7 @@ class RoadModelDataSource {
     - SensorFusion sensor_fusion_
 }
 
-IDataSource <|-- RoadModelDataSource
+IDataSource <|-- DataSource
 
 class MotionPlanning {
     + MotionPlanning(const std::unique_ptr<IDataSource> data_source)

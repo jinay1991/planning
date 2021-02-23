@@ -8,8 +8,8 @@
 
 #include "application/simulator/i_simulator.h"
 #include "planning/common/argument_parser.h"
+#include "planning/motion_planning/data_source.h"
 #include "planning/motion_planning/motion_planning.h"
-#include "planning/motion_planning/roadmodel_data_source.h"
 
 #include <json.hpp>
 
@@ -66,7 +66,7 @@ class UdacitySimulator : public ISimulator
     std::string map_file_;
 
     /// @brief DataSource (contains information on Vehicle Dynamics, SensorFusion, etc.)
-    planning::RoadModelDataSource data_source_;
+    planning::DataSource data_source_;
 
     /// @brief Motion Planning Instance to be used to generate Trajectory and Select optimal trajectory for ego motion
     std::unique_ptr<planning::MotionPlanning> motion_planning_;

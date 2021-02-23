@@ -14,17 +14,26 @@ namespace timer
 {
 namespace
 {
-class ChronoTimerSpecFixture : public ::testing::TestWithParam<std::chrono::system_clock::duration>
+class ChronoTimerFixture : public ::testing::TestWithParam<std::chrono::system_clock::duration>
 {
   protected:
     ChronoTimer timer_{};
 };
-TEST_P(ChronoTimerSpecFixture, GivenTypicalDuration_WhenStartTimer_ThenTimeoutOnDuration)
+
+INSTANTIATE_TEST_SUITE_P(ChronoTimer,
+                         ChronoTimerFixture,
+                         ::testing::Values(std::chrono::seconds{1}, std::chrono::milliseconds{500}));
+
+TEST_P(ChronoTimerFixture, Start_GivenTypicalDuration_ExpectTimeoutOnDuration)
 {
+    // Given
     const auto duration = GetParam();
     timer_.SetTimer(duration);
 
+    // When
     timer_.Start();
+
+    // Then
     ASSERT_TRUE(timer_.IsRunning());
     ASSERT_FALSE(timer_.IsTimeout());
 
@@ -33,18 +42,19 @@ TEST_P(ChronoTimerSpecFixture, GivenTypicalDuration_WhenStartTimer_ThenTimeoutOn
     EXPECT_FALSE(timer_.IsRunning());
     EXPECT_TRUE(timer_.IsTimeout());
 }
-INSTANTIATE_TEST_SUITE_P(BoundaryValueCheck,
-                         ChronoTimerSpecFixture,
-                         ::testing::Values(std::chrono::seconds{1}, std::chrono::milliseconds{500}));
 
-TEST_F(ChronoTimerSpecFixture, GivenTypicalTimer_WhenStopped_ThenStoppedTimer)
+TEST_F(ChronoTimerFixture, Stop_GivenTypicalTimer_ExpectStoppedTimer)
 {
+    // Given
     timer_.SetTimer(std::chrono::seconds(10));
     timer_.Start();
     ASSERT_TRUE(timer_.IsRunning());
     ASSERT_FALSE(timer_.IsTimeout());
 
+    // When
     timer_.Stop();
+
+    // Then
     EXPECT_FALSE(timer_.IsRunning());
 }
 }  // namespace

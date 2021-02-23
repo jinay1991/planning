@@ -3,7 +3,7 @@
 /// @brief Contains unit tests for Trajectory Evaluator.
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#include "planning/motion_planning/roadmodel_data_source.h"
+#include "planning/motion_planning/data_source.h"
 #include "planning/motion_planning/test/support/data_source_builder.h"
 #include "planning/motion_planning/test/support/trajectory_builder.h"
 #include "planning/motion_planning/trajectory_evaluator.h"
@@ -19,10 +19,10 @@ namespace
 using GlobalLaneId = LaneInformation::GlobalLaneId;
 using LaneId = LaneInformation::LaneId;
 
-class TrajectoryEvaluatorSpec : public ::testing::Test
+class TrajectoryEvaluatorFixture : public ::testing::Test
 {
   public:
-    TrajectoryEvaluatorSpec()
+    TrajectoryEvaluatorFixture()
         : ego_global_lane_id_{GlobalLaneId::kCenter},
           target_velocity_{units::velocity::meters_per_second_t{18.0}},
           ego_trajectory_{TrajectoryBuilder()
@@ -52,17 +52,29 @@ class TrajectoryEvaluatorSpec : public ::testing::Test
     const Trajectory right_trajectory_;
     const Trajectories planned_trajectories_;
 };
-TEST_F(TrajectoryEvaluatorSpec, GivenTypicalPlannedTrajectories_WhenEvaluated_ThenReturnSameNumberOfTrajectories)
-{
-    const auto actual = TrajectoryEvaluator(DataSourceBuilder().Build()).GetRatedTrajectories(planned_trajectories_);
 
+TEST_F(TrajectoryEvaluatorFixture, GetRatedTrajectories_GivenTypicalPlannedTrajectories_ExpectSameNumberOfTrajectories)
+{
+    // Given
+    const auto data_source = DataSourceBuilder().Build();
+
+    // When
+    const auto actual = TrajectoryEvaluator(data_source).GetRatedTrajectories(planned_trajectories_);
+
+    // Then
     EXPECT_EQ(actual.size(), planned_trajectories_.size());
 }
 
-TEST_F(TrajectoryEvaluatorSpec, GivenTypicalPlannedTrajectories_WhenNoObject_ThenReturnSameCostTrajectories)
+TEST_F(TrajectoryEvaluatorFixture,
+       GetRatedTrajectories_GivenTypicalPlannedTrajectoriesWithNoObjects_ExpectSameCostTrajectories)
 {
-    const auto actual = TrajectoryEvaluator(DataSourceBuilder().Build()).GetRatedTrajectories(planned_trajectories_);
+    // Given
+    const auto data_source = DataSourceBuilder().Build();
 
+    // When
+    const auto actual = TrajectoryEvaluator(data_source).GetRatedTrajectories(planned_trajectories_);
+
+    // Then
     const auto expected_cost = [&](const auto& trajectory) {
         const auto cost = (trajectory.lane_id != LaneId::kEgo) ? 1.0 : 0.0;
         EXPECT_DOUBLE_EQ(trajectory.cost, cost);
@@ -70,7 +82,8 @@ TEST_F(TrajectoryEvaluatorSpec, GivenTypicalPlannedTrajectories_WhenNoObject_The
     std::for_each(actual.begin(), actual.end(), expected_cost);
 }
 
-class TrajectoryEvaluatorSpecFixture : public ::testing::TestWithParam<std::tuple<GlobalLaneId, GlobalLaneId>>
+class TrajectoryEvaluatorFixture_WithEgoGlobalLaneId
+    : public ::testing::TestWithParam<std::tuple<GlobalLaneId, GlobalLaneId>>
 {
   protected:
     void SetUp() override
@@ -99,18 +112,28 @@ class TrajectoryEvaluatorSpecFixture : public ::testing::TestWithParam<std::tupl
     Trajectories planned_trajectories_{};
 };
 
-TEST_P(TrajectoryEvaluatorSpecFixture,
-       GivenTypicalPlannedTrajectories_WhenObjectInLane_ThenReturnHighCostToTrajectoryOnThatLane)
+INSTANTIATE_TEST_SUITE_P(
+    TrajectoryEvaluator,
+    TrajectoryEvaluatorFixture_WithEgoGlobalLaneId,
+    ::testing::Combine(::testing::Values(GlobalLaneId::kLeft, GlobalLaneId::kCenter, GlobalLaneId::kRight),
+                       ::testing::Values(GlobalLaneId::kLeft, GlobalLaneId::kCenter, GlobalLaneId::kRight)));
+
+TEST_P(TrajectoryEvaluatorFixture_WithEgoGlobalLaneId,
+       GetRatedTrajectories_GivenTypicalPlannedTrajectoriesWithObjectInLane_ExpectHighCostToTrajectoryOnThatLane)
 {
+    // Given
     const auto ego_global_lane_id = std::get<0>(GetParam());
     const auto obj_global_lane_id = std::get<1>(GetParam());
     const auto ego_velocity = units::velocity::meters_per_second_t{10.0};
-    const auto actual = TrajectoryEvaluator(DataSourceBuilder()
-                                                .WithGlobalLaneId(ego_global_lane_id)
-                                                .WithObjectInLane(obj_global_lane_id, ego_velocity)
-                                                .Build())
-                            .GetRatedTrajectories(planned_trajectories_);
+    const auto data_source = DataSourceBuilder()
+                                 .WithGlobalLaneId(ego_global_lane_id)
+                                 .WithObjectInLane(obj_global_lane_id, ego_velocity)
+                                 .Build();
 
+    // When
+    const auto actual = TrajectoryEvaluator(data_source).GetRatedTrajectories(planned_trajectories_);
+
+    // Then
     const auto expected_cost = [&](const auto& trajectory) {
         if (trajectory.global_lane_id == GlobalLaneId::kInvalid || trajectory.global_lane_id == obj_global_lane_id)
         {
@@ -124,11 +147,6 @@ TEST_P(TrajectoryEvaluatorSpecFixture,
     };
     std::for_each(actual.begin(), actual.end(), expected_cost);
 }
-INSTANTIATE_TEST_SUITE_P(
-    TrajectoryEvaluator,
-    TrajectoryEvaluatorSpecFixture,
-    ::testing::Combine(::testing::Values(GlobalLaneId::kLeft, GlobalLaneId::kCenter, GlobalLaneId::kRight),
-                       ::testing::Values(GlobalLaneId::kLeft, GlobalLaneId::kCenter, GlobalLaneId::kRight)));
 
 }  // namespace
 }  // namespace planning

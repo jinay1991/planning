@@ -9,7 +9,7 @@
 #include "planning/datatypes/lane.h"
 #include "planning/datatypes/sensor_fusion.h"
 #include "planning/datatypes/vehicle_dynamics.h"
-#include "planning/motion_planning/roadmodel_data_source.h"
+#include "planning/motion_planning/data_source.h"
 #include "planning/motion_planning/test/support/sensor_fusion_builder.h"
 
 #include <units.h>
@@ -130,7 +130,7 @@ class DataSourceBuilder
     }
 
     /// @brief Build Data Source Object
-    const RoadModelDataSource& Build()
+    DataSource Build()
     {
         data_source_.SetPreviousPath(previous_path_global_);
         data_source_.SetPreviousPathEnd(previous_path_end_frenet_);
@@ -192,7 +192,7 @@ class DataSourceBuilder
     units::velocity::meters_per_second_t speed_limit_;
 
     /// @brief Data Source Object
-    RoadModelDataSource data_source_;
+    DataSource data_source_;
 };
 }  // namespace
 }  // namespace planning

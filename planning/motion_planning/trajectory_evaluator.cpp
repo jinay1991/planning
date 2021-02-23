@@ -10,7 +10,7 @@
 
 namespace planning
 {
-TrajectoryEvaluator::TrajectoryEvaluator(const IDataSource& data_source) : lane_evaluator_{data_source} {}
+TrajectoryEvaluator::TrajectoryEvaluator(const DataSource& data_source) : lane_evaluator_{data_source} {}
 
 Trajectories TrajectoryEvaluator::GetRatedTrajectories(const Trajectories& optimized_trajectories) const
 {
@@ -20,14 +20,14 @@ Trajectories TrajectoryEvaluator::GetRatedTrajectories(const Trajectories& optim
     std::copy_if(optimized_trajectories.begin(),
                  optimized_trajectories.end(),
                  std::back_inserter(rated_trajectories),
-                 [&](const auto& trajectory) {
-                     return trajectory.global_lane_id != GlobalLaneId::kInvalid &&
+                 [this](const auto& trajectory) {
+                     return (trajectory.global_lane_id != GlobalLaneId::kInvalid) &&
                             lane_evaluator_.IsValidLane(trajectory.lane_id);
                  });
 
     /// @todo Improve Cost adjustment algorithm
     // update costs for each trajectory
-    const auto adjust_costs = [&](const auto& trajectory) {
+    const auto adjust_costs = [this](const auto& trajectory) {
         auto rated_trajectory = trajectory;
         rated_trajectory.drivable = lane_evaluator_.IsDrivableLane(trajectory.lane_id);
         if (!rated_trajectory.drivable)

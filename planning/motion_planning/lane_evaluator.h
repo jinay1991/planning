@@ -8,7 +8,7 @@
 #include "planning/datatypes/lane.h"
 #include "planning/datatypes/sensor_fusion.h"
 #include "planning/datatypes/trajectory.h"
-#include "planning/motion_planning/i_data_source.h"
+#include "planning/motion_planning/data_source.h"
 
 #include <memory>
 
@@ -19,7 +19,7 @@ class LaneEvaluator
 {
   public:
     /// @brief Constructor. Initializes based on provided DataSource
-    explicit LaneEvaluator(const IDataSource& data_source);
+    explicit LaneEvaluator(const DataSource& data_source);
 
     /// @brief Evaluates Lane to be drivable (collision free)
     bool IsDrivableLane(const LaneId& lane_id) const;
@@ -35,7 +35,7 @@ class LaneEvaluator
     bool IsObjectNear(const FrenetCoordinates& ego_position, const FrenetCoordinates& obj_position) const;
 
     /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, etc.)
-    const IDataSource& data_source_;
+    const DataSource& data_source_;
 };
 }  // namespace planning
 #endif  /// PLANNING_MOTION_PLANNING_LANE_EVALUATOR_H

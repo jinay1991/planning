@@ -14,16 +14,20 @@ namespace planning
 {
 namespace
 {
-TEST(TrajectorySelectorTest, GivenTypicalTrajectories_WhenPrioritized_ThenSelectedTopPriorityTrajectory)
+
+TEST(TrajectorySelectorTest, GetSelectedTrajectory_GivenTypicalTrajectories_ExpectSelectedTopPriorityTrajectory)
 {
+    // Given
     const auto ego_trajectory = TrajectoryBuilder().WithLaneId(LaneId::kEgo).WithCost(1.0).Build();
     const auto left_trajectory = TrajectoryBuilder().WithLaneId(LaneId::kLeft).WithCost(2.0).Build();
     const auto right_trajectory = TrajectoryBuilder().WithLaneId(LaneId::kRight).WithCost(3.0).Build();
-
     const auto trajectories = Trajectories{ego_trajectory, left_trajectory, right_trajectory};
     const auto prioritized_trajectories = TrajectoryPrioritizer().GetPrioritizedTrajectories(trajectories);
+
+    // When
     const auto actual = TrajectorySelector().GetSelectedTrajectory(prioritized_trajectories);
 
+    // Then
     EXPECT_EQ(actual.lane_id, LaneId::kEgo);
     EXPECT_DOUBLE_EQ(actual.cost, ego_trajectory.cost);
 }

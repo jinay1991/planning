@@ -10,11 +10,11 @@
 namespace planning
 {
 /// @brief DataSource based on RoadModel (contains information from Front Sensors and Rear Sensors).
-class RoadModelDataSource : public IDataSource
+class DataSource : public IDataSource
 {
   public:
     /// @brief Constructor. Initialize with default values for all information.
-    RoadModelDataSource();
+    DataSource();
 
     /// @brief Set current Vehicle Dynamics
     void SetVehicleDynamics(const VehicleDynamics& vehicle_dynamics) override;

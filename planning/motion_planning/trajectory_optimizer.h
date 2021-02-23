@@ -5,7 +5,7 @@
 #ifndef PLANNING_MOTION_PLANNING_TRAJECTORY_OPTIMIZER_H
 #define PLANNING_MOTION_PLANNING_TRAJECTORY_OPTIMIZER_H
 
-#include "planning/motion_planning/i_data_source.h"
+#include "planning/motion_planning/data_source.h"
 #include "planning/motion_planning/i_trajectory_optimizer.h"
 
 #include <spline.h>
@@ -19,7 +19,7 @@ class TrajectoryOptimizer : public ITrajectoryOptimizer
 {
   public:
     /// @brief Constructor. Initializes with provided DataSource
-    explicit TrajectoryOptimizer(const IDataSource& data_source);
+    explicit TrajectoryOptimizer(const DataSource& data_source);
 
     /// @brief Provide Optimized Trajectories set using Spline Equations
     Trajectories GetOptimizedTrajectories(const Trajectories& planned_trajectories) const override;
@@ -29,7 +29,7 @@ class TrajectoryOptimizer : public ITrajectoryOptimizer
     Trajectory GetOptimizedTrajectory(const Trajectory& planned_trajectory) const;
 
     /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, Map Points etc.)
-    const IDataSource& data_source_;
+    const DataSource& data_source_;
 };
 
 }  // namespace planning

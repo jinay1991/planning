@@ -8,7 +8,7 @@
 
 namespace planning
 {
-LaneEvaluator::LaneEvaluator(const IDataSource& data_source) : data_source_{data_source} {}
+LaneEvaluator::LaneEvaluator(const DataSource& data_source) : data_source_{data_source} {}
 
 bool LaneEvaluator::IsObjectNear(const FrenetCoordinates& ego_position, const FrenetCoordinates& obj_position) const
 {

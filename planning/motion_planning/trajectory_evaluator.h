@@ -6,7 +6,7 @@
 #define PLANNING_MOTION_PLANNING_TRAJECTORY_EVALUATOR_H
 
 #include "planning/datatypes/sensor_fusion.h"
-#include "planning/motion_planning/i_data_source.h"
+#include "planning/motion_planning/data_source.h"
 #include "planning/motion_planning/i_trajectory_evaluator.h"
 #include "planning/motion_planning/lane_evaluator.h"
 
@@ -19,7 +19,7 @@ class TrajectoryEvaluator : public ITrajectoryEvaluator
 {
   public:
     /// @brief Constructor. Initializes with provided DataSource
-    explicit TrajectoryEvaluator(const IDataSource& data_source);
+    explicit TrajectoryEvaluator(const DataSource& data_source);
 
     /// @brief Get Rated Trajectories for provided optimized trajectories.
     Trajectories GetRatedTrajectories(const Trajectories& optimized_trajectories) const override;
