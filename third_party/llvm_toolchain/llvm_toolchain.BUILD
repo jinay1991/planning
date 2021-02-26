@@ -46,6 +46,21 @@ filegroup(
 )
 
 filegroup(
+    name = "llvm-objcopy",
+    srcs = ["bin/llvm-objcopy"],
+)
+
+filegroup(
+    name = "llvm-objdump",
+    srcs = ["bin/llvm-objdump"],
+)
+
+filegroup(
+    name = "llvm-strip",
+    srcs = ["bin/llvm-strip"],
+)
+
+filegroup(
     name = "compiler_pieces",
     srcs = glob(["**"]),
 )
