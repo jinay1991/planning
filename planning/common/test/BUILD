@@ -20,7 +20,6 @@ cc_test(
     tags = [
         "fuzzer",
         "manual",
-        "unit",
     ],
     deps = [
         "//planning/common",
