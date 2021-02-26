@@ -47,3 +47,27 @@ filegroup(
         "@llvm_toolchain//:llvm-nm",
     ],
 )
+
+filegroup(
+    name = "llvm-objcopy",
+    srcs = [
+        "llvm-objcopy",
+        "@llvm_toolchain//:llvm-objcopy",
+    ],
+)
+
+filegroup(
+    name = "llvm-objdump",
+    srcs = [
+        "llvm-objdump",
+        "@llvm_toolchain//:llvm-objdump",
+    ],
+)
+
+filegroup(
+    name = "llvm-strip",
+    srcs = [
+        "llvm-strip",
+        "@llvm_toolchain//:llvm-strip",
+    ],
+)

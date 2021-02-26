@@ -20,6 +20,15 @@ filegroup(
 )
 
 filegroup(
+    name = "linker_files",
+    srcs = [
+        "//bazel/toolchain/clang/bin:ar",
+        "//bazel/toolchain/clang/bin:lcov",
+        "//bazel/toolchain/clang/bin:lld",
+    ],
+)
+
+filegroup(
     name = "compiler_files",
     srcs = [
         ":sysroot",
@@ -32,6 +41,15 @@ filegroup(
     ],
 )
 
+filegroup(
+    name = "all_files",
+    srcs = [
+        ":compiler_files",
+        ":linker_files",
+        ":sysroot",
+    ],
+)
+
 clang_toolchain_config(name = "clang_toolchain_config")
 
 cc_toolchain(
@@ -41,8 +59,8 @@ cc_toolchain(
     compiler_files = ":compiler_files",
     dwp_files = ":empty",
     linker_files = ":compiler_files",
-    objcopy_files = ":empty",
-    strip_files = ":empty",
+    objcopy_files = ":compiler_files",
+    strip_files = ":compiler_files",
     supports_param_files = 0,
     toolchain_config = ":clang_toolchain_config",
     toolchain_identifier = "clang-linux",

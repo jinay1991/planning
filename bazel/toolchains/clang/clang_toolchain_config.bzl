@@ -417,7 +417,7 @@ def _impl(ctx):
         tool_path(name = "nm", path = "bin/llvm-nm"),
         tool_path(name = "objcopy", path = "bin/llvm-objcopy"),
         tool_path(name = "objdump", path = "bin/llvm-objdump"),
-        tool_path(name = "strip", path = "/bin/false"),
+        tool_path(name = "strip", path = "bin/llvm-strip"),
     ]
 
     out = ctx.actions.declare_file(ctx.label.name)
