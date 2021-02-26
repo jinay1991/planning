@@ -23,11 +23,11 @@ filegroup(
     name = "compiler_files",
     srcs = [
         ":sysroot",
-        "//bazel/toolchain/clang/llvm:ar",
-        "//bazel/toolchain/clang/llvm:cc",
-        "//bazel/toolchain/clang/llvm:cpp",
-        "//bazel/toolchain/clang/llvm:lcov",
-        "//bazel/toolchain/clang/llvm:nm",
+        "//bazel/toolchains/clang/bin:ar",
+        "//bazel/toolchains/clang/bin:cc",
+        "//bazel/toolchains/clang/bin:cpp",
+        "//bazel/toolchains/clang/bin:lcov",
+        "//bazel/toolchains/clang/bin:nm",
         "@llvm_toolchain//:compiler_pieces",
     ],
 )
@@ -51,7 +51,7 @@ cc_toolchain(
 cc_toolchain_suite(
     name = "clang",
     toolchains = {
-        "k8": ":clang_toolchain",
-        "k8|clang": ":clang_toolchain",
+        "k8": "//bazel/toolchains/clang:clang_toolchain",
+        "k8|clang": "//bazel/toolchains/clang:clang_toolchain",
     },
 )

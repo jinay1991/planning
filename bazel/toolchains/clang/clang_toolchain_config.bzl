@@ -15,16 +15,6 @@ def _impl(ctx):
         ACTION_NAMES.preprocess_assemble,
     ]
 
-    all_cpp_compile_actions = [
-        ACTION_NAMES.clif_match,
-        ACTION_NAMES.cpp_compile,
-        ACTION_NAMES.cpp_header_parsing,
-        ACTION_NAMES.cpp_module_codegen,
-        ACTION_NAMES.cpp_module_compile,
-        ACTION_NAMES.linkstamp_compile,
-        ACTION_NAMES.lto_backend,
-    ]
-
     all_link_actions = [
         ACTION_NAMES.cpp_link_dynamic_library,
         ACTION_NAMES.cpp_link_executable,
@@ -417,17 +407,17 @@ def _impl(ctx):
     ]
 
     tool_paths = [
-        tool_path(name = "ar", path = "llvm/llvm-ar"),
-        tool_path(name = "compat-ld", path = "bin/false"),
-        tool_path(name = "cpp", path = "llvm/clang-cpp"),
-        tool_path(name = "dwp", path = "bin/false"),
-        tool_path(name = "gcc", path = "llvm/clang++"),
-        tool_path(name = "gcov", path = "llvm/llvm-cov"),
-        tool_path(name = "ld", path = "llvm/lld"),
-        tool_path(name = "nm", path = "llvm/llvm-nm"),
-        tool_path(name = "objcopy", path = "bin/false"),
-        tool_path(name = "objdump", path = "bin/false"),
-        tool_path(name = "strip", path = "bin/false"),
+        tool_path(name = "ar", path = "bin/llvm-ar"),
+        tool_path(name = "compat-ld", path = "/bin/false"),
+        tool_path(name = "cpp", path = "bin/clang-cpp"),
+        tool_path(name = "dwp", path = "/bin/false"),
+        tool_path(name = "gcc", path = "bin/clang++"),
+        tool_path(name = "gcov", path = "bin/llvm-cov"),
+        tool_path(name = "ld", path = "bin/lld"),
+        tool_path(name = "nm", path = "bin/llvm-nm"),
+        tool_path(name = "objcopy", path = "/bin/false"),
+        tool_path(name = "objdump", path = "/bin/false"),
+        tool_path(name = "strip", path = "/bin/false"),
     ]
 
     out = ctx.actions.declare_file(ctx.label.name)

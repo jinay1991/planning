@@ -1,4 +1,4 @@
-package(default_visibility = ["//bazel/toolchain/clang:__pkg__"])
+package(default_visibility = ["//bazel/toolchains/clang:__pkg__"])
 
 filegroup(
     name = "ar",
