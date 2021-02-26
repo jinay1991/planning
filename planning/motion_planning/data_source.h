@@ -68,9 +68,6 @@ class DataSource : public IDataSource
     /// @brief Check if given Frenet Coordinate is on Right Lane (Global)
     static bool IsRightLane(const FrenetCoordinates& coords);
 
-    /// @brief Global Lane Id for Ego Vehicle
-    GlobalLaneId global_lane_id_;
-
     /// @brief Current Vehicle Dynamics
     VehicleDynamics vehicle_dynamics_;
 

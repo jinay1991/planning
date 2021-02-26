@@ -1,0 +1,7 @@
+#!/bin/bash --norc
+
+THIS_DIR=$(dirname "$0")
+THIS_NAME=$(basename "$0")
+SDK_BIN=external/llvm_toolchain/bin
+
+exec "${SDK_BIN}"/"${THIS_NAME}" "$@"

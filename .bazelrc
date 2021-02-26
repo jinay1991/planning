@@ -1,3 +1,11 @@
 build --color=yes
 build --test_env="GTEST_COLOR=TRUE" --test_env="DISPLAY" --test_output=errors
 build --cxxopt="-std=c++14" --cxxopt="-Wall"
+
+
+build:clang11 --experimental_guard_against_concurrent_changes
+build:clang11 --crosstool_top=//bazel/toolchain/clang:clang
+build:clang11 --host_crosstool_top=//bazel/toolchain/clang:clang
+build:clang11 --compiler=clang
+build:clang11 --features=no_legacy_features
+build:clang11 --features=treat_warnings_as_errors
