@@ -13,3 +13,16 @@ cc_test(
         "@googletest//:gtest_main",
     ],
 )
+
+cc_test(
+    name = "fuzzer_tests",
+    srcs = ["chrono_timer_fuzzer_tests.cpp"],
+    tags = [
+        "fuzzer",
+        "manual",
+        "unit",
+    ],
+    deps = [
+        "//planning/common",
+    ],
+)

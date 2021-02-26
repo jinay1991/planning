@@ -3,8 +3,6 @@ load(":clang_toolchain_config.bzl", "clang_toolchain_config")
 
 package(default_visibility = ["//visibility:public"])
 
-clang_toolchain_config(name = "clang_toolchain_config")
-
 filegroup(
     name = "empty",
     srcs = [],
@@ -33,6 +31,8 @@ filegroup(
         "@llvm_toolchain//:compiler_pieces",
     ],
 )
+
+clang_toolchain_config(name = "clang_toolchain_config")
 
 cc_toolchain(
     name = "clang_toolchain",

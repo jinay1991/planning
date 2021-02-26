@@ -55,10 +55,10 @@ def _impl(ctx):
                     flag_group(
                         flags = [
                             "-pipe",
-                            "-fuse-id=lld",
+                            "-fuse-ld=lld",
                             "-Wl,-z,relro,-z,now,-z,notext",
                             "-no-canonical-prefixes",
-                            "-pthrea",
+                            "-pthread",
                         ],
                     ),
                 ],

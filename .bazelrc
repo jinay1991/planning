@@ -1,11 +1,44 @@
+# Default Build Configuration
 build --color=yes
-build --test_env="GTEST_COLOR=TRUE" --test_env="DISPLAY" --test_output=errors
-build --cxxopt="-std=c++14" --cxxopt="-Wall"
+build --test_env="GTEST_COLOR=TRUE"
+build --test_env="DISPLAY"
+build --test_output=errors
+build --cxxopt="-std=c++14"
+build --cxxopt="-Wall"
 
-
+# LLVM 11.0 Build Configuration
 build:clang11 --experimental_guard_against_concurrent_changes
 build:clang11 --crosstool_top=//bazel/toolchain/clang:clang
 build:clang11 --host_crosstool_top=//bazel/toolchain/clang:clang
 build:clang11 --compiler=clang
 build:clang11 --features=no_legacy_features
 build:clang11 --features=treat_warnings_as_errors
+
+build:clang_tidy11 --aspects=bazel/clang_tidy/clang_tidy_aspect.bzl%clang_tidy_aspect
+build:clang_tidy11 --output_groups=cc_aspect_output
+build:clang_tidy11 --config=clang11
+build:clang_tidy11 --build_tag_filters="-tidy_suite"
+
+build:dbg_fuzzer --config=clang11
+build:dbg_fuzzer --copt=-g
+build:dbg_fuzzer --compilation_mode=dbg
+build:dbg_fuzzer --features=sanitizer
+build:dbg_fuzzer --features=fuzzer
+
+build:dbg_sanitize_base --config=clang11
+build:dbg_sanitize_base --compilation_mode=dbg
+build:dbg_sanitize_base --copt=-g
+build:dbg_sanitize_base --copt=-fno-optimize-sibling-calls
+build:dbg_sanitize_base --copt=-fno-omit-frame-pointer
+
+build:dbg_sanitize_asan --config=dbg_sanitize_base
+build:dbg_sanitize_asan --copt=-fsanitize=address
+build:dbg_sanitize_asan --copt=-fsanitize-recover=address
+build:dbg_sanitize_asan --linkopt=-fsanitize=address
+build:dbg_sanitize_asan --action_env=ASANOPTIONS=halt_on_error=0
+
+build:dbg_sanitize_ubsan --config=dbg_sanitize_base
+build:dbg_sanitize_ubsan --copt=-fsanitize=undefined,float-cast-overflow
+build:dbg_sanitize_ubsan --copt=-fno-sanitize=float-divide-by-zero
+build:dbg_sanitize_ubsan --linkopt=-fsanitize=undefined
+build:dbg_sanitize_ubsan --action_env=UBSANOPTIONS=print_stacktrace=1
