@@ -22,9 +22,9 @@ filegroup(
 filegroup(
     name = "linker_files",
     srcs = [
-        "//bazel/toolchain/clang/bin:ar",
-        "//bazel/toolchain/clang/bin:lcov",
-        "//bazel/toolchain/clang/bin:lld",
+        "//bazel/toolchains/clang/bin:ar",
+        "//bazel/toolchains/clang/bin:lcov",
+        "//bazel/toolchains/clang/bin:lld",
     ],
 )
 

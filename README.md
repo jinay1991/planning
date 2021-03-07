@@ -1,10 +1,10 @@
-# Motion Planning 
+# Motion Planning
 
-[![pipeline status](https://gitlab.com/jinay1991/motion_planning/badges/master/pipeline.svg)](https://ad_platform.gitlab.com/jinay1991/planning/commits/master)
-[![coverage report](https://gitlab.com/jinay1991/motion_planning/badges/master/coverage.svg?job=code-coverage)](https://ad_platform.gitlab.io/planning/coverage/index.html)
-[![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://ad_platform.gitlab.io/planning/doc/html/)
+[![pipeline status](https://gitlab.com/ad_platform/motion_planning/badges/master/pipeline.svg)](https://gitlab.com/ad_platform/planning/-/pipelines)
+[![coverage report](https://gitlab.com/ad_platform/planning/badges/master/coverage.svg?job=code-coverage)](https://ad_platform.gitlab.io/planning/coverage/index.html)
+[![Documentation](https://img.shields.io/badge/doc-doxygen-blue.svg)](https://ad_platform.gitlab.io/planning/doc/html/)
 [![Static Code Analyzer](https://img.shields.io/badge/static-analysis-green.svg)](https://ad_platform.gitlab.io/planning/static_code_analysis_report/)
-[![Issues](https://img.shields.io/badge/bugs-issues-green.svg)](https://ad_platform.gitlab.com/jinay1991/planning/-/boards)]
+[![Issues](https://img.shields.io/badge/bugs-issues-green.svg)](https://gitlab.com/ad_platform/planning/-/boards/)]
 
 This repository contains one of the subsystem for Autonomous Driving Platform.
 
@@ -30,7 +30,7 @@ This repository is primarily hosted on [GitLab](https://gitlab.com/jinay1991/mot
 
 ## Test
 
-* Launch Simulator 
+* Launch Simulator
 * Run `./bazel-bin/client-app data/highway-map.csv`
 
 ![Screenshot](example/screenshot_01.png)
@@ -43,19 +43,19 @@ This repository is primarily hosted on [GitLab](https://gitlab.com/jinay1991/mot
     On Linux, `apt-get install libssl-dev`
 
 * `libuv`
-    
+
     On macOS, `brew install libuv`
     On Linux, `apt-get install libuv1-dev`
 
-* [Bazel](https://docs.bazel.build/versions/1.1.0/getting-started.html) 
+* [Bazel](https://docs.bazel.build/versions/1.1.0/getting-started.html)
 * Simulator
     * Download prebuilt binaries
-        * [Linux](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_linux.zip) 
+        * [Linux](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_linux.zip)
         * [MacOS](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_mac.zip)
         * [MacOS Catalina v10.15](https://github.com/jinay1991/motion_planning/releases/download/v1.1/term3_sim_mac_catalina.zip)
         * [Windows](https://github.com/udacity/self-driving-car-sim/releases/download/T3_v1.2/term3_sim_windows.zip)
 
-## Supported OS 
+## Supported OS
 
 Currently project works (tested) on following Operating Systems:
 
@@ -79,7 +79,7 @@ Repository uses some of the third party library as follows, which are being down
 If one want to use Docker Image for quick and easy built-test. Follow below steps:
 
 1. Install [Docker](https://docs.docker.com/v17.09/engine/installation/) for respective OS.
-2. Pull Latest Docker Image 
+2. Pull Latest Docker Image
 
     ```
     docker pull registry.gitlab.com/ad_platform/planning:latest
@@ -94,6 +94,6 @@ If one want to use Docker Image for quick and easy built-test. Follow below step
 4. Build and test within docker container
 
     ```
-    bazel build //... 
+    bazel build //...
     bazel test //... --test_output=all
     ```

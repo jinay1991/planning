@@ -19,26 +19,26 @@ build:clang_tidy11 --output_groups=cc_aspect_output
 build:clang_tidy11 --config=clang11
 build:clang_tidy11 --build_tag_filters="-tidy_suite"
 
-build:dbg_fuzzer --config=clang11
-build:dbg_fuzzer --copt=-g
-build:dbg_fuzzer --compilation_mode=dbg
-build:dbg_fuzzer --features=sanitizer
-build:dbg_fuzzer --features=fuzzer
+build:fuzzer --config=clang11
+build:fuzzer --copt=-g
+build:fuzzer --compilation_mode=dbg
+build:fuzzer --features=sanitizer
+build:fuzzer --features=fuzzer
 
-build:dbg_sanitize_base --config=clang11
-build:dbg_sanitize_base --compilation_mode=dbg
-build:dbg_sanitize_base --copt=-g
-build:dbg_sanitize_base --copt=-fno-optimize-sibling-calls
-build:dbg_sanitize_base --copt=-fno-omit-frame-pointer
+build:basesan --config=clang11
+build:basesan --compilation_mode=dbg
+build:basesan --copt=-g
+build:basesan --copt=-fno-optimize-sibling-calls
+build:basesan --copt=-fno-omit-frame-pointer
 
-build:dbg_sanitize_asan --config=dbg_sanitize_base
-build:dbg_sanitize_asan --copt=-fsanitize=address
-build:dbg_sanitize_asan --copt=-fsanitize-recover=address
-build:dbg_sanitize_asan --linkopt=-fsanitize=address
-build:dbg_sanitize_asan --action_env=ASANOPTIONS=halt_on_error=0
+build:asan --config=basesan
+build:asan --copt=-fsanitize=address
+build:asan --copt=-fsanitize-recover=address
+build:asan --linkopt=-fsanitize=address
+build:asan --action_env=ASANOPTIONS=halt_on_error=0
 
-build:dbg_sanitize_ubsan --config=dbg_sanitize_base
-build:dbg_sanitize_ubsan --copt=-fsanitize=undefined,float-cast-overflow
-build:dbg_sanitize_ubsan --copt=-fno-sanitize=float-divide-by-zero
-build:dbg_sanitize_ubsan --linkopt=-fsanitize=undefined
-build:dbg_sanitize_ubsan --action_env=UBSANOPTIONS=print_stacktrace=1
+build:ubsan --config=basesan
+build:ubsan --copt=-fsanitize=undefined,float-cast-overflow
+build:ubsan --copt=-fno-sanitize=float-divide-by-zero
+build:ubsan --linkopt=-fsanitize=undefined
+build:ubsan --action_env=UBSANOPTIONS=print_stacktrace=1

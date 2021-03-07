@@ -49,7 +49,7 @@ filegroup(
 )
 
 filegroup(
-    name = "llvm-objcopy",
+    name = "objcopy",
     srcs = [
         "llvm-objcopy",
         "@llvm_toolchain//:llvm-objcopy",
@@ -57,7 +57,7 @@ filegroup(
 )
 
 filegroup(
-    name = "llvm-objdump",
+    name = "objdump",
     srcs = [
         "llvm-objdump",
         "@llvm_toolchain//:llvm-objdump",
@@ -65,7 +65,7 @@ filegroup(
 )
 
 filegroup(
-    name = "llvm-strip",
+    name = "strip",
     srcs = [
         "llvm-strip",
         "@llvm_toolchain//:llvm-strip",
