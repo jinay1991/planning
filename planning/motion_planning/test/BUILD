@@ -32,3 +32,15 @@ cc_test(
         "@googletest//:gtest_main",
     ],
 )
+
+cc_test(
+    name = "fuzzer_tests",
+    srcs = ["motion_planning_fuzzer_tests.cpp"],
+    tags = [
+        "fuzzer",
+        "manual",
+    ],
+    deps = [
+        "//planning/motion_planning",
+    ],
+)

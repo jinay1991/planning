@@ -7,8 +7,7 @@
 namespace planning
 {
 DataSource::DataSource()
-    : global_lane_id_{GlobalLaneId::kCenter},
-      vehicle_dynamics_{},
+    : vehicle_dynamics_{},
       map_coordinates_{},
       previous_path_global_{},
       previous_path_end_frenet_{},
