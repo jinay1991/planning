@@ -28,7 +28,7 @@ class MotionPlanning
 {
   public:
     /// @brief Constructor. Initialize Motion Planner with DataSource instance
-    explicit MotionPlanning(const DataSource& data_source);
+    explicit MotionPlanning(const IDataSource& data_source);
 
     /// @brief Generate Trajectories based on the provided DataSource (i.e. Environment)
     void GenerateTrajectories();

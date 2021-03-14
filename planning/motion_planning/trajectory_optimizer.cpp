@@ -11,7 +11,7 @@
 
 namespace planning
 {
-TrajectoryOptimizer::TrajectoryOptimizer(const DataSource& data_source) : data_source_{data_source} {}
+TrajectoryOptimizer::TrajectoryOptimizer(const IDataSource& data_source) : data_source_{data_source} {}
 
 Trajectories TrajectoryOptimizer::GetOptimizedTrajectories(const Trajectories& planned_trajectories) const
 {

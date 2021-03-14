@@ -22,7 +22,7 @@ class TrajectoryPlanner : public ITrajectoryPlanner
 {
   public:
     /// @brief Constructor. Initializes with provided DataSource
-    explicit TrajectoryPlanner(const DataSource& data_source);
+    explicit TrajectoryPlanner(const IDataSource& data_source);
 
     /// @brief Get Planned Trajectories for each maneuvers provided.
     Trajectories GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const override;
@@ -44,7 +44,7 @@ class TrajectoryPlanner : public ITrajectoryPlanner
     GlobalLaneId GetGlobalLaneId(const LaneId& lane_id) const;
 
     /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, etc.)
-    const DataSource& data_source_;
+    const IDataSource& data_source_;
 };
 }  // namespace planning
 
