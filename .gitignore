@@ -1,7 +1,7 @@
 # Extras
 .DS_Store
 term3_sim_*
-.compile_commands.json
+compile_commands.json
 
 # bazel build files
 bazel-*

@@ -34,11 +34,11 @@ LaneId LaneEvaluator::GetLocalLaneId(const GlobalLaneId& global_lane_id) const
     {
         lane_id = LaneId::kEgo;
     }
-    else if (ego_global_lane_id - 1 == global_lane_id)
+    else if ((ego_global_lane_id - 1) == global_lane_id)
     {
         lane_id = LaneId::kLeft;
     }
-    else if (ego_global_lane_id + 1 == global_lane_id)
+    else if ((ego_global_lane_id + 1) == global_lane_id)
     {
         lane_id = LaneId::kRight;
     }

@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <sstream>
+#include <vector>
 
 namespace planning
 {
@@ -50,31 +51,29 @@ Trajectory TrajectoryOptimizer::GetOptimizedTrajectory(const Trajectory& planned
     // split waypoints to points_x and points_y for spline utility
     std::vector<double> points_x;
     std::vector<double> points_y;
-    std::transform(optimized_trajectory.waypoints.begin(),
-                   optimized_trajectory.waypoints.end(),
-                   std::back_inserter(points_x),
-                   [](const auto& wp) { return wp.x; });
-    std::transform(optimized_trajectory.waypoints.begin(),
-                   optimized_trajectory.waypoints.end(),
-                   std::back_inserter(points_y),
-                   [](const auto& wp) { return wp.y; });
+    for (const auto& waypoint : optimized_trajectory.waypoints)
+    {
+        points_x.push_back(waypoint.x);
+        points_y.push_back(waypoint.y);
+    }
 
     tk::spline spline;
 
     spline.set_points(points_x, points_y);
 
     // spline waypoints at 30m intervals
-    auto target_position = GlobalCoordinates{30.0, spline(30.0)};
-    double target_dist = sqrt((target_position.x * target_position.x) + (target_position.y * target_position.y));
+    const auto target_position = GlobalCoordinates{30.0, spline(30.0)};
+    const auto target_distance =
+        sqrt((target_position.x * target_position.x) + (target_position.y * target_position.y));
     double x_add_on = 0.0;
 
-    const auto yaw = optimized_trajectory.yaw.value();
+    const auto yaw = optimized_trajectory.yaw;
     const auto position = optimized_trajectory.position;
     const auto target_velocity = optimized_trajectory.velocity.value();
-
-    for (std::size_t i = 1; i <= 50 - previous_path_global.size(); i++)
+    constexpr auto kTotalWaypoints = 50U;
+    for (std::size_t i = 1; i <= kTotalWaypoints - previous_path_global.size(); i++)
     {
-        double N = (target_dist / (0.02F * target_velocity));
+        const double N = (target_distance / (0.02 * target_velocity));
         double x_point = x_add_on + (target_position.x / N);
         double y_point = spline(x_point);
 
@@ -83,8 +82,8 @@ Trajectory TrajectoryOptimizer::GetOptimizedTrajectory(const Trajectory& planned
         double x_ref = x_point;
         double y_ref = y_point;
 
-        x_point = (x_ref * cos(yaw) - y_ref * sin(yaw));
-        y_point = (x_ref * sin(yaw) + y_ref * cos(yaw));
+        x_point = (x_ref * units::math::cos(yaw) - y_ref * units::math::sin(yaw));
+        y_point = (x_ref * units::math::sin(yaw) + y_ref * units::math::cos(yaw));
 
         x_point += position.x;
         y_point += position.y;

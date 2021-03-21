@@ -6,13 +6,11 @@
 
 #include "planning/common/logging.h"
 
-#include <algorithm>
-
 namespace planning
 {
 Trajectory TrajectorySelector::GetSelectedTrajectory(const PrioritizedTrajectories& prioritized_trajectories) const
 {
-    const auto selected_trajectory = prioritized_trajectories.top();
+    const auto& selected_trajectory = prioritized_trajectories.top();
 
     std::stringstream log_stream;
     log_stream << "Selected trajectory (lane_id): " << selected_trajectory.global_lane_id << std::endl;
