@@ -1,3 +1,4 @@
+load("@planning//third_party/base64:base64.bzl", "base64")
 load("@planning//third_party/benchmark:benchmark.bzl", "benchmark")
 load("@planning//third_party/eigen:eigen.bzl", "eigen")
 load("@planning//third_party/glog:glog.bzl", "glog")
@@ -14,6 +15,7 @@ load("@planning//third_party/zlib:zlib.bzl", "zlib")
 
 def planning_dependencies():
     """ Load 3rd party dependencies """
+    base64()
     benchmark()
     eigen()
     glog()
