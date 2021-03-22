@@ -6,8 +6,9 @@
 
 namespace planning
 {
+using namespace units::literals;
 
-constexpr units::velocity::meters_per_second_t kDefaultSpeedLimit{22.12848};
+constexpr units::velocity::meters_per_second_t kDefaultSpeedLimit{48.5_mph};
 
 DataSource::DataSource()
     : vehicle_dynamics_{},

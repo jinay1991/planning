@@ -4,6 +4,7 @@ cc_library(
     name = "datatypes",
     hdrs = [
         "lane.h",
+        "position.h",
         "sensor_fusion.h",
         "trajectory.h",
         "vehicle_dynamics.h",

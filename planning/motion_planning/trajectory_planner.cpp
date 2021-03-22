@@ -141,7 +141,6 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
                       [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
         log_stream << "     => ... (more " << previous_path_global.size() - n_samples << " waypoints)" << std::endl;
     }
-    log_stream << std::endl;
 
     log_stream << "Planned trajectories: " << trajectories.size() << std::endl;
     std::for_each(trajectories.begin(), trajectories.end(), [&log_stream](const auto& trajectory) {
