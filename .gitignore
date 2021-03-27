@@ -2,6 +2,8 @@
 .DS_Store
 term3_sim_*
 compile_commands.json
+doc/
+coverage/
 
 # bazel build files
 bazel-*

@@ -12,7 +12,6 @@
 
 namespace planning
 {
-
 using Node = std::uint8_t;
 using Path = std::vector<Node>;
 
