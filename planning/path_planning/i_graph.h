@@ -5,9 +5,10 @@
 #ifndef PLANNING_PATH_PLANNING_I_GRAPH_H
 #define PLANNING_PATH_PLANNING_I_GRAPH_H
 
-#include <array>
 #include <cstdint>
 #include <list>
+#include <unordered_set>
+#include <vector>
 
 namespace planning
 {
@@ -16,40 +17,15 @@ class IGraph
 {
   public:
     ///
-    /// @brief Max Vertices in the Graph
-    ///
-    static constexpr std::size_t kMaxVertices = 10U;
-
-    ///
     /// @brief Each node of the graph is called a vertex. In the above graph, A, B, C, and D are the vertices of the
     /// graph.
     ///
-    using Vertex = std::int32_t;
+    using Vertex = std::uint8_t;
 
     ///
     /// @brief List of Vertices
     ///
-    using Vertices = std::array<Vertex, kMaxVertices>;
-
-    ///
-    /// @brief Adjacency Matrix [kMaxVertices x kMaxVertices]
-    ///
-    using AdjacencyMatrix = std::array<Vertices, kMaxVertices>;
-
-    ///
-    /// @brief Link or path between two vertices
-    ///
-    struct Edge
-    {
-        Vertex from;
-        Vertex to;
-        double cost;
-    };
-
-    ///
-    /// @brief List of all the edges
-    ///
-    using Edges = std::vector<Edge>;
+    using Vertices = std::list<Vertex>;
 
     ///
     /// @brief Destructor
