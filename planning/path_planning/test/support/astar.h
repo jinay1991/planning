@@ -9,7 +9,10 @@
 
 #include <algorithm>
 #include <array>
+#include <initializer_list>
 #include <list>
+#include <queue>
+#include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
@@ -49,11 +52,12 @@ namespace std
 {
 
 /* implement hash function so we can put GridLocation into an unordered_set */
-struct hash<GridLocation>
+template <>
+struct hash<planning::GridLocation>
 {
-    typedef GridLocation argument_type;
+    typedef planning::GridLocation argument_type;
     typedef std::size_t result_type;
-    std::size_t operator()(const GridLocation& id) const noexcept
+    std::size_t operator()(const planning::GridLocation& id) const noexcept
     {
         return (std::hash<std::int32_t>()(id.x.to<std::int32_t>() ^ (id.y.to<std::int32_t>() << 4)));
     }
@@ -134,5 +138,187 @@ class SquareGrid
     const Directions directions_;
 };
 
+class GridWithWeights : public SquareGrid
+{
+  public:
+    explicit GridWithWeights(const units::length::meter_t width, const units::length::meter_t height)
+        : SquareGrid{width, height}
+    {
+    }
+
+    void AddForest(const GridLocation& location) { forests_.insert(location); }
+
+    double GetCost(const GridLocation& from, const GridLocation& to) const
+    {
+        return ((forests_.find(to) != forests_.end()) ? 5.0 : 1.0);
+    }
+
+  private:
+    std::unordered_set<GridLocation> forests_;
+};
+
+class SquareGridBuilder
+{
+  public:
+    explicit SquareGridBuilder(const units::length::meter_t width, const units::length::meter_t height)
+        : grid_{width, height}
+    {
+    }
+
+    SquareGridBuilder& WithBlock(const GridLocation& start, const GridLocation& end)
+    {
+        grid_.AddBlock(start, end);
+        return *this;
+    }
+
+    const SquareGrid& Build() const { return grid_; }
+
+  private:
+    SquareGrid grid_;
+};
+
+class GridWithWeightsBuilder
+{
+  public:
+    explicit GridWithWeightsBuilder(const units::length::meter_t width, const units::length::meter_t height)
+        : grid_{width, height}
+    {
+    }
+
+    GridWithWeightsBuilder& WithForest(const GridLocation& location)
+    {
+        grid_.AddForest(location);
+        return *this;
+    }
+    GridWithWeightsBuilder& WithForestList(const std::initializer_list<GridLocation>& location_list)
+    {
+        for (auto& location : location_list)
+        {
+            grid_.AddForest(location);
+        }
+        return *this;
+    }
+    GridWithWeightsBuilder& WithBlock(const GridLocation& start, const GridLocation& end)
+    {
+        grid_.AddBlock(start, end);
+        return *this;
+    }
+
+    const GridWithWeights& Build() const { return grid_; }
+
+  private:
+    GridWithWeights grid_;
+};
+
+inline units::length::meter_t CalculateHeuristic(const GridLocation& from, const GridLocation& to)
+{
+    return (units::math::abs(from.x - to.x) + units::math::abs(from.y - to.y));
+}
+
+template <typename Location>
+std::vector<Location> GetRecontructPath(const Location& start,
+                                        const Location& end,
+                                        const std::unordered_map<Location, Location>& came_from)
+{
+    std::vector<Location> path;
+    Location current = end;
+    while (current != start)
+    {
+        path.push_back(current);
+        current = came_from[current];
+    }
+    path.push_back(start);
+    std::reverse(path.begin(), path.end());
+    return path;
+}
+
+template <typename T, typename priority_t>
+struct PriorityQueue
+{
+    typedef std::pair<priority_t, T> PQElement;
+    std::priority_queue<PQElement, std::vector<PQElement>, std::greater<PQElement>> elements;
+
+    inline bool empty() const { return elements.empty(); }
+
+    inline void put(T item, priority_t priority) { elements.emplace(priority, item); }
+
+    T get()
+    {
+        T best_item = elements.top().second;
+        elements.pop();
+        return best_item;
+    }
+};
+
+template <typename Location, typename Graph>
+void DijkstraSearch(const Graph& graph,
+                    const Location& start,
+                    const Location& end,
+                    std::unordered_map<Location, Location>& came_from,
+                    std::unordered_map<Location, double>& cost_so_far)
+{
+    PriorityQueue<Location, double> frontier;
+    frontier.put(start, 0);
+
+    came_from[start] = start;
+    cost_so_far[start] = 0;
+
+    while (!frontier.empty())
+    {
+        Location current = frontier.get();
+
+        if (current == end)
+        {
+            break;
+        }
+
+        for (Location next : graph.neighbors(current))
+        {
+            double new_cost = cost_so_far[current] + graph.cost(current, next);
+            if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next])
+            {
+                cost_so_far[next] = new_cost;
+                came_from[next] = current;
+                frontier.put(next, new_cost);
+            }
+        }
+    }
+}
+
+template <typename Location, typename Graph>
+void AStarSearch(const Graph& graph,
+                 const Location& start,
+                 const Location& end,
+                 std::unordered_map<Location, Location>& came_from,
+                 std::unordered_map<Location, double>& cost_so_far)
+{
+    PriorityQueue<Location, double> frontier;
+    frontier.put(start, 0);
+
+    came_from[start] = start;
+    cost_so_far[start] = 0;
+
+    while (!frontier.empty())
+    {
+        Location current = frontier.get();
+
+        if (current == end)
+        {
+            break;
+        }
+
+        for (Location next : graph.neighbors(current))
+        {
+            double new_cost = cost_so_far[current] + graph.cost(current, next);
+            if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next])
+            {
+                cost_so_far[next] = new_cost;
+                double priority = new_cost + heuristic(next, end);
+                frontier.put(next, priority);
+                came_from[next] = current;
+            }
+        }
+    }
+}
 }  // namespace planning
 #endif  /// PLANNING_PATH_PLANNING_GRID_GENERATE_H

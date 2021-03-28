@@ -39,7 +39,7 @@ TEST(Graph, AddEdge)
     graph.AddEdge('a', 'c');
 
     // Then
-    EXPECT_THAT(graph.GetAdjacentVertices('a'), ::testing::ElementsAre('a', 'b', 'c'));
+    EXPECT_THAT(graph.GetAdjacentVertices('a'), ::testing::ElementsAre('a', 'b'));
     EXPECT_THAT(graph.GetAdjacentVertices('b'), ::testing::IsEmpty());
 }
 
