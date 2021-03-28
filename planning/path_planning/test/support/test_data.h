@@ -9,6 +9,14 @@
 
 namespace planning
 {
+static const SimpleGraph<char> kSampleGraph = SimpleGraphBuilder<char>()
+                                                  .WithEdge('A', {'B'})
+                                                  .WithEdge('B', {'C'})
+                                                  .WithEdge('C', {'B', 'D', 'F'})
+                                                  .WithEdge('D', {'C', 'E'})
+                                                  .WithEdge('E', {'F'})
+                                                  .WithEdge('F', {})
+                                                  .Build();
 
 static const SquareGrid kSquareGridDiagram = SquareGridBuilder(30_m, 15_m)
                                                  .WithBlock(GridLocation{13_m, 4_m}, GridLocation{15_m, 15_m})

@@ -21,6 +21,38 @@ namespace planning
 
 using namespace units::literals;
 
+template <typename T>
+class SimpleGraph
+{
+  public:
+    SimpleGraph() : edges_{} {}
+
+    void AddEdge(const T& node, const std::vector<T>& edge) { edges_[node] = edge; }
+    std::vector<T> GetNeighbors(const T& id) const { return edges_[id]; }
+    double GetCost(const T& from, const T& to) const { return 0.0; }
+
+  private:
+    std::unordered_map<T, std::vector<T>> edges_;
+};
+
+template <typename T>
+class SimpleGraphBuilder
+{
+  public:
+    SimpleGraphBuilder() : graph_{} {}
+
+    SimpleGraphBuilder& WithEdge(const T& node, const std::vector<T>& edge)
+    {
+        graph_.AddEdge(node, edge);
+        return *this;
+    }
+
+    const SimpleGraph<T>& Build() const { return graph_; }
+
+  private:
+    SimpleGraph<T> graph_;
+};
+
 struct GridLocation
 {
     units::length::meter_t x;
@@ -251,6 +283,39 @@ struct PriorityQueue
         return best_item;
     }
 };
+
+template <typename Location, typename Graph>
+void BreadthFirstSearch(const Graph& graph,
+                        const Location& start,
+                        const Location& end,
+                        std::unordered_map<Location, Location>& came_from)
+{
+    std::queue<Location> frontier;
+    frontier.push(start);
+
+    came_from[start] = start;
+
+    while (!frontier.empty())
+    {
+        Location current = frontier.front();
+        frontier.pop();
+
+        if (current == end)
+        {
+            break;
+        }
+
+        for (Location next : graph.GetNeighbors(current))
+        {
+            if (came_from.find(next) == came_from.end())
+            {
+                frontier.push(next);
+                came_from[next] = current;
+            }
+        }
+    }
+}
+
 
 template <typename Location, typename Graph>
 void DijkstraSearch(const Graph& graph,
