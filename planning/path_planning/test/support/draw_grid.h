@@ -26,12 +26,12 @@ using namespace units::literals;
 // arrows that point to the parent location, or pass in a path vector
 // if you want to draw the path.
 template <class Graph>
-void draw_grid(const Graph& graph,
-               std::unordered_map<GridLocation, double>* distances = nullptr,
-               std::unordered_map<GridLocation, GridLocation>* point_to = nullptr,
-               std::vector<GridLocation>* path = nullptr,
-               GridLocation* start = nullptr,
-               GridLocation* goal = nullptr)
+void DrawGrid(const Graph& graph,
+              std::unordered_map<GridLocation, double>* distances = nullptr,
+              std::unordered_map<GridLocation, GridLocation>* point_to = nullptr,
+              std::vector<GridLocation>* path = nullptr,
+              GridLocation* start = nullptr,
+              GridLocation* goal = nullptr)
 {
     const std::int32_t field_width = 3;
     const std::int32_t width = static_cast<std::int32_t>(graph.GetWidth().value());

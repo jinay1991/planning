@@ -4,6 +4,7 @@
 ///
 #include "planning/path_planning/test/support/astar.h"
 #include "planning/path_planning/test/support/draw_grid.h"
+#include "planning/path_planning/test/support/test_data.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -26,7 +27,24 @@ TEST(SquareGrid, AddBlock)
     grid.AddBlock(start, end);
 
     // Then
-    draw_grid(grid);
+    DrawGrid(grid);
+}
+
+TEST(AStarSearch, GivenTypicalGridDiagram_ExpectShortestPath)
+{
+    // Given
+    std::unordered_map<GridLocation, GridLocation> came_from;
+    std::unordered_map<GridLocation, double> cost_so_far;
+    GridLocation start{0_m, 0_m};
+    GridLocation end{30_m, 15_m};
+
+    // When
+    AStarSearch(kGridWithWeightsDiagram, start, end, came_from, cost_so_far);
+
+    // Then
+    DrawGrid(kGridWithWeightsDiagram);
+    const auto shortest_path = GetReconstructPath<GridLocation>(start, end, came_from);
+    EXPECT_GT(shortest_path.size(), 1U);
 }
 }  // namespace
 }  // namespace planning

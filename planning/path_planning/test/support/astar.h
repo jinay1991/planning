@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (C) 2021. MIT License.
 ///
-#ifndef PLANNING_PATH_PLANNING_GRID_GENERATE_H
-#define PLANNING_PATH_PLANNING_GRID_GENERATE_H
+#ifndef PLANNING_PATH_PLANNING_ASTAR_H
+#define PLANNING_PATH_PLANNING_ASTAR_H
 
 #include <units.h>
 
@@ -190,6 +190,7 @@ class GridWithWeightsBuilder
         grid_.AddForest(location);
         return *this;
     }
+
     GridWithWeightsBuilder& WithForestList(const std::initializer_list<GridLocation>& location_list)
     {
         for (auto& location : location_list)
@@ -198,6 +199,7 @@ class GridWithWeightsBuilder
         }
         return *this;
     }
+
     GridWithWeightsBuilder& WithBlock(const GridLocation& start, const GridLocation& end)
     {
         grid_.AddBlock(start, end);
@@ -216,9 +218,9 @@ inline units::length::meter_t CalculateHeuristic(const GridLocation& from, const
 }
 
 template <typename Location>
-std::vector<Location> GetRecontructPath(const Location& start,
-                                        const Location& end,
-                                        const std::unordered_map<Location, Location>& came_from)
+std::vector<Location> GetReconstructPath(const Location& start,
+                                         const Location& end,
+                                         std::unordered_map<Location, Location>& came_from)
 {
     std::vector<Location> path;
     Location current = end;
@@ -272,9 +274,9 @@ void DijkstraSearch(const Graph& graph,
             break;
         }
 
-        for (Location next : graph.neighbors(current))
+        for (const auto& next : graph.GetNeighbors(current))
         {
-            double new_cost = cost_so_far[current] + graph.cost(current, next);
+            double new_cost = cost_so_far[current] + graph.GetCost(current, next);
             if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next])
             {
                 cost_so_far[next] = new_cost;
@@ -307,13 +309,13 @@ void AStarSearch(const Graph& graph,
             break;
         }
 
-        for (Location next : graph.neighbors(current))
+        for (const auto& next : graph.GetNeighbors(current))
         {
-            double new_cost = cost_so_far[current] + graph.cost(current, next);
+            double new_cost = cost_so_far[current] + graph.GetCost(current, next);
             if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next])
             {
                 cost_so_far[next] = new_cost;
-                double priority = new_cost + heuristic(next, end);
+                double priority = new_cost + CalculateHeuristic(next, end).value();
                 frontier.put(next, priority);
                 came_from[next] = current;
             }
@@ -321,4 +323,4 @@ void AStarSearch(const Graph& graph,
     }
 }
 }  // namespace planning
-#endif  /// PLANNING_PATH_PLANNING_GRID_GENERATE_H
+#endif  /// PLANNING_PATH_PLANNING_ASTAR_H
