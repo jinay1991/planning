@@ -5,6 +5,7 @@ cc_test(
     srcs = glob(["*.cpp"]),
     deps = [
         "//planning/path_planning",
+        "//planning/path_planning/test/support:astar",
         "@googletest//:gtest_main",
     ],
 )
