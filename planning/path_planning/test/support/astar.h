@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (C) 2021. MIT License.
 ///
-#ifndef PLANNING_PATH_PLANNING_ASTAR_H
-#define PLANNING_PATH_PLANNING_ASTAR_H
+#ifndef PLANNING_PATH_PLANNING_TEST_SUPPORT_ASTAR_H
+#define PLANNING_PATH_PLANNING_TEST_SUPPORT_ASTAR_H
 
 #include <units.h>
 
@@ -244,46 +244,6 @@ class GridWithWeightsBuilder
     GridWithWeights grid_;
 };
 
-inline units::length::meter_t CalculateHeuristic(const GridLocation& from, const GridLocation& to)
-{
-    return (units::math::abs(from.x - to.x) + units::math::abs(from.y - to.y));
-}
-
-template <typename Location>
-std::vector<Location> GetReconstructPath(const Location& start,
-                                         const Location& end,
-                                         std::unordered_map<Location, Location>& came_from)
-{
-    std::vector<Location> path;
-    Location current = end;
-    while (current != start)
-    {
-        path.push_back(current);
-        current = came_from[current];
-    }
-    path.push_back(start);
-    std::reverse(path.begin(), path.end());
-    return path;
-}
-
-template <typename T, typename priority_t>
-struct PriorityQueue
-{
-    typedef std::pair<priority_t, T> PQElement;
-    std::priority_queue<PQElement, std::vector<PQElement>, std::greater<PQElement>> elements;
-
-    inline bool empty() const { return elements.empty(); }
-
-    inline void put(T item, priority_t priority) { elements.emplace(priority, item); }
-
-    T get()
-    {
-        T best_item = elements.top().second;
-        elements.pop();
-        return best_item;
-    }
-};
-
 template <typename Location, typename Graph>
 void BreadthFirstSearch(const Graph& graph,
                         const Location& start,
@@ -316,76 +276,5 @@ void BreadthFirstSearch(const Graph& graph,
     }
 }
 
-
-template <typename Location, typename Graph>
-void DijkstraSearch(const Graph& graph,
-                    const Location& start,
-                    const Location& end,
-                    std::unordered_map<Location, Location>& came_from,
-                    std::unordered_map<Location, double>& cost_so_far)
-{
-    PriorityQueue<Location, double> frontier;
-    frontier.put(start, 0);
-
-    came_from[start] = start;
-    cost_so_far[start] = 0;
-
-    while (!frontier.empty())
-    {
-        Location current = frontier.get();
-
-        if (current == end)
-        {
-            break;
-        }
-
-        for (const auto& next : graph.GetNeighbors(current))
-        {
-            double new_cost = cost_so_far[current] + graph.GetCost(current, next);
-            if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next])
-            {
-                cost_so_far[next] = new_cost;
-                came_from[next] = current;
-                frontier.put(next, new_cost);
-            }
-        }
-    }
-}
-
-template <typename Location, typename Graph>
-void AStarSearch(const Graph& graph,
-                 const Location& start,
-                 const Location& end,
-                 std::unordered_map<Location, Location>& came_from,
-                 std::unordered_map<Location, double>& cost_so_far)
-{
-    PriorityQueue<Location, double> frontier;
-    frontier.put(start, 0);
-
-    came_from[start] = start;
-    cost_so_far[start] = 0;
-
-    while (!frontier.empty())
-    {
-        Location current = frontier.get();
-
-        if (current == end)
-        {
-            break;
-        }
-
-        for (const auto& next : graph.GetNeighbors(current))
-        {
-            double new_cost = cost_so_far[current] + graph.GetCost(current, next);
-            if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next])
-            {
-                cost_so_far[next] = new_cost;
-                double priority = new_cost + CalculateHeuristic(next, end).value();
-                frontier.put(next, priority);
-                came_from[next] = current;
-            }
-        }
-    }
-}
 }  // namespace planning
-#endif  /// PLANNING_PATH_PLANNING_ASTAR_H
+#endif  /// PLANNING_PATH_PLANNING_TEST_SUPPORT_ASTAR_H
