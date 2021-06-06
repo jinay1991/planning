@@ -18,7 +18,7 @@ RUN curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel
     echo "source /etc/bash_completion.d/bazel" >> ~/.bashrc
 
 # Installation of Bazel Tools
-RUN wget https://github.com/bazelbuild/buildtools/releases/download/3.5.0/buildifier && \
+RUN wget https://github.com/bazelbuild/buildtools/releases/download/4.0.1/buildifier && \
     chmod +x buildifier && \
     mv buildifier /usr/bin
 
