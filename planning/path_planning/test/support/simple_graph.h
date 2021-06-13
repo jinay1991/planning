@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (C) 2021. MIT License.
 ///
-#ifndef PLANNING_PATH_PLANNING_TEST_SUPPORT_GRAPH_H
-#define PLANNING_PATH_PLANNING_TEST_SUPPORT_GRAPH_H
+#ifndef PLANNING_PATH_PLANNING_TEST_SUPPORT_SIMPLE_GRAPH_H
+#define PLANNING_PATH_PLANNING_TEST_SUPPORT_SIMPLE_GRAPH_H
 
 #include <limits>
 #include <unordered_map>
@@ -29,4 +29,4 @@ class SimpleGraph
 };
 
 }  // namespace planning
-#endif  /// PLANNING_PATH_PLANNING_TEST_SUPPORT_GRAPH_H
+#endif  /// PLANNING_PATH_PLANNING_TEST_SUPPORT_SIMPLE_GRAPH_H

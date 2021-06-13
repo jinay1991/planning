@@ -3,6 +3,7 @@
 /// @copyright Copyright (C) 2021. MIT License.
 ///
 #include "planning/path_planning/breadth_first_search.h"
+#include "planning/path_planning/test/support/grid_location.h"
 #include "planning/path_planning/test/support/test_data.h"
 
 #include <gmock/gmock.h>

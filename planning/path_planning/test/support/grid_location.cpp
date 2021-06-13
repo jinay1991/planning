@@ -4,9 +4,6 @@
 ///
 #include "planning/path_planning/test/support/grid_location.h"
 
-#include <ostream>
-#include <string>
-
 namespace planning
 {
 
@@ -30,5 +27,4 @@ std::ostream& operator<<(std::ostream& out, const GridLocation& location) noexce
     out << '(' << location.x << ',' << location.y << ')';
     return out;
 }
-
 }  // namespace planning

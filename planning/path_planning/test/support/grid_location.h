@@ -13,16 +13,17 @@
 
 namespace planning
 {
+
 struct GridLocation
 {
     units::length::meter_t x;
     units::length::meter_t y;
 };
 
-inline bool operator==(const GridLocation& lhs, const GridLocation& rhs) noexcept;
-inline bool operator!=(const GridLocation& lhs, const GridLocation& rhs) noexcept;
-inline bool operator<(const GridLocation& lhs, const GridLocation& rhs) noexcept;
-inline std::ostream& operator<<(std::ostream& out, const GridLocation& location) noexcept;
+bool operator==(const GridLocation& lhs, const GridLocation& rhs) noexcept;
+bool operator!=(const GridLocation& lhs, const GridLocation& rhs) noexcept;
+bool operator<(const GridLocation& lhs, const GridLocation& rhs) noexcept;
+std::ostream& operator<<(std::ostream& out, const GridLocation& location) noexcept;
 
 }  // namespace planning
 

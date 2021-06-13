@@ -2,8 +2,8 @@
 /// @file
 /// @copyright Copyright (C) 2021. MIT License.
 ///
-#ifndef PLANNING_PATH_PLANNING_TEST_SUPPORT_SIMPLE_GRAPH_H
-#define PLANNING_PATH_PLANNING_TEST_SUPPORT_SIMPLE_GRAPH_H
+#ifndef PLANNING_PATH_PLANNING_TEST_SUPPORT_SIMPLE_GRAPH_BUILDER_H
+#define PLANNING_PATH_PLANNING_TEST_SUPPORT_SIMPLE_GRAPH_BUILDER_H
 
 #include "planning/path_planning/test/support/simple_graph.h"
 
@@ -31,4 +31,4 @@ class SimpleGraphBuilder
 };
 
 }  // namespace planning
-#endif  /// PLANNING_PATH_PLANNING_TEST_SUPPORT_SIMPLE_GRAPH_H
+#endif  /// PLANNING_PATH_PLANNING_TEST_SUPPORT_SIMPLE_GRAPH_BUILDER_H
