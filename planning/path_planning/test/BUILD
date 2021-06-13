@@ -9,7 +9,7 @@ cc_test(
     ],
     deps = [
         "//planning/path_planning",
-        "//planning/path_planning/test/support:astar",
+        "//planning/path_planning/test/support",
         "@googletest//:gtest_main",
     ],
 )

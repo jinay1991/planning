@@ -3,15 +3,11 @@
 /// @copyright Copyright (C) 2021. MIT License.
 ///
 #include "planning/path_planning/breadth_first_search.h"
-#include "planning/path_planning/test/support/astar.h"
-#include "planning/path_planning/test/support/draw_grid.h"
 #include "planning/path_planning/test/support/test_data.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <units.h>
-
-#include <type_traits>
 
 namespace planning
 {

@@ -5,10 +5,17 @@
 #ifndef PLANNING_PATH_PLANNING_TEST_SUPPORT_TEST_DATA_H
 #define PLANNING_PATH_PLANNING_TEST_SUPPORT_TEST_DATA_H
 
-#include "planning/path_planning/test/support/astar.h"
+#include "planning/path_planning/test/support/grid_with_weights_builder.h"
+#include "planning/path_planning/test/support/simple_graph_builder.h"
+#include "planning/path_planning/test/support/square_grid_builder.h"
+
+#include <units.h>
 
 namespace planning
 {
+
+using namespace units::literals;
+
 static const SimpleGraph<char> kSampleGraph = SimpleGraphBuilder<char>()
                                                   .WithEdge('A', {'B'})
                                                   .WithEdge('B', {'C'})

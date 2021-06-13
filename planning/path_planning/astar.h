@@ -36,7 +36,7 @@ class AStar
     constexpr const ShortestPath& GetShortestPath() const { return shortest_path_; }
 
   protected:
-    virtual constexpr Cost GetHeuristicCost(const Location& from, const Location& to) const
+    virtual Cost GetHeuristicCost(const Location& from, const Location& to) const
     {
         return static_cast<double>((units::math::abs(from.x - to.x) + units::math::abs(from.y - to.y)).value());
     }

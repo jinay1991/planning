@@ -5,8 +5,6 @@
 #ifndef PLANNING_PATH_PLANNING_TEST_SUPPORT_DRAW_GRID_H
 #define PLANNING_PATH_PLANNING_TEST_SUPPORT_DRAW_GRID_H
 
-#include "planning/path_planning/test/support/astar.h"
-
 #include <units.h>
 
 #include <cstdint>
@@ -18,8 +16,6 @@
 
 namespace planning
 {
-
-using namespace units::literals;
 
 // This outputs a grid. Pass in a distances map if you want to print
 // the distances, or pass in a point_to map if you want to print
@@ -33,6 +29,8 @@ void DrawGrid(const Graph& graph,
               GridLocation* start = nullptr,
               GridLocation* goal = nullptr)
 {
+    using namespace units::literals;
+
     const std::int32_t field_width = 3;
     const std::int32_t width = static_cast<std::int32_t>(graph.GetWidth().value());
     std::cout << std::string(field_width * width, '_') << '\n';
