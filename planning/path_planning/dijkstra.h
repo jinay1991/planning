@@ -7,6 +7,8 @@
 
 #include "planning/path_planning/astar.h"
 
+#include <limits>
+
 namespace planning
 {
 
@@ -17,7 +19,10 @@ class Dijkstra : public AStar<Graph, Location, Cost>
     constexpr explicit Dijkstra(const Graph& graph) : AStar<Graph, Location, Cost>{graph} {}
 
   protected:
-    constexpr Cost GetHeuristicCost(const Location& from, const Location& to) const override { return 0.0; }
+    constexpr Cost GetHeuristicCost(const Location& from, const Location& to) const override
+    {
+        return std::numeric_limits<Cost>::min();
+    }
 };
 }  // namespace planning
 #endif  /// PLANNING_PATH_PLANNING_DIJKSTRA_H

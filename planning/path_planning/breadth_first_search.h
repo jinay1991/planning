@@ -2,10 +2,8 @@
 /// @file
 /// @copyright Copyright (C) 2021. MIT License.
 ///
-#ifndef PLANNING_PATH_PLANNING_ASTAR_H
-#define PLANNING_PATH_PLANNING_ASTAR_H
-
-#include <units.h>
+#ifndef PLANNING_PATH_PLANNING_BREADTH_FIRST_SEARCH_H
+#define PLANNING_PATH_PLANNING_BREADTH_FIRST_SEARCH_H
 
 #include <algorithm>
 #include <queue>
@@ -16,13 +14,13 @@
 namespace planning
 {
 
-template <typename Graph, typename Location, typename Cost = double>
-class AStar
+template <typename Graph, typename Location>
+class BreadthFirstSearch
 {
   public:
     using ShortestPath = std::vector<Location>;
 
-    constexpr explicit AStar(const Graph& graph) : graph_{graph}, came_from_{}, cost_so_far_{}, shortest_path_{}
+    constexpr explicit BreadthFirstSearch(const Graph& graph) : graph_{graph}, came_from_{}, shortest_path_{}
     {
         static_assert(std::is_pod<Location>::value, "Location must be plain type.");
     }
@@ -35,41 +33,29 @@ class AStar
 
     constexpr const ShortestPath& GetShortestPath() const { return shortest_path_; }
 
-  protected:
-    virtual constexpr Cost GetHeuristicCost(const Location& from, const Location& to) const
-    {
-        return static_cast<double>((units::math::abs(from.x - to.x) + units::math::abs(from.y - to.y)).value());
-    }
-
   private:
     constexpr void DetermineShortestPath(const Location& start, const Location& end)
     {
-        using LocationCostPair = std::pair<Cost, Location>;
-        std::priority_queue<LocationCostPair, std::vector<LocationCostPair>, std::greater<LocationCostPair>>
-            priority_queue;
-        priority_queue.emplace(0.0, start);
+        std::queue<Location> queue;
+        queue.push(start);
 
         came_from_[start] = start;
-        cost_so_far_[start] = 0.0;
 
-        while (!priority_queue.empty())
+        while (!queue.empty())
         {
-            const auto current = priority_queue.top().second;
-            priority_queue.pop();
+            Location current = queue.front();
+            queue.pop();
 
             if (current == end)
             {
                 break;
             }
 
-            for (const auto& next : graph_.GetNeighbors(current))
+            for (Location next : graph_.GetNeighbors(current))
             {
-                const Cost current_cost = cost_so_far_[current] + graph_.GetCost(current, next);
-                if ((cost_so_far_.find(next) == cost_so_far_.end()) || (current_cost < cost_so_far_[next]))
+                if (came_from_.find(next) == came_from_.end())
                 {
-                    cost_so_far_[next] = current_cost;
-                    const Cost total_cost = current_cost + GetHeuristicCost(next, end);
-                    priority_queue.emplace(total_cost, next);
+                    queue.push(next);
                     came_from_[next] = current;
                 }
             }
@@ -92,8 +78,8 @@ class AStar
     const Graph& graph_;
 
     std::unordered_map<Location, Location> came_from_;
-    std::unordered_map<Location, Cost> cost_so_far_;
     ShortestPath shortest_path_;
 };
+
 }  // namespace planning
-#endif  /// PLANNING_PATH_PLANNING_ASTAR_H
+#endif  /// PLANNING_PATH_PLANNING_BREADTH_FIRST_SEARCH_H

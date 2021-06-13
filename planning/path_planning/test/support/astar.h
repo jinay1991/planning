@@ -80,9 +80,12 @@ inline std::ostream& operator<<(std::ostream& out, const GridLocation& location)
     return out;
 }
 }  // namespace planning
+
+/// =============
+/// HASH FUNCTION
+/// =============
 namespace std
 {
-
 /* implement hash function so we can put GridLocation into an unordered_set */
 template <>
 struct hash<planning::GridLocation>
@@ -244,37 +247,6 @@ class GridWithWeightsBuilder
     GridWithWeights grid_;
 };
 
-template <typename Location, typename Graph>
-void BreadthFirstSearch(const Graph& graph,
-                        const Location& start,
-                        const Location& end,
-                        std::unordered_map<Location, Location>& came_from)
-{
-    std::queue<Location> frontier;
-    frontier.push(start);
-
-    came_from[start] = start;
-
-    while (!frontier.empty())
-    {
-        Location current = frontier.front();
-        frontier.pop();
-
-        if (current == end)
-        {
-            break;
-        }
-
-        for (Location next : graph.GetNeighbors(current))
-        {
-            if (came_from.find(next) == came_from.end())
-            {
-                frontier.push(next);
-                came_from[next] = current;
-            }
-        }
-    }
-}
 
 }  // namespace planning
 #endif  /// PLANNING_PATH_PLANNING_TEST_SUPPORT_ASTAR_H
