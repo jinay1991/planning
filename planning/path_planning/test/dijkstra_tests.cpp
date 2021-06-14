@@ -16,6 +16,9 @@ namespace
 {
 using namespace units::literals;
 
+///
+/// @test Test if correct shortest path is found between start-end locations using Dijkstra algorithm.
+///
 TEST(Dijkstra, SearchShortestPath_GivenTypicalStartEndLocations_ExpectShortestPath)
 {
     // Given

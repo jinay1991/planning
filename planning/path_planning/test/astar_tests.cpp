@@ -16,6 +16,9 @@ namespace
 {
 using namespace units::literals;
 
+///
+/// @test Test if correct shortest path is found between start-end locations using A* algorithm.
+///
 TEST(AStar, SearchShortestPath_GivenTypicalStartEndLocations_ExpectShortestPath)
 {
     // Given
