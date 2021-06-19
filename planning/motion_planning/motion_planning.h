@@ -37,6 +37,9 @@ class MotionPlanning
     Trajectory GetSelectedTrajectory() const;
 
   private:
+    /// @brief Data Source (storage of all the inputs)
+    DataSource data_source_;
+
     /// @brief Velocity Planner
     std::unique_ptr<IVelocityPlanner> velocity_planner_;
 

@@ -17,7 +17,7 @@ class Maneuver : public IManeuver
     Maneuver();
 
     /// @brief Constructor. Initialize Maneuver with LaneId and target velocity
-    explicit Maneuver(const LaneId& lane_id, const units::velocity::meters_per_second_t& velocity);
+    explicit Maneuver(const LaneId lane_id, const units::velocity::meters_per_second_t velocity);
 
     /// @brief Get LaneId for Maneuver
     LaneId GetLaneId() const override;

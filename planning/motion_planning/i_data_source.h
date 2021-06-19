@@ -14,9 +14,6 @@ namespace planning
 {
 using GlobalLaneId = LaneInformation::GlobalLaneId;
 using LaneId = LaneInformation::LaneId;
-using MapCoordinatesList = std::vector<MapCoordinates>;
-using PreviousPathFrenet = std::vector<FrenetCoordinates>;
-using PreviousPathGlobal = std::vector<GlobalCoordinates>;
 
 /// @brief Interface for Data Source (Inputs from SensorFusion and MapPoints)
 class IDataSource
@@ -41,7 +38,7 @@ class IDataSource
     virtual void SetSensorFusion(const SensorFusion& sensor_fusion) = 0;
 
     /// @brief Set Speed Limit (Traffic Rules)
-    virtual void SetSpeedLimit(const units::velocity::meters_per_second_t& speed_limit) = 0;
+    virtual void SetSpeedLimit(const units::velocity::meters_per_second_t speed_limit) = 0;
 
     /// @brief Get Global LaneId based on provided Frenet Coordinates
     virtual GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& coords) const = 0;

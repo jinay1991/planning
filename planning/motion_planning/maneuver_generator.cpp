@@ -11,7 +11,7 @@
 
 namespace planning
 {
-std::vector<Maneuver> ManeuverGenerator::Generate(const units::velocity::meters_per_second_t& target_velocity) const
+std::vector<Maneuver> ManeuverGenerator::Generate(const units::velocity::meters_per_second_t target_velocity) const
 {
     auto maneuvers = std::vector<Maneuver>{Maneuver{LaneId::kLeft, target_velocity},
                                            Maneuver{LaneId::kEgo, target_velocity},
@@ -19,9 +19,9 @@ std::vector<Maneuver> ManeuverGenerator::Generate(const units::velocity::meters_
 
     std::stringstream log_stream;
     log_stream << "Generated Maneuvers:" << std::endl;
-    std::for_each(maneuvers.begin(), maneuvers.end(), [&](const auto& maneuver) {
-        log_stream << " (+) " << maneuver << std::endl;
-    });
+    std::for_each(maneuvers.begin(),
+                  maneuvers.end(),
+                  [&](const auto& maneuver) { log_stream << " (+) " << maneuver << std::endl; });
     LOG(INFO) << log_stream.str();
     return maneuvers;
 }

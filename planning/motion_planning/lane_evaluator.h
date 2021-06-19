@@ -22,14 +22,14 @@ class LaneEvaluator
     explicit LaneEvaluator(const IDataSource& data_source);
 
     /// @brief Evaluates Lane to be drivable (collision free)
-    bool IsDrivableLane(const LaneId& lane_id) const;
+    bool IsDrivableLane(const LaneId lane_id) const;
 
     /// @brief Evaluates Lane to be Valid Lane
-    bool IsValidLane(const LaneId& lane_id) const;
+    bool IsValidLane(const LaneId lane_id) const;
 
   private:
     /// @brief Converts Global Lane Id to Local Lane Id based on Ego Position
-    LaneId GetLocalLaneId(const GlobalLaneId& global_lane_id) const;
+    LaneId GetLocalLaneId(const GlobalLaneId global_lane_id) const;
 
     /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, etc.)
     const IDataSource& data_source_;

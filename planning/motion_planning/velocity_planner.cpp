@@ -14,7 +14,7 @@ VelocityPlanner::VelocityPlanner(const IDataSource& data_source)
 }
 
 VelocityPlanner::VelocityPlanner(const IDataSource& data_source,
-                                 const units::velocity::meters_per_second_t& target_velocity)
+                                 const units::velocity::meters_per_second_t target_velocity)
     : frequency_{25.0},
       deceleration_{-5.0},
       acceleration_{5.0},

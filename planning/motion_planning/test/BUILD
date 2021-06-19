@@ -7,6 +7,7 @@ cc_test(
         "lane_evaluator_tests.cpp",
         "maneuver_generator_tests.cpp",
         "maneuver_tests.cpp",
+        "motion_planning_tests.cpp",
         "trajectory_evaluator_tests.cpp",
         "trajectory_optimizer_tests.cpp",
         "trajectory_planner_tests.cpp",
@@ -24,10 +25,10 @@ cc_test(
 
 cc_test(
     name = "component_tests",
-    srcs = ["motion_planning_tests.cpp"],
+    srcs = ["motion_planning_node_tests.cpp"],
     tags = ["component"],
     deps = [
-        "//planning/motion_planning",
+        "//planning/motion_planning/node",
         "//planning/motion_planning/test/support",
         "@googletest//:gtest_main",
     ],
@@ -42,5 +43,25 @@ cc_test(
     ],
     deps = [
         "//planning/motion_planning",
+    ],
+)
+
+cc_test(
+    name = "benchmark_tests",
+    srcs = [
+        "motion_planning_benchmark_tests.cpp",
+    ],
+    copts = [
+        "-Wall",
+        "-Werror",
+    ],
+    tags = [
+        "benchmark",
+        "manual",
+    ],
+    deps = [
+        "//planning/motion_planning/node",
+        "//planning/motion_planning/test/support",
+        "@benchmark//:benchmark_main",
     ],
 )

@@ -44,7 +44,7 @@ class ObjectFusionBuilder
     }
 
     /// @brief Build Object Fusion object with Object Velocity (meters per seconds)
-    ObjectFusionBuilder& WithVelocity(const units::velocity::meters_per_second_t& velocity)
+    ObjectFusionBuilder& WithVelocity(const units::velocity::meters_per_second_t velocity)
     {
         object_fusion_.velocity = velocity;
         return *this;

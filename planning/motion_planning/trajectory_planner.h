@@ -32,7 +32,7 @@ class TrajectoryPlanner : public ITrajectoryPlanner
     Trajectory GetInitialTrajectory() const;
 
     /// @brief Calculate Trajectory for given lane_id, target velocity
-    Trajectory GetCalculatedTrajectory(const LaneId& lane_id) const;
+    Trajectory GetCalculatedTrajectory(const LaneId lane_id) const;
 
     /// @brief Produces trajectories and optimizes for each maneuver
     Trajectories GetTrajectories(const std::vector<Maneuver>& maneuvers) const;
@@ -41,7 +41,7 @@ class TrajectoryPlanner : public ITrajectoryPlanner
     GlobalCoordinates GetGlobalCoordinates(const FrenetCoordinates& frenet_coords) const;
 
     /// @brief Converts Local Lane Id to Global Lane Id (using ego's global lane)
-    GlobalLaneId GetGlobalLaneId(const LaneId& lane_id) const;
+    GlobalLaneId GetGlobalLaneId(const LaneId lane_id) const;
 
     /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, etc.)
     const IDataSource& data_source_;

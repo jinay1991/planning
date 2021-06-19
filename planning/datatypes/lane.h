@@ -45,7 +45,7 @@ struct LaneInformation
     double cost{0.0};
 };
 
-inline LaneInformation::LaneId operator+(const LaneInformation::LaneId& lhs, const std::int32_t& offset)
+inline LaneInformation::LaneId operator+(const LaneInformation::LaneId lhs, const std::int32_t offset)
 {
     if (lhs < LaneInformation::LaneId::kRight)
     {
@@ -57,7 +57,7 @@ inline LaneInformation::LaneId operator+(const LaneInformation::LaneId& lhs, con
     }
 }
 
-inline LaneInformation::LaneId operator-(const LaneInformation::LaneId& lhs, const std::int32_t& offset)
+inline LaneInformation::LaneId operator-(const LaneInformation::LaneId lhs, const std::int32_t offset)
 {
     if (lhs > LaneInformation::LaneId::kLeft)
     {
@@ -68,7 +68,7 @@ inline LaneInformation::LaneId operator-(const LaneInformation::LaneId& lhs, con
         return LaneInformation::LaneId::kInvalid;
     }
 }
-inline LaneInformation::GlobalLaneId operator+(const LaneInformation::GlobalLaneId& lhs, const std::int32_t& offset)
+inline LaneInformation::GlobalLaneId operator+(const LaneInformation::GlobalLaneId lhs, const std::int32_t offset)
 {
     if (lhs < LaneInformation::GlobalLaneId::kRight)
     {
@@ -80,7 +80,7 @@ inline LaneInformation::GlobalLaneId operator+(const LaneInformation::GlobalLane
     }
 }
 
-inline LaneInformation::GlobalLaneId operator-(const LaneInformation::GlobalLaneId& lhs, const std::int32_t& offset)
+inline LaneInformation::GlobalLaneId operator-(const LaneInformation::GlobalLaneId lhs, const std::int32_t offset)
 {
     if (lhs > LaneInformation::GlobalLaneId::kLeft)
     {
@@ -91,7 +91,7 @@ inline LaneInformation::GlobalLaneId operator-(const LaneInformation::GlobalLane
         return LaneInformation::GlobalLaneId::kInvalid;
     }
 }
-inline std::ostream& operator<<(std::ostream& out, const LaneInformation::LaneId& lane_id)
+inline std::ostream& operator<<(std::ostream& out, const LaneInformation::LaneId lane_id)
 {
     switch (lane_id)
     {
@@ -107,7 +107,7 @@ inline std::ostream& operator<<(std::ostream& out, const LaneInformation::LaneId
     }
 }
 
-inline std::ostream& operator<<(std::ostream& out, const LaneInformation::GlobalLaneId& lane_id)
+inline std::ostream& operator<<(std::ostream& out, const LaneInformation::GlobalLaneId lane_id)
 {
     switch (lane_id)
     {

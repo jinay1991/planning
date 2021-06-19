@@ -13,6 +13,10 @@ build:clang11 --host_crosstool_top=//bazel/toolchains/clang:clang
 build:clang11 --compiler=clang
 build:clang11 --features=no_legacy_features
 build:clang11 --features=treat_warnings_as_errors
+build:clang11 --cxxopt="-std=c++14"
+build:clang11 --cxxopt="-Wall"
+build:clang11 --cxxopt="-Werror"
+
 
 build:clang_tidy11 --aspects=bazel/clang_tidy/clang_tidy_aspect.bzl%clang_tidy_aspect
 build:clang_tidy11 --output_groups=cc_aspect_output

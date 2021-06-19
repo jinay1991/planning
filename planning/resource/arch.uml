@@ -8,7 +8,7 @@ class IDataSource {
 }
 
 class DataSource {
-    + DataSource(const LaneInformation::GlobalLaneId& lane_id, const VehicleDynamics& vehicle_dynamics, const MapCoordinates& map_coords, const PreviousPath& previous_path, const SensorFusion& sensor_fusion)
+    + DataSource(const LaneInformation::GlobalLaneId lane_id, const VehicleDynamics& vehicle_dynamics, const MapCoordinates& map_coords, const PreviousPath& previous_path, const SensorFusion& sensor_fusion)
 
     + VehicleDynamics GetVehicleDynamics() const override
     + MapCoordinates GetMapCoordinates() const override
@@ -50,7 +50,7 @@ package "Maneuver Generation" {
 
     class Maneuver {
         + Maneuver();
-        + Maneuver(const LaneId& id, const units::velocity::meters_per_second_t& velocity);
+        + Maneuver(const LaneId id, const units::velocity::meters_per_second_t velocity);
         + LaneId GetLaneId() const;
         + units::velocity::meters_per_second_t GetVelocity() const;
 

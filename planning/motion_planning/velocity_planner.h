@@ -25,7 +25,7 @@ class VelocityPlanner : public IVelocityPlanner
 
     /// @brief Constructor. Initialize with DataSource for given target velocity.
     explicit VelocityPlanner(const IDataSource& data_source,
-                             const units::velocity::meters_per_second_t& target_velocity);
+                             const units::velocity::meters_per_second_t target_velocity);
 
     /// @brief Calculate Target Velocity based on DataSource.
     void CalculateTargetVelocity() override;

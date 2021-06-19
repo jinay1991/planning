@@ -41,28 +41,28 @@ class TrajectoryBuilder
     }
 
     /// @brief Build Trajectory with Trajectory Velocity
-    TrajectoryBuilder& WithTargetVelocity(const units::velocity::meters_per_second_t& target_velocity)
+    TrajectoryBuilder& WithTargetVelocity(const units::velocity::meters_per_second_t target_velocity)
     {
         trajectory_.velocity = target_velocity;
         return *this;
     }
 
     /// @brief Build Trajectory with Trajectory Lane Id
-    TrajectoryBuilder& WithLaneId(const LaneInformation::LaneId& lane_id)
+    TrajectoryBuilder& WithLaneId(const LaneInformation::LaneId lane_id)
     {
         trajectory_.lane_id = lane_id;
         return *this;
     }
 
     /// @brief Build Trajectory with Trajectory Global Lane Id
-    TrajectoryBuilder& WithGlobalLaneId(const LaneInformation::GlobalLaneId& global_lane_id)
+    TrajectoryBuilder& WithGlobalLaneId(const LaneInformation::GlobalLaneId global_lane_id)
     {
         trajectory_.global_lane_id = global_lane_id;
         return *this;
     }
 
     /// @brief Build Trajectory with Trajectory Yaw (radians)
-    TrajectoryBuilder& WithYaw(const units::angle::radian_t& yaw)
+    TrajectoryBuilder& WithYaw(const units::angle::radian_t yaw)
     {
         trajectory_.yaw = yaw;
         return *this;

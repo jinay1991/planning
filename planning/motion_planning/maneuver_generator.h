@@ -18,7 +18,7 @@ class ManeuverGenerator : public IManeuverGenerator
 {
   public:
     /// @brief Generate Maneuvers for given target velocity (one for each lane)
-    std::vector<Maneuver> Generate(const units::velocity::meters_per_second_t& target_velocity) const override;
+    std::vector<Maneuver> Generate(const units::velocity::meters_per_second_t target_velocity) const override;
 };
 }  // namespace planning
 #endif  /// PLANNING_MOTION_PLANNING_MANEUVER_GENERATOR_H

@@ -25,7 +25,7 @@ inline bool IsObjectNear(const FrenetCoordinates& ego_position, const FrenetCoor
 
 LaneEvaluator::LaneEvaluator(const IDataSource& data_source) : data_source_{data_source} {}
 
-LaneId LaneEvaluator::GetLocalLaneId(const GlobalLaneId& global_lane_id) const
+LaneId LaneEvaluator::GetLocalLaneId(const GlobalLaneId global_lane_id) const
 {
     const auto ego_global_lane_id = data_source_.GetGlobalLaneId();
     LaneId lane_id{LaneId::kInvalid};
@@ -45,7 +45,7 @@ LaneId LaneEvaluator::GetLocalLaneId(const GlobalLaneId& global_lane_id) const
     return lane_id;
 }
 
-bool LaneEvaluator::IsDrivableLane(const LaneId& lane_id) const
+bool LaneEvaluator::IsDrivableLane(const LaneId lane_id) const
 {
     bool car_in_front = false;
     bool car_to_left = false;
@@ -114,7 +114,7 @@ bool LaneEvaluator::IsDrivableLane(const LaneId& lane_id) const
     return is_drivable;
 }
 
-bool LaneEvaluator::IsValidLane(const LaneId& lane_id) const
+bool LaneEvaluator::IsValidLane(const LaneId lane_id) const
 {
     const auto ego_global_lane_id = data_source_.GetGlobalLaneId();
     bool result{false};

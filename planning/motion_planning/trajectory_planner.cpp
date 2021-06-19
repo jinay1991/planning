@@ -52,7 +52,7 @@ Trajectory TrajectoryPlanner::GetInitialTrajectory() const
     return trajectory;
 }
 
-Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) const
+Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId lane_id) const
 {
     // Waypoints based on previous path
     auto trajectory = GetInitialTrajectory();
@@ -68,7 +68,8 @@ Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) con
         GetGlobalCoordinates(FrenetCoordinates{vehicle_dynamics.frenet_coords.s + 90.0, 2.0 + (4.0 * lane), 0.0, 0.0}));
 
     // Shift and rotate points to local coordinates
-    const auto shift_rotate_waypoints = [&position = trajectory.position, &yaw = trajectory.yaw](const auto& waypoint) {
+    const auto shift_rotate_waypoints = [&position = trajectory.position, &yaw = trajectory.yaw](const auto& waypoint)
+    {
         const auto shift_position = GlobalCoordinates{waypoint.x - position.x, waypoint.y - position.y};
         return GlobalCoordinates{
             ((shift_position.x * units::math::cos(-yaw)) - (shift_position.y * units::math::sin(-yaw))),
@@ -81,7 +82,7 @@ Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) con
     return trajectory;
 }
 
-GlobalLaneId TrajectoryPlanner::GetGlobalLaneId(const LaneId& lane_id) const
+GlobalLaneId TrajectoryPlanner::GetGlobalLaneId(const LaneId lane_id) const
 {
     const auto ego_global_lane_id = data_source_.GetGlobalLaneId();
     switch (lane_id)
@@ -143,15 +144,19 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
     }
 
     log_stream << "Planned trajectories: " << trajectories.size() << std::endl;
-    std::for_each(trajectories.begin(), trajectories.end(), [&log_stream](const auto& trajectory) {
-        log_stream << " (+) " << trajectory << std::endl;
-        const auto n_samples =
-            std::min(static_cast<std::size_t>(trajectory.waypoints.size()), static_cast<std::size_t>(10));
-        std::for_each(trajectory.waypoints.begin(),
-                      trajectory.waypoints.begin() + n_samples,
-                      [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
-        log_stream << "     => ... (more " << trajectory.waypoints.size() - n_samples << " waypoints)" << std::endl;
-    });
+    std::for_each(trajectories.begin(),
+                  trajectories.end(),
+                  [&log_stream](const auto& trajectory)
+                  {
+                      log_stream << " (+) " << trajectory << std::endl;
+                      const auto n_samples =
+                          std::min(static_cast<std::size_t>(trajectory.waypoints.size()), static_cast<std::size_t>(10));
+                      std::for_each(trajectory.waypoints.begin(),
+                                    trajectory.waypoints.begin() + n_samples,
+                                    [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
+                      log_stream << "     => ... (more " << trajectory.waypoints.size() - n_samples << " waypoints)"
+                                 << std::endl;
+                  });
 
     LOG(INFO) << log_stream.str();
     return trajectories;
