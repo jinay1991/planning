@@ -3,12 +3,12 @@
 /// @brief Contains builder utility for Sensor Fusion and Object Fusion Objects built-up.
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_TEST_SENSOR_FUSION_BUILDER_H
-#define PLANNING_MOTION_PLANNING_TEST_SENSOR_FUSION_BUILDER_H
+#ifndef PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_SENSOR_FUSION_BUILDER_H
+#define PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_SENSOR_FUSION_BUILDER_H
 
 #include "planning/datatypes/sensor_fusion.h"
 #include "planning/datatypes/vehicle_dynamics.h"
-#include "planning/motion_planning/test/support/object_fusion_builder.h"
+#include "planning/motion_planning/test/support/builders/object_fusion_builder.h"
 
 namespace planning
 {
@@ -36,4 +36,4 @@ class SensorFusionBuilder
 };
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_TEST_SENSOR_FUSION_BUILDER_H
+#endif  /// PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_SENSOR_FUSION_BUILDER_H

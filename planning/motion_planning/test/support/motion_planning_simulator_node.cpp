@@ -8,7 +8,7 @@
 #include "planning/communication/topics.h"
 #include "planning/datatypes/sensor_fusion.h"
 #include "planning/datatypes/vehicle_dynamics.h"
-#include "planning/motion_planning/test/support/data_source_builder.h"
+#include "planning/motion_planning/test/support/builders/data_source_builder.h"
 #include "planning/motion_planning/test/support/map_coordinates.h"
 
 #include <limits>

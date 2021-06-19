@@ -18,7 +18,7 @@ class SquareGridBuilder
   public:
     explicit SquareGridBuilder(const units::length::meter_t width, const units::length::meter_t height);
     SquareGridBuilder& WithBlock(const GridLocation& start, const GridLocation& end);
-    const SquareGrId Build() const;
+    const SquareGrid& Build() const;
 
   private:
     SquareGrid grid_;

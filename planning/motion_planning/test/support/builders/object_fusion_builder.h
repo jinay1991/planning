@@ -3,8 +3,8 @@
 /// @brief Contains builder utility for Object Fusion Objects built-up.
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_TEST_OBJECT_FUSION_BUILDER_H
-#define PLANNING_MOTION_PLANNING_TEST_OBJECT_FUSION_BUILDER_H
+#ifndef PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_OBJECT_FUSION_BUILDER_H
+#define PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_OBJECT_FUSION_BUILDER_H
 
 #include "planning/datatypes/sensor_fusion.h"
 #include "planning/datatypes/vehicle_dynamics.h"
@@ -58,4 +58,4 @@ class ObjectFusionBuilder
     ObjectFusion object_fusion_;
 };
 }  // namespace planning
-#endif  /// PLANNING_MOTION_PLANNING_TEST_OBJECT_FUSION_BUILDER_H
+#endif  /// PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_OBJECT_FUSION_BUILDER_H

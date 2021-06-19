@@ -3,8 +3,8 @@
 /// @brief Contains unit tests for Trajectory Optimizer.
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#include "planning/motion_planning/test/support/data_source_builder.h"
-#include "planning/motion_planning/test/support/trajectory_builder.h"
+#include "planning/motion_planning/test/support/builders/data_source_builder.h"
+#include "planning/motion_planning/test/support/builders/trajectory_builder.h"
 #include "planning/motion_planning/trajectory_optimizer.h"
 
 #include <gmock/gmock.h>

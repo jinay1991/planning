@@ -18,7 +18,7 @@ SquareGridBuilder& SquareGridBuilder::WithBlock(const GridLocation& start, const
     return *this;
 }
 
-const SquareGrId SquareGridBuilder::Build() const
+const SquareGrid& SquareGridBuilder::Build() const
 {
     return grid_;
 }

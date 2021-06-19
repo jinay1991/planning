@@ -3,14 +3,14 @@
 /// @brief Contains builder utility for Data Source object built-up.
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_TEST_DATA_SOURCE_BUILDER_H
-#define PLANNING_MOTION_PLANNING_TEST_DATA_SOURCE_BUILDER_H
+#ifndef PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_DATA_SOURCE_BUILDER_H
+#define PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_DATA_SOURCE_BUILDER_H
 
 #include "planning/datatypes/lane.h"
 #include "planning/datatypes/sensor_fusion.h"
 #include "planning/datatypes/vehicle_dynamics.h"
 #include "planning/motion_planning/data_source.h"
-#include "planning/motion_planning/test/support/sensor_fusion_builder.h"
+#include "planning/motion_planning/test/support/builders/sensor_fusion_builder.h"
 
 #include <units.h>
 
@@ -197,4 +197,4 @@ class DataSourceBuilder
 }  // namespace
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_TEST_DATA_SOURCE_BUILDER_H
+#endif  /// PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_DATA_SOURCE_BUILDER_H

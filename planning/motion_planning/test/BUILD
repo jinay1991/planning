@@ -24,7 +24,7 @@ cc_test(
 )
 
 cc_test(
-    name = "component_tests",
+    name = "node_tests",
     srcs = ["motion_planning_node_tests.cpp"],
     tags = ["component"],
     deps = [

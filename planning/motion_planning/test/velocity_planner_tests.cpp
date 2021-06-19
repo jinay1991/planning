@@ -4,7 +4,7 @@
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/datatypes/lane.h"
-#include "planning/motion_planning/test/support/data_source_builder.h"
+#include "planning/motion_planning/test/support/builders/data_source_builder.h"
 #include "planning/motion_planning/velocity_planner.h"
 
 #include <gmock/gmock.h>

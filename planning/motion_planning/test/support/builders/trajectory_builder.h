@@ -3,8 +3,8 @@
 /// @brief Contains builder utility for Trajectory Object built-up.
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_TEST_TRAJECTORY_BUILDER_H
-#define PLANNING_MOTION_PLANNING_TEST_TRAJECTORY_BUILDER_H
+#ifndef PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_TRAJECTORY_BUILDER_H
+#define PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_TRAJECTORY_BUILDER_H
 
 #include "planning/datatypes/trajectory.h"
 
@@ -104,4 +104,4 @@ class TrajectoryBuilder
 }  // namespace
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_TEST_TRAJECTORY_BUILDER_H
+#endif  /// PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_TRAJECTORY_BUILDER_H

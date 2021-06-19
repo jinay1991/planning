@@ -4,8 +4,8 @@
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 #include "planning/motion_planning/data_source.h"
-#include "planning/motion_planning/test/support/sensor_fusion_builder.h"
-#include "support/object_fusion_builder.h"
+#include "planning/motion_planning/test/support/builders/sensor_fusion_builder.h"
+#include "support/builders/object_fusion_builder.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

@@ -55,7 +55,7 @@ class MotionPlanningNodeFixture : public ::testing::Test
     MotionPlanningSimulatorNode simulator_;
 };
 
-TEST_F(MotionPlanningNodeFixture, Step_GivenTypicalInputs_ExpectSelectedTrajectory)
+TEST_F(MotionPlanningNodeFixture, Step_GivenBlockedEgoLane_ExpectSelectedTrajectory)
 {
     // Given
     GetSimulator().BlockEgoLane();
