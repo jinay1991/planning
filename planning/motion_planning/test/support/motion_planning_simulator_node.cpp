@@ -21,6 +21,7 @@ MotionPlanningSimulatorNode::MotionPlanningSimulatorNode(middleware::IPubSubFact
     : middleware::Node{"simulator_node", factory}, data_source_{}
 {
     data_source_.SetMapCoordinates(kHighwayMap);
+    data_source_.SetPreviousPath(PreviousPathGlobal{});
 }
 
 void MotionPlanningSimulatorNode::Init()
@@ -45,12 +46,17 @@ void MotionPlanningSimulatorNode::SetSpeedLimit(const units::velocity::meters_pe
 
 void MotionPlanningSimulatorNode::BlockEgoLane()
 {
+    constexpr auto kObjectDistance = 10.0_m;
+    constexpr auto kObjectVelocity = 10.0_kph;
+    constexpr auto kEgoVelocity = 30.0_kph;
+
     data_source_ = DataSourceBuilder()
-                       .WithVelocity(30.0_kph)
+                       .WithPreviousPath(PreviousPathGlobal{})
+                       .WithVelocity(kEgoVelocity)
                        .WithMapCoordinates(kHighwayMap)
                        .WithGlobalLaneId(GlobalLaneId::kCenter)
-                       .WithDistance(0.0_m)
-                       .WithObjectInLane(GlobalLaneId::kCenter, 10.0_kph)
+                       .WithDistance(kObjectDistance)
+                       .WithObjectInLane(GlobalLaneId::kCenter, kObjectVelocity)
                        .Build();
 }
 

@@ -29,7 +29,6 @@ class DataSourceBuilder
     DataSourceBuilder() : data_source_{}
     {
         this->WithFakePreviousPath(50)
-            .WithMapCoordinates(kHighwayMap)
             .WithDistance(units::length::meter_t{24.0})
             .WithGlobalLaneId(GlobalLaneId::kCenter)
             .WithVelocity(units::velocity::meters_per_second_t{17.0})
