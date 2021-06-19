@@ -75,8 +75,7 @@ TEST_F(TrajectoryEvaluatorFixture,
     const auto actual = TrajectoryEvaluator(data_source).GetRatedTrajectories(planned_trajectories_);
 
     // Then
-    const auto expected_cost = [&](const auto& trajectory)
-    {
+    const auto expected_cost = [&](const auto& trajectory) {
         const auto cost = (trajectory.lane_id != LaneId::kEgo) ? 1.0 : 0.0;
         EXPECT_DOUBLE_EQ(trajectory.cost, cost);
     };
@@ -135,8 +134,7 @@ TEST_P(TrajectoryEvaluatorFixture_WithEgoGlobalLaneId,
     const auto actual = TrajectoryEvaluator(data_source).GetRatedTrajectories(planned_trajectories_);
 
     // Then
-    const auto expected_cost = [&](const auto& trajectory)
-    {
+    const auto expected_cost = [&](const auto& trajectory) {
         if (trajectory.global_lane_id == GlobalLaneId::kInvalid || trajectory.global_lane_id == obj_global_lane_id)
         {
             EXPECT_DOUBLE_EQ(trajectory.cost, std::numeric_limits<double>::infinity());

@@ -19,9 +19,9 @@ std::vector<Maneuver> ManeuverGenerator::Generate(const units::velocity::meters_
 
     std::stringstream log_stream;
     log_stream << "Generated Maneuvers:" << std::endl;
-    std::for_each(maneuvers.begin(),
-                  maneuvers.end(),
-                  [&](const auto& maneuver) { log_stream << " (+) " << maneuver << std::endl; });
+    std::for_each(maneuvers.begin(), maneuvers.end(), [&](const auto& maneuver) {
+        log_stream << " (+) " << maneuver << std::endl;
+    });
     LOG(INFO) << log_stream.str();
     return maneuvers;
 }

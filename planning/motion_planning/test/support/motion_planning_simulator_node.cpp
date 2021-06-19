@@ -26,8 +26,8 @@ MotionPlanningSimulatorNode::MotionPlanningSimulatorNode(middleware::IPubSubFact
 void MotionPlanningSimulatorNode::Init()
 {
     AddPublisher<MapCoordinatesTopic>([&data_source = data_source_] { return data_source.GetMapCoordinates(); });
-    AddPublisher<PreviousPathTopic>([&data_source = data_source_]
-                                    { return data_source.GetPreviousPathInGlobalCoords(); });
+    AddPublisher<PreviousPathTopic>(
+        [&data_source = data_source_] { return data_source.GetPreviousPathInGlobalCoords(); });
     AddPublisher<PreviousPathEndTopic>([&data_source = data_source_] { return data_source.GetPreviousPathEnd(); });
     AddPublisher<VehicleDynamicsTopic>([&data_source = data_source_] { return data_source.GetVehicleDynamics(); });
     AddPublisher<SpeedLimitTopic>([&data_source = data_source_] { return data_source.GetSpeedLimit(); });
@@ -47,6 +47,7 @@ void MotionPlanningSimulatorNode::BlockEgoLane()
 {
     data_source_ = DataSourceBuilder()
                        .WithVelocity(30.0_kph)
+                       .WithMapCoordinates(kHighwayMap)
                        .WithGlobalLaneId(GlobalLaneId::kCenter)
                        .WithDistance(0.0_m)
                        .WithObjectInLane(GlobalLaneId::kCenter, 10.0_kph)

@@ -11,6 +11,7 @@
 #include "planning/datatypes/vehicle_dynamics.h"
 #include "planning/motion_planning/data_source.h"
 #include "planning/motion_planning/test/support/builders/sensor_fusion_builder.h"
+#include "planning/motion_planning/test/support/map_coordinates.h"
 
 #include <units.h>
 
@@ -28,6 +29,7 @@ class DataSourceBuilder
     DataSourceBuilder() : data_source_{}
     {
         this->WithFakePreviousPath(50)
+            .WithMapCoordinates(kHighwayMap)
             .WithDistance(units::length::meter_t{24.0})
             .WithGlobalLaneId(GlobalLaneId::kCenter)
             .WithVelocity(units::velocity::meters_per_second_t{17.0})

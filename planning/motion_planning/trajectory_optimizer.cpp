@@ -64,7 +64,7 @@ Trajectory TrajectoryOptimizer::GetOptimizedTrajectory(const Trajectory& planned
     // spline waypoints at 30m intervals
     const auto target_position = GlobalCoordinates{30.0, spline(30.0)};
     const auto target_distance =
-        sqrt((target_position.x * target_position.x) + (target_position.y * target_position.y));
+        std::sqrt((target_position.x * target_position.x) + (target_position.y * target_position.y));
     double x_add_on = 0.0;
 
     const auto yaw = optimized_trajectory.yaw;

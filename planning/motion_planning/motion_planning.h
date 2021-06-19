@@ -2,15 +2,12 @@
 /// @file
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_PLANNING_MOTION_PLANNING_H
-#define PLANNING_MOTION_PLANNING_PLANNING_MOTION_PLANNING_H
+#ifndef PLANNING_MOTION_PLANNING_MOTION_PLANNING_H
+#define PLANNING_MOTION_PLANNING_MOTION_PLANNING_H
 
-#include "planning/datatypes/lane.h"
-#include "planning/datatypes/sensor_fusion.h"
 #include "planning/datatypes/trajectory.h"
 #include "planning/datatypes/vehicle_dynamics.h"
-#include "planning/motion_planning/data_source.h"
-#include "planning/motion_planning/i_maneuver.h"
+#include "planning/motion_planning/i_data_source.h"
 #include "planning/motion_planning/i_maneuver_generator.h"
 #include "planning/motion_planning/i_trajectory_evaluator.h"
 #include "planning/motion_planning/i_trajectory_optimizer.h"
@@ -37,9 +34,6 @@ class MotionPlanning
     Trajectory GetSelectedTrajectory() const;
 
   private:
-    /// @brief Data Source (storage of all the inputs)
-    DataSource data_source_;
-
     /// @brief Velocity Planner
     std::unique_ptr<IVelocityPlanner> velocity_planner_;
 
@@ -66,4 +60,4 @@ class MotionPlanning
 };
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_PLANNING_MOTION_PLANNING_H
+#endif  /// PLANNING_MOTION_PLANNING_MOTION_PLANNING_H
