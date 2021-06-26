@@ -11,12 +11,12 @@ write_filegroup () {
     [[ $# -lt 2 ]] && die "invoke with \"write_filegroup <name> [Debian package]...\""
 
     echo "
-  filegroup(
-      name = \"${1}\",
-      srcs = [" >> "${FILE}"
-    while read f; do [ -f "${f}" ] && echo "        \"${f:1}\"," >> "${FILE}" ; done < <(dpkg -L "${@:2}" | sort)
-    echo "    ],
-  )" >> "${FILE}"
+filegroup(
+    name = \"${1}\",
+    srcs = [" >> "${FILE}"
+  while read f; do [ -f "${f}" ] && echo "        \"${f:1}\"," >> "${FILE}" ; done < <(dpkg -L "${@:2}" | sort)
+  echo "    ],
+)" >> "${FILE}"
 }
 
 FILE=sysroot.BUILD
