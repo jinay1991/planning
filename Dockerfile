@@ -2,13 +2,17 @@ FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update
+# Updates
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get autoremove -y
 
 # Installation of general dependencies
 RUN apt-get install -y \
-    build-essential clang-format clang-tidy clangd git git-lfs \
+    g++ gcc clang-format clang-tidy git git-lfs \
     wget curl gnupg \
-    openjdk-11-jdk openjdk-11-jre lcov
+    openjdk-11-jdk openjdk-11-jre lcov \
+    vim gdb
 
 # Installation of Bazel Package
 RUN curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg && \
