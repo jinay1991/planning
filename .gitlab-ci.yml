@@ -31,7 +31,7 @@ buildifier:
   before_script:
     - apt-get update
     - apt-get install -y wget curl
-    - wget https://github.com/bazelbuild/buildtools/releases/download/3.4.0/buildifier
+    - wget https://github.com/bazelbuild/buildtools/releases/download/4.0.1/buildifier
     - chmod +x buildifier
     - mv buildifier /usr/bin
   script:

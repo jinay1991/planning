@@ -6,30 +6,30 @@ build --test_output=errors
 build --cxxopt="-std=c++14"
 build --cxxopt="-Wall"
 
-# LLVM 11.0 Build Configuration
-build:clang11 --experimental_guard_against_concurrent_changes
-build:clang11 --crosstool_top=//bazel/toolchains/clang:clang
-build:clang11 --host_crosstool_top=//bazel/toolchains/clang:clang
-build:clang11 --compiler=clang
-build:clang11 --features=no_legacy_features
-build:clang11 --features=treat_warnings_as_errors
-build:clang11 --cxxopt="-std=c++14"
-build:clang11 --cxxopt="-Wall"
-build:clang11 --cxxopt="-Werror"
+# LLVM 12.0 Build Configuration
+build:clang12 --experimental_guard_against_concurrent_changes
+build:clang12 --crosstool_top=//bazel/toolchains/clang:clang
+build:clang12 --host_crosstool_top=//bazel/toolchains/clang:clang
+build:clang12 --compiler=clang
+build:clang12 --features=no_legacy_features
+build:clang12 --features=treat_warnings_as_errors
+build:clang12 --cxxopt="-std=c++14"
+build:clang12 --cxxopt="-Wall"
+build:clang12 --cxxopt="-Werror"
 
 
-build:clang_tidy11 --aspects=bazel/clang_tidy/clang_tidy_aspect.bzl%clang_tidy_aspect
-build:clang_tidy11 --output_groups=cc_aspect_output
-build:clang_tidy11 --config=clang11
-build:clang_tidy11 --build_tag_filters="-tidy_suite"
+build:clang_tidy12 --aspects=bazel/clang_tidy/clang_tidy_aspect.bzl%clang_tidy_aspect
+build:clang_tidy12 --output_groups=cc_aspect_output
+build:clang_tidy12 --config=clang12
+build:clang_tidy12 --build_tag_filters="-tidy_suite"
 
-build:fuzzer --config=clang11
+build:fuzzer --config=clang12
 build:fuzzer --copt=-g
 build:fuzzer --compilation_mode=dbg
 build:fuzzer --features=sanitizer
 build:fuzzer --features=fuzzer
 
-build:basesan --config=clang11
+build:basesan --config=clang12
 build:basesan --compilation_mode=dbg
 build:basesan --copt=-g
 build:basesan --copt=-fno-optimize-sibling-calls
