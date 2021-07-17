@@ -77,22 +77,22 @@ bazel-gcc-build-and-test:
     reports:
       junit: merged_test_report.xml
 
-bazel-clang-build-and-test:
-  stage: build
-  image: registry.gitlab.com/ad_platform/planning
-  needs: []
-  script:
-    - bazel test --config=clang11 //...  --test_output=all
-  after_script:
-    - apt-get update && apt-get install -y wget
-    - wget https://github.com/drazisil/junit-merge/releases/download/v2.0.0/junit-merge-linux
-    - chmod +x junit-merge-linux
-    - mv junit-merge-linux /usr/bin
-    - junit-merge-linux $(find bazel-out/* -name test.xml) --out merged_test_report.xml
-  artifacts:
-    when: always
-    reports:
-      junit: merged_test_report.xml
+# bazel-clang-build-and-test:
+#   stage: build
+#   image: registry.gitlab.com/ad_platform/planning
+#   needs: []
+#   script:
+#     - bazel test --config=clang11 //...  --test_output=all
+#   after_script:
+#     - apt-get update && apt-get install -y wget
+#     - wget https://github.com/drazisil/junit-merge/releases/download/v2.0.0/junit-merge-linux
+#     - chmod +x junit-merge-linux
+#     - mv junit-merge-linux /usr/bin
+#     - junit-merge-linux $(find bazel-out/* -name test.xml) --out merged_test_report.xml
+#   artifacts:
+#     when: always
+#     reports:
+#       junit: merged_test_report.xml
 
 doxygen:
   stage: build
