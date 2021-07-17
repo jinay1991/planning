@@ -8,15 +8,24 @@
 
 namespace planning
 {
-LaneEvaluator::LaneEvaluator(const DataSource& data_source) : data_source_{data_source} {}
-
-bool LaneEvaluator::IsObjectNear(const FrenetCoordinates& ego_position, const FrenetCoordinates& obj_position) const
+namespace
+{
+/// @brief Evaluates Euclidean Distance to Object Position from Ego Position
+///
+/// @param ego_position [in] - Ego Vehicle Frenet Coordinate
+/// @param obj_position [in] - Object Frenet Coordinate
+///
+/// @return True if ego vehicle's longitudinal distance to object is < gkFarDistanceThreshold, False otherwise.
+inline bool IsObjectNear(const FrenetCoordinates& ego_position, const FrenetCoordinates& obj_position) noexcept
 {
     const auto is_near = (std::fabs(obj_position.s - ego_position.s) < gkFarDistanceThreshold.value());
     return is_near;
 }
+}  // namespace
 
-LaneId LaneEvaluator::GetLocalLaneId(const GlobalLaneId& global_lane_id) const
+LaneEvaluator::LaneEvaluator(const IDataSource& data_source) : data_source_{data_source} {}
+
+LaneId LaneEvaluator::GetLocalLaneId(const GlobalLaneId global_lane_id) const
 {
     const auto ego_global_lane_id = data_source_.GetGlobalLaneId();
     LaneId lane_id{LaneId::kInvalid};
@@ -25,18 +34,18 @@ LaneId LaneEvaluator::GetLocalLaneId(const GlobalLaneId& global_lane_id) const
     {
         lane_id = LaneId::kEgo;
     }
-    else if (ego_global_lane_id - 1 == global_lane_id)
+    else if ((ego_global_lane_id - 1) == global_lane_id)
     {
         lane_id = LaneId::kLeft;
     }
-    else if (ego_global_lane_id + 1 == global_lane_id)
+    else if ((ego_global_lane_id + 1) == global_lane_id)
     {
         lane_id = LaneId::kRight;
     }
     return lane_id;
 }
 
-bool LaneEvaluator::IsDrivableLane(const LaneId& lane_id) const
+bool LaneEvaluator::IsDrivableLane(const LaneId lane_id) const
 {
     bool car_in_front = false;
     bool car_to_left = false;
@@ -105,7 +114,7 @@ bool LaneEvaluator::IsDrivableLane(const LaneId& lane_id) const
     return is_drivable;
 }
 
-bool LaneEvaluator::IsValidLane(const LaneId& lane_id) const
+bool LaneEvaluator::IsValidLane(const LaneId lane_id) const
 {
     const auto ego_global_lane_id = data_source_.GetGlobalLaneId();
     bool result{false};

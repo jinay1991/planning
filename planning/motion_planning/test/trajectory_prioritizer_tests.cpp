@@ -4,7 +4,7 @@
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
 
-#include "planning/motion_planning/test/support/trajectory_builder.h"
+#include "planning/motion_planning/test/support/builders/trajectory_builder.h"
 #include "planning/motion_planning/trajectory_planner.h"
 #include "planning/motion_planning/trajectory_prioritizer.h"
 

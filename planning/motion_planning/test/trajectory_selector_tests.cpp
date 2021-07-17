@@ -3,7 +3,7 @@
 /// @brief Contains unit tests for Trajectory Selector.
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#include "planning/motion_planning/test/support/trajectory_builder.h"
+#include "planning/motion_planning/test/support/builders/trajectory_builder.h"
 #include "planning/motion_planning/trajectory_prioritizer.h"
 #include "planning/motion_planning/trajectory_selector.h"
 

@@ -8,7 +8,7 @@
 
 namespace planning
 {
-TrajectoryPlanner::TrajectoryPlanner(const DataSource& data_source) : data_source_{data_source} {}
+TrajectoryPlanner::TrajectoryPlanner(const IDataSource& data_source) : data_source_{data_source} {}
 
 Trajectories TrajectoryPlanner::GetPlannedTrajectories(const std::vector<Maneuver>& maneuvers) const
 {
@@ -26,8 +26,9 @@ Trajectory TrajectoryPlanner::GetInitialTrajectory() const
     // no previous waypoints, initialize current waypoints
     if (previous_path_size < 2)
     {
-        const GlobalCoordinates prev_position{vehicle_dynamics.global_coords.x - cos(vehicle_dynamics.yaw.value()),
-                                              vehicle_dynamics.global_coords.y - sin(vehicle_dynamics.yaw.value())};
+        const GlobalCoordinates prev_position{
+            vehicle_dynamics.global_coords.x - units::math::cos(vehicle_dynamics.yaw),
+            vehicle_dynamics.global_coords.y - units::math::sin(vehicle_dynamics.yaw)};
 
         trajectory.waypoints.push_back(prev_position);
         trajectory.waypoints.push_back(vehicle_dynamics.global_coords);
@@ -37,21 +38,21 @@ Trajectory TrajectoryPlanner::GetInitialTrajectory() const
     }
     else  // calculate new waypoints based on previous waypoints
     {
-        const GlobalCoordinates prev_position[2] = {previous_path_global[previous_path_size - 2],
-                                                    previous_path_global[previous_path_size - 1]};
+        const std::array<GlobalCoordinates, 2U> prev_position{previous_path_global.at(previous_path_size - 2U),
+                                                              previous_path_global.at(previous_path_size - 1U)};
 
-        trajectory.waypoints.push_back(prev_position[0]);
-        trajectory.waypoints.push_back(prev_position[1]);
+        trajectory.waypoints.push_back(prev_position.at(0U));
+        trajectory.waypoints.push_back(prev_position.at(1U));
 
-        trajectory.position = prev_position[1];
-        trajectory.yaw = units::angle::radian_t{
-            atan2(prev_position[1].y - prev_position[0].y, prev_position[1].x - prev_position[0].x)};
+        trajectory.position = prev_position.at(1U);
+        trajectory.yaw = units::angle::radian_t{std::atan2(prev_position.at(1U).y - prev_position.at(0U).y,
+                                                           prev_position.at(1U).x - prev_position.at(0U).x)};
     }
 
     return trajectory;
 }
 
-Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) const
+Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId lane_id) const
 {
     // Waypoints based on previous path
     auto trajectory = GetInitialTrajectory();
@@ -67,12 +68,11 @@ Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) con
         GetGlobalCoordinates(FrenetCoordinates{vehicle_dynamics.frenet_coords.s + 90.0, 2.0 + (4.0 * lane), 0.0, 0.0}));
 
     // Shift and rotate points to local coordinates
-    const auto yaw = trajectory.yaw.value();
-    const auto position = trajectory.position;
-    const auto shift_rotate_waypoints = [&](const auto& wp) {
-        const auto shift_position = GlobalCoordinates{wp.x - position.x, wp.y - position.y};
-        return GlobalCoordinates{((shift_position.x * cos(-yaw)) - (shift_position.y * sin(-yaw))),
-                                 ((shift_position.x * sin(-yaw)) + (shift_position.y * cos(-yaw)))};
+    const auto shift_rotate_waypoints = [&position = trajectory.position, &yaw = trajectory.yaw](const auto& waypoint) {
+        const auto shift_position = GlobalCoordinates{waypoint.x - position.x, waypoint.y - position.y};
+        return GlobalCoordinates{
+            ((shift_position.x * units::math::cos(-yaw)) - (shift_position.y * units::math::sin(-yaw))),
+            ((shift_position.x * units::math::sin(-yaw)) + (shift_position.y * units::math::cos(-yaw)))};
     };
 
     std::transform(
@@ -81,7 +81,7 @@ Trajectory TrajectoryPlanner::GetCalculatedTrajectory(const LaneId& lane_id) con
     return trajectory;
 }
 
-GlobalLaneId TrajectoryPlanner::GetGlobalLaneId(const LaneId& lane_id) const
+GlobalLaneId TrajectoryPlanner::GetGlobalLaneId(const LaneId lane_id) const
 {
     const auto ego_global_lane_id = data_source_.GetGlobalLaneId();
     switch (lane_id)
@@ -89,9 +89,9 @@ GlobalLaneId TrajectoryPlanner::GetGlobalLaneId(const LaneId& lane_id) const
         case LaneId::kEgo:
             return ego_global_lane_id;
         case LaneId::kLeft:
-            return ego_global_lane_id - 1;
+            return (ego_global_lane_id - 1);
         case LaneId::kRight:
-            return ego_global_lane_id + 1;
+            return (ego_global_lane_id + 1);
         case LaneId::kInvalid:
         default:
             return GlobalLaneId::kInvalid;
@@ -131,7 +131,7 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
     }
 
     std::stringstream log_stream;
-    log_stream << "Previous Path: " << previous_path_global.size() << std::endl;
+    log_stream << "Previous Path size: " << previous_path_global.size() << std::endl;
     if (!previous_path_global.empty())
     {
         const auto n_samples =
@@ -141,7 +141,6 @@ Trajectories TrajectoryPlanner::GetTrajectories(const std::vector<Maneuver>& man
                       [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
         log_stream << "     => ... (more " << previous_path_global.size() - n_samples << " waypoints)" << std::endl;
     }
-    log_stream << std::endl;
 
     log_stream << "Planned trajectories: " << trajectories.size() << std::endl;
     std::for_each(trajectories.begin(), trajectories.end(), [&log_stream](const auto& trajectory) {
@@ -170,18 +169,19 @@ GlobalCoordinates TrajectoryPlanner::GetGlobalCoordinates(const FrenetCoordinate
 
     std::int32_t wp2 = (prev_wp + 1) % map_coordinates.size();
 
-    double heading = atan2((map_coordinates[wp2].global_coords.y - map_coordinates[prev_wp].global_coords.y),
-                           (map_coordinates[wp2].global_coords.x - map_coordinates[prev_wp].global_coords.x));
+    const double heading =
+        std::atan2((map_coordinates[wp2].global_coords.y - map_coordinates[prev_wp].global_coords.y),
+                   (map_coordinates[wp2].global_coords.x - map_coordinates[prev_wp].global_coords.x));
     // the x,y,s along the segment
-    double seg_s = (frenet_coords.s - map_coordinates[prev_wp].frenet_coords.s);
+    const double seg_s = (frenet_coords.s - map_coordinates[prev_wp].frenet_coords.s);
 
-    double seg_x = map_coordinates[prev_wp].global_coords.x + seg_s * cos(heading);
-    double seg_y = map_coordinates[prev_wp].global_coords.y + seg_s * sin(heading);
+    const double seg_x = map_coordinates[prev_wp].global_coords.x + seg_s * std::cos(heading);
+    const double seg_y = map_coordinates[prev_wp].global_coords.y + seg_s * std::sin(heading);
 
-    double perp_heading = heading - units::constants::detail::PI_VAL / 2;
+    const double perp_heading = heading - units::constants::detail::PI_VAL / 2;
 
-    double x = seg_x + frenet_coords.d * cos(perp_heading);
-    double y = seg_y + frenet_coords.d * sin(perp_heading);
+    const double x = seg_x + frenet_coords.d * std::cos(perp_heading);
+    const double y = seg_y + frenet_coords.d * std::sin(perp_heading);
 
     return {x, y};
 }

@@ -2,14 +2,14 @@
 /// @file
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_ROADMODEL_DATA_SOURCE_H
-#define PLANNING_MOTION_PLANNING_ROADMODEL_DATA_SOURCE_H
+#ifndef PLANNING_MOTION_PLANNING_DATA_SOURCE_H
+#define PLANNING_MOTION_PLANNING_DATA_SOURCE_H
 
 #include "planning/motion_planning/i_data_source.h"
 
 namespace planning
 {
-/// @brief DataSource based on RoadModel (contains information from Front Sensors and Rear Sensors).
+/// @brief Data Source containing information from Front/Rear Sensors.
 class DataSource : public IDataSource
 {
   public:
@@ -32,7 +32,7 @@ class DataSource : public IDataSource
     void SetSensorFusion(const SensorFusion& sensor_fusion) override;
 
     /// @brief Set Speed Limit (Traffic Rules)
-    void SetSpeedLimit(const units::velocity::meters_per_second_t& speed_limit) override;
+    void SetSpeedLimit(const units::velocity::meters_per_second_t speed_limit) override;
 
     /// @brief Get Global LaneId based on provided Frenet Coordinates
     GlobalLaneId GetGlobalLaneId(const FrenetCoordinates& coords) const override;
@@ -88,4 +88,4 @@ class DataSource : public IDataSource
 };
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_ROADMODEL_DATA_SOURCE_H
+#endif  /// PLANNING_MOTION_PLANNING_DATA_SOURCE_H

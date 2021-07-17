@@ -28,7 +28,7 @@ void PrintQueue(T q)
 PrioritizedTrajectories TrajectoryPrioritizer::GetPrioritizedTrajectories(const Trajectories& trajectories) const
 {
     PrioritizedTrajectories prioritized_trajectories;
-    for (auto& trajectory : trajectories)
+    for (const auto& trajectory : trajectories)
     {
         prioritized_trajectories.push(trajectory);
     }

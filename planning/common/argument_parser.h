@@ -29,9 +29,6 @@ class ArgumentParser : public IArgumentParser
     /// @param [in] argv - list of arguments
     explicit ArgumentParser(int argc, char* argv[]);
 
-    /// @brief Destructor
-    ~ArgumentParser();
-
     /// @brief Provides Parsed Arguments
     CLIOptions GetParsedArgs() const override;
 

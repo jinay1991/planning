@@ -31,7 +31,7 @@ buildifier:
   before_script:
     - apt-get update
     - apt-get install -y wget curl
-    - wget https://github.com/bazelbuild/buildtools/releases/download/3.4.0/buildifier
+    - wget https://github.com/bazelbuild/buildtools/releases/download/4.0.1/buildifier
     - chmod +x buildifier
     - mv buildifier /usr/bin
   script:
@@ -59,9 +59,10 @@ cppcheck:
 # ------------
 # Stage: Build
 # ------------
-bazel-build-and-test:
+bazel-gcc-build-and-test:
   stage: build
   image: registry.gitlab.com/ad_platform/planning
+  needs: []
   script:
     - bazel build //...
     - bazel test //...  --test_output=all
@@ -75,6 +76,23 @@ bazel-build-and-test:
     when: always
     reports:
       junit: merged_test_report.xml
+
+# bazel-clang-build-and-test:
+#   stage: build
+#   image: registry.gitlab.com/ad_platform/planning
+#   needs: []
+#   script:
+#     - bazel test --config=clang11 //...  --test_output=all
+#   after_script:
+#     - apt-get update && apt-get install -y wget
+#     - wget https://github.com/drazisil/junit-merge/releases/download/v2.0.0/junit-merge-linux
+#     - chmod +x junit-merge-linux
+#     - mv junit-merge-linux /usr/bin
+#     - junit-merge-linux $(find bazel-out/* -name test.xml) --out merged_test_report.xml
+#   artifacts:
+#     when: always
+#     reports:
+#       junit: merged_test_report.xml
 
 doxygen:
   stage: build

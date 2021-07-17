@@ -1,18 +1,42 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
-    name = "support",
+    name = "builders",
     testonly = True,
     hdrs = [
-        "data_source_builder.h",
-        "object_fusion_builder.h",
-        "sensor_fusion_builder.h",
-        "trajectory_builder.h",
+        "builders/data_source_builder.h",
+        "builders/object_fusion_builder.h",
+        "builders/sensor_fusion_builder.h",
+        "builders/trajectory_builder.h",
     ],
-    visibility = ["//planning/motion_planning:__subpackages__"],
+    visibility = ["//planning/motion_planning/test:__subpackages__"],
     deps = [
         "//planning/datatypes",
         "//planning/motion_planning",
+        "@nholthaus//:units",
+    ],
+)
+
+cc_library(
+    name = "support",
+    testonly = True,
+    srcs = [
+        "motion_planning_consumer_node.cpp",
+        "motion_planning_simulator_node.cpp",
+    ],
+    hdrs = [
+        "map_coordinates.h",
+        "motion_planning_consumer_node.h",
+        "motion_planning_simulator_node.h",
+    ],
+    visibility = ["//planning/motion_planning/test:__subpackages__"],
+    deps = [
+        ":builders",
+        "//planning/communication:topics",
+        "//planning/datatypes",
+        "//planning/motion_planning",
+        "@middleware//:communication",
+        "@middleware//:lifecycle",
         "@nholthaus//:units",
     ],
 )

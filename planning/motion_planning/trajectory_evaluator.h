@@ -19,7 +19,7 @@ class TrajectoryEvaluator : public ITrajectoryEvaluator
 {
   public:
     /// @brief Constructor. Initializes with provided DataSource
-    explicit TrajectoryEvaluator(const DataSource& data_source);
+    explicit TrajectoryEvaluator(const IDataSource& data_source);
 
     /// @brief Get Rated Trajectories for provided optimized trajectories.
     Trajectories GetRatedTrajectories(const Trajectories& optimized_trajectories) const override;

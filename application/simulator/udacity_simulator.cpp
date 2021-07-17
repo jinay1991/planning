@@ -157,6 +157,9 @@ void UdacitySimulator::ReceiveCallback(uWS::WebSocket<uWS::SERVER> ws, char* dat
                 std::vector<double> next_y_vals;
 
                 // ##############################################################
+                LOG(INFO) << std::endl
+                          << std::endl
+                          << "############### Processing received frame ###############" << std::endl;
                 UpdateDataSource(j[1]);
 
                 const auto start = std::chrono::system_clock::now();

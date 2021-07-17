@@ -17,19 +17,13 @@ class Maneuver : public IManeuver
     Maneuver();
 
     /// @brief Constructor. Initialize Maneuver with LaneId and target velocity
-    explicit Maneuver(const LaneId& lane_id, const units::velocity::meters_per_second_t& velocity);
-
-    /// @brief Destructor.
-    ~Maneuver() override;
+    explicit Maneuver(const LaneId lane_id, const units::velocity::meters_per_second_t velocity);
 
     /// @brief Get LaneId for Maneuver
     LaneId GetLaneId() const override;
 
     /// @brief Get Target Velocity for Maneuver
     units::velocity::meters_per_second_t GetVelocity() const override;
-
-    /// @brief Comparator for Maneuvers
-    inline bool operator==(const Maneuver& rhs) const { return lane_id_ == rhs.lane_id_ && velocity_ == rhs.velocity_; }
 
   private:
     /// @brief Maneuver LaneId
@@ -38,6 +32,12 @@ class Maneuver : public IManeuver
     /// @brief Maneuver Target Velocity
     units::velocity::meters_per_second_t velocity_;
 };
+
+/// @brief Comparator for Maneuvers
+inline bool operator==(const Maneuver& lhs, const Maneuver& rhs) noexcept
+{
+    return ((lhs.GetLaneId() == rhs.GetLaneId()) && (lhs.GetVelocity() == rhs.GetVelocity()));
+}
 
 /// @brief String Stream for Maneuver information (used for printing verbose information)
 inline std::ostream& operator<<(std::ostream& out, const Maneuver& maneuver)

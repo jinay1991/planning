@@ -5,7 +5,7 @@
 ///
 #include "planning/motion_planning/data_source.h"
 #include "planning/motion_planning/motion_planning.h"
-#include "planning/motion_planning/test/support/data_source_builder.h"
+#include "planning/motion_planning/test/support/builders/data_source_builder.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

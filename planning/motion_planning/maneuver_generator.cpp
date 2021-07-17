@@ -11,7 +11,7 @@
 
 namespace planning
 {
-std::vector<Maneuver> ManeuverGenerator::Generate(const units::velocity::meters_per_second_t& target_velocity) const
+std::vector<Maneuver> ManeuverGenerator::Generate(const units::velocity::meters_per_second_t target_velocity) const
 {
     auto maneuvers = std::vector<Maneuver>{Maneuver{LaneId::kLeft, target_velocity},
                                            Maneuver{LaneId::kEgo, target_velocity},

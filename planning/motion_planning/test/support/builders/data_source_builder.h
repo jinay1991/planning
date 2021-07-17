@@ -3,14 +3,15 @@
 /// @brief Contains builder utility for Data Source object built-up.
 /// @copyright Copyright (c) 2021. All Rights Reserved.
 ///
-#ifndef PLANNING_MOTION_PLANNING_TEST_DATA_SOURCE_BUILDER_H
-#define PLANNING_MOTION_PLANNING_TEST_DATA_SOURCE_BUILDER_H
+#ifndef PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_DATA_SOURCE_BUILDER_H
+#define PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_DATA_SOURCE_BUILDER_H
 
 #include "planning/datatypes/lane.h"
 #include "planning/datatypes/sensor_fusion.h"
 #include "planning/datatypes/vehicle_dynamics.h"
 #include "planning/motion_planning/data_source.h"
-#include "planning/motion_planning/test/support/sensor_fusion_builder.h"
+#include "planning/motion_planning/test/support/builders/sensor_fusion_builder.h"
+#include "planning/motion_planning/test/support/map_coordinates.h"
 
 #include <units.h>
 
@@ -35,7 +36,7 @@ class DataSourceBuilder
     }
 
     /// @brief Build Data Source Object with Global Lane Id information
-    DataSourceBuilder& WithGlobalLaneId(const GlobalLaneId& global_lane_id)
+    DataSourceBuilder& WithGlobalLaneId(const GlobalLaneId global_lane_id)
     {
         const auto lateral_distance = units::length::meter_t{GetCoordinates(global_lane_id).d};
         previous_path_end_frenet_.d = lateral_distance.value();
@@ -44,7 +45,7 @@ class DataSourceBuilder
     }
 
     /// @brief Build Data Source Object with Ego Velocity
-    DataSourceBuilder& WithVelocity(const units::velocity::meters_per_second_t& velocity)
+    DataSourceBuilder& WithVelocity(const units::velocity::meters_per_second_t velocity)
     {
         vehicle_dynamics_.velocity = velocity;
         return *this;
@@ -58,8 +59,8 @@ class DataSourceBuilder
     }
 
     /// @brief Build Data Source Object with Object Fusion
-    DataSourceBuilder& WithObjectInLane(const GlobalLaneId& global_lane_id,
-                                        const units::velocity::meters_per_second_t& velocity)
+    DataSourceBuilder& WithObjectInLane(const GlobalLaneId global_lane_id,
+                                        const units::velocity::meters_per_second_t velocity)
     {
         this->WithSensorFusion(SensorFusionBuilder()
                                    .WithObjectFusion(ObjectFusionBuilder()
@@ -72,7 +73,7 @@ class DataSourceBuilder
     }
 
     /// @brief Build Data Source Object with Distance Travelled (Ego)
-    DataSourceBuilder& WithDistance(const units::length::meter_t& longitudinal_distance)
+    DataSourceBuilder& WithDistance(const units::length::meter_t longitudinal_distance)
     {
         previous_path_end_frenet_.s = longitudinal_distance.value();
         vehicle_dynamics_.frenet_coords.s = longitudinal_distance.value();
@@ -123,7 +124,7 @@ class DataSourceBuilder
     }
 
     /// @brief Build Data Source Object with provided Speed Limit
-    DataSourceBuilder& WithSpeedLimit(const units::velocity::meters_per_second_t& speed_limit)
+    DataSourceBuilder& WithSpeedLimit(const units::velocity::meters_per_second_t speed_limit)
     {
         speed_limit_ = speed_limit;
         return *this;
@@ -142,7 +143,7 @@ class DataSourceBuilder
     }
 
     /// @brief Convert Global Coordinates to Frenet Coordinates (uses Global Lane Information)
-    static FrenetCoordinates GetCoordinates(const GlobalLaneId& global_lane_id)
+    static FrenetCoordinates GetCoordinates(const GlobalLaneId global_lane_id)
     {
         auto coords = FrenetCoordinates{24.0, 0.0};
         switch (global_lane_id)
@@ -197,4 +198,4 @@ class DataSourceBuilder
 }  // namespace
 }  // namespace planning
 
-#endif  /// PLANNING_MOTION_PLANNING_TEST_DATA_SOURCE_BUILDER_H
+#endif  /// PLANNING_MOTION_PLANNING_TEST_SUPPORT_BUILDERS_DATA_SOURCE_BUILDER_H

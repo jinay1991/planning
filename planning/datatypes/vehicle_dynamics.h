@@ -10,6 +10,7 @@
 #include <units.h>
 
 #include <cstdint>
+#include <vector>
 
 namespace planning
 {
@@ -22,6 +23,9 @@ struct GlobalCoordinates
     /// @brief y axis value
     double y;
 };
+
+/// @brief List of Previous Path Nodes in Global Coordinates
+using PreviousPathGlobal = std::vector<GlobalCoordinates>;
 
 /// @brief Frenet Coordinates
 struct FrenetCoordinates
@@ -41,6 +45,9 @@ struct FrenetCoordinates
     double dy{0.0};
 };
 
+/// @brief List of Previous Path Nodes in Frenet Coordinates
+using PreviousPathFrenet = std::vector<FrenetCoordinates>;
+
 /// @brief Map Points
 struct MapCoordinates
 {
@@ -50,6 +57,9 @@ struct MapCoordinates
     /// @brief Map Point (Frenet Coordinates)
     FrenetCoordinates frenet_coords;
 };
+
+/// @brief List of Map Coordinates
+using MapCoordinatesList = std::vector<MapCoordinates>;
 
 /// @brief VehicleDynamics (Ego Vehicle localization information)
 struct VehicleDynamics

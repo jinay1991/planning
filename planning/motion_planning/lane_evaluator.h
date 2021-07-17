@@ -19,23 +19,20 @@ class LaneEvaluator
 {
   public:
     /// @brief Constructor. Initializes based on provided DataSource
-    explicit LaneEvaluator(const DataSource& data_source);
+    explicit LaneEvaluator(const IDataSource& data_source);
 
     /// @brief Evaluates Lane to be drivable (collision free)
-    bool IsDrivableLane(const LaneId& lane_id) const;
+    bool IsDrivableLane(const LaneId lane_id) const;
 
     /// @brief Evaluates Lane to be Valid Lane
-    bool IsValidLane(const LaneId& lane_id) const;
+    bool IsValidLane(const LaneId lane_id) const;
 
   private:
     /// @brief Converts Global Lane Id to Local Lane Id based on Ego Position
-    LaneId GetLocalLaneId(const GlobalLaneId& global_lane_id) const;
-
-    /// @brief Evaluates Euclidean Distance to Object Position from Ego Position
-    bool IsObjectNear(const FrenetCoordinates& ego_position, const FrenetCoordinates& obj_position) const;
+    LaneId GetLocalLaneId(const GlobalLaneId global_lane_id) const;
 
     /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, etc.)
-    const DataSource& data_source_;
+    const IDataSource& data_source_;
 };
 }  // namespace planning
 #endif  /// PLANNING_MOTION_PLANNING_LANE_EVALUATOR_H

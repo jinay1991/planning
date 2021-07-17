@@ -11,7 +11,6 @@ namespace planning
 {
 namespace
 {
-
 extern "C" int LLVMFuzzerTestOneInput(const std::uint8_t* input, const std::size_t size)
 {
     std::istringstream s{std::string{reinterpret_cast<const char*>(input), size}};

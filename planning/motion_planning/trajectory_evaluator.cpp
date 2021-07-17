@@ -10,7 +10,7 @@
 
 namespace planning
 {
-TrajectoryEvaluator::TrajectoryEvaluator(const DataSource& data_source) : lane_evaluator_{data_source} {}
+TrajectoryEvaluator::TrajectoryEvaluator(const IDataSource& data_source) : lane_evaluator_{data_source} {}
 
 Trajectories TrajectoryEvaluator::GetRatedTrajectories(const Trajectories& optimized_trajectories) const
 {

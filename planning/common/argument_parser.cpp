@@ -30,8 +30,6 @@ ArgumentParser::ArgumentParser(int argc, char* argv[])
     cli_options_ = ParseArgs(argc, argv);
 }
 
-ArgumentParser::~ArgumentParser() {}
-
 CLIOptions ArgumentParser::GetParsedArgs() const
 {
     return cli_options_;

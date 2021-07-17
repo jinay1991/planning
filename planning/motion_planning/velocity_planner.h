@@ -21,11 +21,11 @@ class VelocityPlanner : public IVelocityPlanner
 {
   public:
     /// @brief Constructor. Initialize with DataSource.
-    explicit VelocityPlanner(const DataSource& data_source);
+    explicit VelocityPlanner(const IDataSource& data_source);
 
     /// @brief Constructor. Initialize with DataSource for given target velocity.
-    explicit VelocityPlanner(const DataSource& data_source,
-                             const units::velocity::meters_per_second_t& target_velocity);
+    explicit VelocityPlanner(const IDataSource& data_source,
+                             const units::velocity::meters_per_second_t target_velocity);
 
     /// @brief Calculate Target Velocity based on DataSource.
     void CalculateTargetVelocity() override;
@@ -53,7 +53,7 @@ class VelocityPlanner : public IVelocityPlanner
     units::velocity::meters_per_second_t target_velocity_;
 
     /// @brief DataSource (contains information on VehicleDynamics, SensorFusion, Map Points etc.)
-    const DataSource& data_source_;
+    const IDataSource& data_source_;
 };
 }  // namespace planning
 

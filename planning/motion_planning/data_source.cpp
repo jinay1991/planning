@@ -6,13 +6,32 @@
 
 namespace planning
 {
+using namespace units::literals;
+
+constexpr units::velocity::meters_per_second_t kDefaultSpeedLimit{48.5_mph};
+
+namespace
+{
+/// @brief Validate value to be in given bounds (exclusively)
+///
+/// @tparam value type
+///
+/// @return True if given value is inside the provided bounds (exclusively), otherwise False.
+template <typename T>
+inline constexpr bool IsInRangeExclusive(const T& value, const T& lower, const T& upper) noexcept
+{
+    return ((value > lower) && (value < upper));
+}
+
+}  // namespace
+
 DataSource::DataSource()
     : vehicle_dynamics_{},
       map_coordinates_{},
       previous_path_global_{},
       previous_path_end_frenet_{},
       sensor_fusion_{},
-      speed_limit_{units::velocity::meters_per_second_t{22.12848}}
+      speed_limit_{kDefaultSpeedLimit}
 {
 }
 
@@ -41,7 +60,7 @@ void DataSource::SetSensorFusion(const SensorFusion& sensor_fusion)
     sensor_fusion_ = sensor_fusion;
 }
 
-void DataSource::SetSpeedLimit(const units::velocity::meters_per_second_t& speed_limit)
+void DataSource::SetSpeedLimit(const units::velocity::meters_per_second_t speed_limit)
 {
     speed_limit_ = speed_limit;
 }
@@ -105,17 +124,17 @@ units::velocity::meters_per_second_t DataSource::GetSpeedLimit() const
 
 bool DataSource::IsLeftLane(const FrenetCoordinates& coords)
 {
-    return (coords.d > 0.0 && coords.d < 4.0);
+    return IsInRangeExclusive(coords.d, 0.0, 4.0);
 }
 
 bool DataSource::IsCenterLane(const FrenetCoordinates& coords)
 {
-    return (coords.d > 4.0 && coords.d < 8.0);
+    return IsInRangeExclusive(coords.d, 4.0, 8.0);
 }
 
 bool DataSource::IsRightLane(const FrenetCoordinates& coords)
 {
-    return (coords.d > 8.0 && coords.d < 12.0);
+    return IsInRangeExclusive(coords.d, 8.0, 12.0);
 }
 
 }  // namespace planning
