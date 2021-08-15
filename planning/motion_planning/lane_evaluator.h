@@ -9,23 +9,24 @@
 #include "planning/datatypes/sensor_fusion.h"
 #include "planning/datatypes/trajectory.h"
 #include "planning/motion_planning/data_source.h"
+#include "planning/motion_planning/i_lane_evaluator.h"
 
 #include <memory>
 
 namespace planning
 {
 /// @brief Evaluates given Lane to be collision free
-class LaneEvaluator
+class LaneEvaluator : public ILaneEvaluator
 {
   public:
     /// @brief Constructor. Initializes based on provided DataSource
     explicit LaneEvaluator(const IDataSource& data_source);
 
     /// @brief Evaluates Lane to be drivable (collision free)
-    bool IsDrivableLane(const LaneId lane_id) const;
+    bool IsDrivableLane(const LaneId lane_id) const override;
 
     /// @brief Evaluates Lane to be Valid Lane
-    bool IsValidLane(const LaneId lane_id) const;
+    bool IsValidLane(const LaneId lane_id) const override;
 
   private:
     /// @brief Converts Global Lane Id to Local Lane Id based on Ego Position
