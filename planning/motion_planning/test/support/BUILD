@@ -20,23 +20,14 @@ cc_library(
 cc_library(
     name = "support",
     testonly = True,
-    srcs = [
-        "motion_planning_consumer_node.cpp",
-        "motion_planning_simulator_node.cpp",
-    ],
     hdrs = [
         "map_coordinates.h",
-        "motion_planning_consumer_node.h",
-        "motion_planning_simulator_node.h",
     ],
     visibility = ["//planning/motion_planning/test:__subpackages__"],
     deps = [
         ":builders",
-        "//planning/communication:topics",
         "//planning/datatypes",
         "//planning/motion_planning",
-        "@middleware//:communication",
-        "@middleware//:lifecycle",
         "@nholthaus//:units",
     ],
 )

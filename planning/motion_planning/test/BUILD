@@ -24,17 +24,6 @@ cc_test(
 )
 
 cc_test(
-    name = "node_tests",
-    srcs = ["motion_planning_node_tests.cpp"],
-    tags = ["component"],
-    deps = [
-        "//planning/motion_planning/node",
-        "//planning/motion_planning/test/support",
-        "@googletest//:gtest_main",
-    ],
-)
-
-cc_test(
     name = "fuzzer_tests",
     srcs = ["motion_planning_fuzzer_tests.cpp"],
     tags = [
@@ -43,25 +32,5 @@ cc_test(
     ],
     deps = [
         "//planning/motion_planning",
-    ],
-)
-
-cc_test(
-    name = "benchmark_tests",
-    srcs = [
-        "motion_planning_benchmark_tests.cpp",
-    ],
-    copts = [
-        "-Wall",
-        "-Werror",
-    ],
-    tags = [
-        "benchmark",
-        "manual",
-    ],
-    deps = [
-        "//planning/motion_planning/node",
-        "//planning/motion_planning/test/support",
-        "@benchmark//:benchmark_main",
     ],
 )

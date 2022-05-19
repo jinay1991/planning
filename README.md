@@ -4,7 +4,7 @@
 [![coverage report](https://gitlab.com/ad_platform/planning/badges/master/coverage.svg?job=code-coverage)](https://ad_platform.gitlab.io/planning/coverage/index.html)
 [![Documentation](https://img.shields.io/badge/doc-doxygen-blue.svg)](https://ad_platform.gitlab.io/planning/doc/html/)
 [![Static Code Analyzer](https://img.shields.io/badge/static-analysis-green.svg)](https://ad_platform.gitlab.io/planning/static_code_analysis_report/)
-[![Issues](https://img.shields.io/badge/bugs-issues-green.svg)](https://gitlab.com/ad_platform/planning/-/boards/)]
+[![Issues](https://img.shields.io/badge/bugs-issues-green.svg)](https://gitlab.com/ad_platform/planning/-/boards/)
 
 This repository contains one of the subsystem for Autonomous Driving Platform.
 

@@ -23,8 +23,8 @@ FILE=sysroot.BUILD
 echo "# DO NOT MODIFY. This file is auto-generated.
 package(default_visibility = [\"//visibility:public\"])" > "${FILE}"
 
-write_filegroup libstdc++ libstdc++6 libstdc++-9-dev
-write_filegroup libgcc libgcc-s1 libgcc-9-dev
+write_filegroup libstdc++ libstdc++6 libstdc++-11-dev
+write_filegroup libgcc libgcc-s1 libgcc-11-dev
 write_filegroup libcrypt libcrypt1 libcrypt-dev
 write_filegroup libc libc6 libc6-dev
 write_filegroup kernel_headers linux-libc-dev
