@@ -25,15 +25,19 @@ Trajectories TrajectoryOptimizer::GetOptimizedTrajectories(const Trajectories& p
 
     std::stringstream log_stream;
     log_stream << "Optimized trajectories: " << optimized_trajectories.size() << std::endl;
-    std::for_each(optimized_trajectories.begin(), optimized_trajectories.end(), [&log_stream](const auto& trajectory) {
-        log_stream << " (+) " << trajectory << std::endl;
-        const auto n_samples =
-            std::min(static_cast<std::size_t>(trajectory.waypoints.size()), static_cast<std::size_t>(10));
-        std::for_each(trajectory.waypoints.begin(),
-                      trajectory.waypoints.begin() + n_samples,
-                      [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
-        log_stream << "     => ... (more " << trajectory.waypoints.size() - n_samples << " waypoints)" << std::endl;
-    });
+    std::for_each(optimized_trajectories.begin(),
+                  optimized_trajectories.end(),
+                  [&log_stream](const auto& trajectory)
+                  {
+                      log_stream << " (+) " << trajectory << std::endl;
+                      const auto n_samples =
+                          std::min(static_cast<std::size_t>(trajectory.waypoints.size()), static_cast<std::size_t>(10));
+                      std::for_each(trajectory.waypoints.begin(),
+                                    trajectory.waypoints.begin() + n_samples,
+                                    [&log_stream](const auto& wp) { log_stream << "     => " << wp << std::endl; });
+                      log_stream << "     => ... (more " << trajectory.waypoints.size() - n_samples << " waypoints)"
+                                 << std::endl;
+                  });
     LOG(INFO) << log_stream.str();
     return optimized_trajectories;
 }

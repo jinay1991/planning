@@ -27,7 +27,8 @@ Trajectories TrajectoryEvaluator::GetRatedTrajectories(const Trajectories& optim
 
     /// @todo Improve Cost adjustment algorithm
     // update costs for each trajectory
-    const auto adjust_costs = [this](const auto& trajectory) {
+    const auto adjust_costs = [this](const auto& trajectory)
+    {
         auto rated_trajectory = trajectory;
         rated_trajectory.drivable = lane_evaluator_.IsDrivableLane(trajectory.lane_id);
         if (!rated_trajectory.drivable)
@@ -49,9 +50,9 @@ Trajectories TrajectoryEvaluator::GetRatedTrajectories(const Trajectories& optim
 
     std::stringstream log_stream;
     log_stream << "Evaluated trajectories: " << rated_trajectories.size() << std::endl;
-    std::for_each(rated_trajectories.begin(), rated_trajectories.end(), [&log_stream](const auto& trajectory) {
-        log_stream << " (+) " << trajectory << std::endl;
-    });
+    std::for_each(rated_trajectories.begin(),
+                  rated_trajectories.end(),
+                  [&log_stream](const auto& trajectory) { log_stream << " (+) " << trajectory << std::endl; });
     LOG(INFO) << log_stream.str();
     return rated_trajectories;
 }

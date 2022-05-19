@@ -101,15 +101,13 @@ void UdacitySimulator::Init()
 {
     InitializeMap();
 
-    h_.onMessage([&](uWS::WebSocket<uWS::SERVER> ws, char* data, size_t length, uWS::OpCode op_code) {
-        ReceiveCallback(ws, data, length, op_code);
-    });
+    h_.onMessage([&](uWS::WebSocket<uWS::SERVER> ws, char* data, size_t length, uWS::OpCode op_code)
+                 { ReceiveCallback(ws, data, length, op_code); });
 
     h_.onConnection([&](uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) { ConnectCallback(ws, req); });
 
-    h_.onDisconnection([&](uWS::WebSocket<uWS::SERVER> ws, std::int32_t code, char* message, size_t length) {
-        DisconnectCallback(ws, code, message, length);
-    });
+    h_.onDisconnection([&](uWS::WebSocket<uWS::SERVER> ws, std::int32_t code, char* message, size_t length)
+                       { DisconnectCallback(ws, code, message, length); });
 }
 
 void UdacitySimulator::InitializeMap()
